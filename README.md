@@ -10,10 +10,14 @@ The technologies/frameworks that will be used mainly are as follows:
 - [Laravel](https://laravel.com/)
 - [MariaDB](https://mariadb.org/)
 
-## Collaboration Guide
+## Setting Up Development Environment
 
 Considering you were already added as a collaborator do this one time step to clone the project.
+Navigate to the folder you want to clone the project and paste the command
+
 `git clone https://github.com/philipangeloang/crs-client.git`
+
+## Collaboration Workflow
 
 ### Common Git Commands
 
@@ -25,9 +29,10 @@ Considering you were already added as a collaborator do this one time step to cl
 - `git add .` staging all the modified file
 - `git commit -m "[commit_message]"` commiting the file for changes
 
-### Collaboration Workflow
+### Collaboration Practices
 
 **THE MAIN BRANCH SHOULD ALWAYS BE DEPLOYABLE**
+
 To keep main branch deployable, we will work in separate branches for new features/modules and merge them into main when they're completed
 
 - Create a branch that represent the module/feauture that will be developed
