@@ -16,7 +16,7 @@ function App() {
         <img src="/divider_signin.png" className="w-full h-3" />
       </div>
       <div className="mx-auto max-w-[100rem] px-16 flex flex-col py-32 justify-center items-center ">
-        <div className="py-14 px-16 border border-black rounded-md w-[28rem]  font-open-sans relative z-10">
+        <div className="py-14 px-16 border border-black rounded-md w-[28rem]  font-open-sans relative z-10 bg-white">
           <h1 className="font-bold font-montserrat text-2xl mb-2 text-main-red">
             Sign In
           </h1>
@@ -43,7 +43,7 @@ function App() {
           </Button>
           <Button
             variant="link"
-            className="text-xs font-normal text-main-blue underline underline-offset-0 font-open-sans"
+            className="text-xs relative z-10 font-normal text-main-blue underline underline-offset-0 font-open-sans"
           >
             Graduate Program Application
           </Button>
