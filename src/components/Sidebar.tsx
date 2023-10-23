@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { faAngleUp, faAngleDown, faDoorOpen } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { useState } from "react";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import {
+  faAngleUp,
+  faAngleDown,
+  faDoorOpen,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // Add the imported icons to the library
 library.add(faAngleUp, faAngleDown, faDoorOpen);
@@ -29,7 +33,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="sidebar py-4 fixed left-0 top-0 bottom-0 w-200 flex flex-col justify-between">
+    <div className="sidebar py-4 fixed left-0 top-0 bottom-0 w-72 flex flex-col justify-between">
       <ul className="space-y-4">
         <li>
           <a href="/" className="text-black block px-4 py-2">
@@ -169,14 +173,13 @@ const Sidebar = () => {
 
       <div>
         <li className="Logout flex items-center">
-        <img className="Logout-icon" src="/Logout.svg" alt="Logo" />
+          <img className="Logout-icon" src="/Logout.svg" alt="Logo" />
           <a href="/services" className="text-black block px-4 py-2">
             Logout
           </a>
           {/* You can add more elements here if needed */}
-          
         </li>
-        </div>
+      </div>
     </div>
   );
 };
