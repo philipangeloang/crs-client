@@ -6,6 +6,7 @@ import {
   faDoorOpen,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Link } from "react-router-dom";
 
 // Add the imported icons to the library
 library.add(faAngleUp, faAngleDown, faDoorOpen);
@@ -64,9 +65,9 @@ const Sidebar = () => {
           {userDropdownOpen && (
             <ul className="pl-4">
               <li>
-                <a href="/service1" className="text-black block py-2">
+                <Link to="/service1" className="text-black block py-2">
                   Service 1
-                </a>
+                </Link>
               </li>
               <li>
                 <a href="/service2" className="text-black block py-2">
