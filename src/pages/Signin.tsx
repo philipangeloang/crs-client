@@ -6,7 +6,7 @@ const Signin = () => {
   return (
     <>
       <div className="mx-auto max-w-[100rem] px-16 flex flex-col my-3">
-        <div className="flex flex-col justify-between items-center | md:flex-row">
+        <div className="flex flex-col justify-between items-center | md:flex-row ">
           <img src="/plm_logo.png" className="h-20" />
           <h1 className="font-montserrat font-bold text-xl text-[#434343] mt-5 | md:mt-0">
             The PLM Online Campus
@@ -35,7 +35,7 @@ const Signin = () => {
             asChild
             className="bg-main-red hover:bg-destructive w-24 relative left-56"
           >
-            <Link to="dashboard"> Continue</Link>
+            <Link to="home"> Continue</Link>
           </Button>
         </div>
         <div className="w-[28rem] flex justify-between">

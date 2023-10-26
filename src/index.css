@@ -66,7 +66,6 @@
   }
 }
 
-
 @layer base {
   * {
     @apply border-border;
@@ -75,45 +74,23 @@
   body {
     @apply bg-background text-foreground;
   }
-
-  li {
-    list-style-type: none;
-  }
 }
 
 /* Sidebar CSS */
 .sidebar {
   border-right: 4px solid transparent;
-
 }
 
 .sidebar::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
-  width: 5px;
+  width: 10px;
   /* Adjust the width of the gradient on the right side */
-  background: linear-gradient(to bottom, #A45128, #0453B4, #D4C221);
+  background: linear-gradient(to bottom, #a42a28, #0453b4, #d4c221);
   /* Gradient colors and direction */
-}
-
-.dropdown-icon {
-  float: right;
-
-}
-
-.Logout {
-  border-top: 1px solid #000000;
-  margin-right: 20px;
-  margin-left: 10px;
-  padding: 20x;
-  text-align: center;
-}
-
-.Logout-icon {
-  margin-left: 10px;
 }
 
 /* Responsiveness for Sidebar */
