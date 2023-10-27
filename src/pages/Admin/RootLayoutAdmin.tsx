@@ -34,7 +34,7 @@ const RootLayoutAdmin = () => {
 
             <li className="px-4 py-2 cursor-pointer">
               <Link
-                to="/home"
+                to="/home/schedule-activities"
                 className={
                   scheduleActivitiesOpen ? "text-main-red font-bold " : ""
                 }
@@ -79,14 +79,17 @@ const RootLayoutAdmin = () => {
                 <ul>
                   <li>
                     <Link
-                      to="/home/service1"
+                      to="/home/encode-user-type"
                       className="text-black block py-2 mt-2"
                     >
                       Encode User Type
                     </Link>
                   </li>
                   <li>
-                    <Link to="/home/service2" className="text-black block py-2">
+                    <Link
+                      to="/home/user-module"
+                      className="text-black block py-2"
+                    >
                       User Module
                     </Link>
                   </li>
@@ -120,22 +123,34 @@ const RootLayoutAdmin = () => {
                 <ul>
                   {/* Dropdown items for Class Management */}
                   <li>
-                    <Link to="/service1" className="text-black block py-2 mt-2">
+                    <Link
+                      to="/home/encode-room"
+                      className="text-black block py-2 mt-2"
+                    >
                       Encoding of Room
                     </Link>
                   </li>
                   <li>
-                    <Link to="/service1" className="text-black block py-2">
+                    <Link
+                      to="/home/encode-meeting-type"
+                      className="text-black block py-2"
+                    >
                       Encoding of Meeting Type
                     </Link>
                   </li>
                   <li>
-                    <Link to="/service1" className="text-black block py-2">
+                    <Link
+                      to="/home/encode-blocks"
+                      className="text-black block py-2"
+                    >
                       Encoding of Blocks
                     </Link>
                   </li>
                   <li>
-                    <Link to="/service1" className="text-black block py-2">
+                    <Link
+                      to="/home/room-plot"
+                      className="text-black block py-2"
+                    >
                       Room Plotting
                     </Link>
                   </li>
@@ -171,12 +186,18 @@ const RootLayoutAdmin = () => {
                 <ul>
                   {/* Dropdown items for College Management */}
                   <li>
-                    <Link to="/service1" className="text-black block py-2 mt-2">
+                    <Link
+                      to="/home/college-module"
+                      className="text-black block py-2 mt-2"
+                    >
                       College Module
                     </Link>
                   </li>
                   <li>
-                    <Link to="/service1" className="text-black block py-2">
+                    <Link
+                      to="/home/program-module"
+                      className="text-black block py-2"
+                    >
                       Program Module
                     </Link>
                   </li>
@@ -213,12 +234,18 @@ const RootLayoutAdmin = () => {
                 <ul>
                   {/* Dropdown items for Student Management */}
                   <li>
-                    <Link to="/service1" className="text-black block py-2 mt-2">
+                    <Link
+                      to="/home/email-blast"
+                      className="text-black block py-2 mt-2"
+                    >
                       Email Blast
                     </Link>
                   </li>
                   <li>
-                    <Link to="/service1" className="text-black block py-2">
+                    <Link
+                      to="/home/student-type"
+                      className="text-black block py-2"
+                    >
                       Student Type
                     </Link>
                   </li>
@@ -227,7 +254,7 @@ const RootLayoutAdmin = () => {
             </li>
           </ul>
 
-          <div>
+          <div className="mb-20">
             <hr className="mb-3  border-black" />
             <li className="flex items-center px-4 py-2 cursor-pointer">
               <img className="Logout-icon" src="/Logout.svg" alt="Logo" />

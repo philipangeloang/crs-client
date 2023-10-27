@@ -11,8 +11,8 @@ import { Link, Outlet } from "react-router-dom";
 // Add the imported icons to the library
 library.add(faAngleUp, faAngleDown, faDoorOpen);
 
-const RootLayoutStudentUndergrad = () => {
-  const [nstpOpen, setNstpOpen] = useState(false);
+const RootLayoutStudentGrad = () => {
+  const [cashierOpen, setCashierOpen] = useState(false);
   const [enrollmentOpen, setEnrollmentOpen] = useState(false);
   const [gradesOpen, setGradesOpen] = useState(false);
   const [studentDropdownOpen, setStudentDropdownOpen] = useState(false);
@@ -32,97 +32,30 @@ const RootLayoutStudentUndergrad = () => {
             </li>
 
             <li className="px-4 py-2 cursor-pointer">
-              <a
-                className={nstpOpen ? "text-main-red font-bold " : ""}
-                onClick={() => {
-                  setNstpOpen(!nstpOpen);
-
-                  if (nstpOpen === false) {
-                    setEnrollmentOpen(false);
-                    setStudentDropdownOpen(false);
-                    setGradesOpen(false);
-                  }
-                }}
-              >
-                NSTP Enlistment
-                <span className="float-right mr-2">
-                  {nstpOpen ? (
-                    <FontAwesomeIcon icon="angle-up" />
-                  ) : (
-                    <FontAwesomeIcon icon="angle-down" />
-                  )}
-                </span>
-              </a>
-              {nstpOpen && (
-                <ul>
-                  <li>
-                    <Link
-                      to="/home/service1"
-                      className="text-black block py-2 mt-2"
-                    >
-                      NSTP Module
-                    </Link>
-                  </li>
-                </ul>
-              )}
-            </li>
-
-            <li className="px-4 py-2 cursor-pointer">
-              <a
+              <Link
+                to="/home/enrollment"
                 className={enrollmentOpen ? "text-main-red font-bold " : ""}
                 onClick={() => {
                   setEnrollmentOpen(!enrollmentOpen);
                   if (enrollmentOpen === false) {
-                    setNstpOpen(false);
+                    setCashierOpen(false);
                     setStudentDropdownOpen(false);
                     setGradesOpen(false);
                   }
                 }}
               >
                 Enrollment
-                <span className="float-right mr-2">
-                  {enrollmentOpen ? (
-                    <FontAwesomeIcon icon="angle-up" />
-                  ) : (
-                    <FontAwesomeIcon icon="angle-down" />
-                  )}
-                </span>
-              </a>
-              {enrollmentOpen && (
-                <ul>
-                  {/* Dropdown items for Class Management */}
-                  <li>
-                    <Link to="/service1" className="text-black block py-2 mt-2">
-                      Step 1 Class Schedule
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/service1" className="text-black block py-2">
-                      Step 2 Assessment
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/service1" className="text-black block py-2">
-                      Step 3 Class Start Date
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/service1" className="text-black block py-2">
-                      Step 4 Download SER
-                    </Link>
-                  </li>
-                </ul>
-              )}
+              </Link>
             </li>
 
             <li className="px-4 py-2 cursor-pointer">
               <Link
-                to="/home"
+                to="/home/view-grades"
                 className={gradesOpen ? "text-main-red font-bold " : ""}
                 onClick={() => {
                   setGradesOpen(!gradesOpen);
                   if (gradesOpen === false) {
-                    setNstpOpen(false);
+                    setCashierOpen(false);
                     setEnrollmentOpen(false);
                     setStudentDropdownOpen(false);
                   }
@@ -142,7 +75,7 @@ const RootLayoutStudentUndergrad = () => {
 
                   if (studentDropdownOpen === false) {
                     setEnrollmentOpen(false);
-                    setNstpOpen(false);
+                    setCashierOpen(false);
                     setGradesOpen(false);
                   }
                 }}
@@ -160,21 +93,44 @@ const RootLayoutStudentUndergrad = () => {
                 <ul>
                   {/* Dropdown items for Student Management */}
                   <li>
-                    <Link to="/service1" className="text-black block py-2 mt-2">
+                    <Link
+                      to="/home/view-information"
+                      className="text-black block py-2 mt-2"
+                    >
                       View Information
                     </Link>
                   </li>
                   <li>
-                    <Link to="/service1" className="text-black block py-2">
+                    <Link
+                      to="/home/change-password"
+                      className="text-black block py-2"
+                    >
                       Change Password
                     </Link>
                   </li>
                 </ul>
               )}
             </li>
+            <li className="px-4 py-2 cursor-pointer">
+              <Link
+                to="/home/cashier"
+                className={cashierOpen ? "text-main-red font-bold " : ""}
+                onClick={() => {
+                  setCashierOpen(!cashierOpen);
+
+                  if (cashierOpen === false) {
+                    setEnrollmentOpen(false);
+                    setStudentDropdownOpen(false);
+                    setGradesOpen(false);
+                  }
+                }}
+              >
+                Cashier
+              </Link>
+            </li>
           </ul>
 
-          <div>
+          <div className="mb-20">
             <hr className="mb-3  border-black" />
             <li className="flex items-center px-4 py-2 cursor-pointer">
               <img className="Logout-icon" src="/Logout.svg" alt="Logo" />
@@ -196,4 +152,4 @@ const RootLayoutStudentUndergrad = () => {
   );
 };
 
-export default RootLayoutStudentUndergrad;
+export default RootLayoutStudentGrad;

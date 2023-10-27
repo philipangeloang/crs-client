@@ -50,7 +50,10 @@ const RootLayoutCashier = () => {
                 <ul>
                   {/* Dropdown items for Student Management */}
                   <li>
-                    <Link to="/service1" className="text-black block py-2 mt-2">
+                    <Link
+                      to="/home/search-student"
+                      className="text-black block py-2 mt-2"
+                    >
                       Search Student Number
                     </Link>
                   </li>
@@ -59,7 +62,7 @@ const RootLayoutCashier = () => {
             </li>
           </ul>
 
-          <div>
+          <div className="mb-20">
             <hr className="mb-3  border-black" />
             <li className="flex items-center px-4 py-2 cursor-pointer">
               <img className="Logout-icon" src="/Logout.svg" alt="Logo" />

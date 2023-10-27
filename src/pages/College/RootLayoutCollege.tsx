@@ -33,7 +33,7 @@ const RootLayoutCollege = () => {
 
             <li className="px-4 py-2 cursor-pointer">
               <Link
-                to="/home"
+                to="/home/activities"
                 className={activitiesOpen ? "text-main-red font-bold " : ""}
                 onClick={() => {
                   setActivitiesOpen(!activitiesOpen);
@@ -76,7 +76,10 @@ const RootLayoutCollege = () => {
                 <ul>
                   {/* Dropdown items for Student Management */}
                   <li>
-                    <Link to="/service1" className="text-black block py-2 mt-2">
+                    <Link
+                      to="/home/student-records"
+                      className="text-black block py-2 mt-2"
+                    >
                       Student Records
                     </Link>
                   </li>
@@ -110,29 +113,32 @@ const RootLayoutCollege = () => {
                 <ul>
                   <li>
                     <Link
-                      to="/home/service1"
+                      to="/home/faculty"
                       className="text-black block py-2 mt-2"
                     >
                       Faculty
                     </Link>
                   </li>
                   <li>
-                    <Link to="/home/service2" className="text-black block py-2">
+                    <Link to="/home/sections" className="text-black block py-2">
                       Sections
                     </Link>
                   </li>
                   <li>
-                    <Link to="/home/service2" className="text-black block py-2">
+                    <Link to="/home/classes" className="text-black block py-2">
                       Classes
                     </Link>
                   </li>
                   <li>
-                    <Link to="/home/service2" className="text-black block py-2">
+                    <Link to="/home/subjects" className="text-black block py-2">
                       Subjects
                     </Link>
                   </li>
                   <li>
-                    <Link to="/home/service2" className="text-black block py-2">
+                    <Link
+                      to="/home/curriculum"
+                      className="text-black block py-2"
+                    >
                       Curriculum
                     </Link>
                   </li>
@@ -165,17 +171,26 @@ const RootLayoutCollege = () => {
                 <ul>
                   {/* Dropdown items for Class Management */}
                   <li>
-                    <Link to="/service1" className="text-black block py-2 mt-2">
+                    <Link
+                      to="/home/add-drop"
+                      className="text-black block py-2 mt-2"
+                    >
                       Add/Drop Request
                     </Link>
                   </li>
                   <li>
-                    <Link to="/service1" className="text-black block py-2">
+                    <Link
+                      to="/home/teaching-assignment"
+                      className="text-black block py-2"
+                    >
                       Teaching Assignment
                     </Link>
                   </li>
                   <li>
-                    <Link to="/service1" className="text-black block py-2">
+                    <Link
+                      to="/home/encode-blocks"
+                      className="text-black block py-2"
+                    >
                       Encoding of Blocks
                     </Link>
                   </li>
@@ -184,7 +199,7 @@ const RootLayoutCollege = () => {
             </li>
           </ul>
 
-          <div>
+          <div className="mb-20">
             <hr className="mb-3  border-black" />
             <li className="flex items-center px-4 py-2 cursor-pointer">
               <img className="Logout-icon" src="/Logout.svg" alt="Logo" />

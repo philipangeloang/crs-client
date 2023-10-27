@@ -53,14 +53,17 @@ const RootLayoutFaculty = () => {
                 <ul>
                   <li>
                     <Link
-                      to="/home/service1"
+                      to="/home/profile"
                       className="text-black block py-2 mt-2"
                     >
                       Profile
                     </Link>
                   </li>
                   <li>
-                    <Link to="/home/service2" className="text-black block py-2">
+                    <Link
+                      to="/home/change-password"
+                      className="text-black block py-2"
+                    >
                       Change Password
                     </Link>
                   </li>
@@ -91,22 +94,34 @@ const RootLayoutFaculty = () => {
                 <ul>
                   {/* Dropdown items for Class Management */}
                   <li>
-                    <Link to="/service1" className="text-black block py-2 mt-2">
+                    <Link
+                      to="/home/class-assignment"
+                      className="text-black block py-2 mt-2"
+                    >
                       Class Assignments
                     </Link>
                   </li>
                   <li>
-                    <Link to="/service1" className="text-black block py-2">
+                    <Link
+                      to="/home/encode-grades"
+                      className="text-black block py-2"
+                    >
                       Encoding of Grades
                     </Link>
                   </li>
                   <li>
-                    <Link to="/service1" className="text-black block py-2">
+                    <Link
+                      to="/home/change-grades"
+                      className="text-black block py-2"
+                    >
                       Change of Grades
                     </Link>
                   </li>
                   <li>
-                    <Link to="/service1" className="text-black block py-2">
+                    <Link
+                      to="/home/teaching-assignment"
+                      className="text-black block py-2"
+                    >
                       Teaching Assignments
                     </Link>
                   </li>
@@ -115,7 +130,7 @@ const RootLayoutFaculty = () => {
             </li>
           </ul>
 
-          <div>
+          <div className="mb-20">
             <hr className="mb-3  border-black" />
             <li className="flex items-center px-4 py-2 cursor-pointer">
               <img className="Logout-icon" src="/Logout.svg" alt="Logo" />
