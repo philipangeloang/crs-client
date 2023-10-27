@@ -11,8 +11,8 @@ import AdminHome from "./pages/Admin/AdminHome";
 // For now eto muna ang ating way to transfer from different views since wala pa tayong backend
 // Just toggle 1 sa gusto niyong mag appear. Hindi pwedeng may dalawang 1, isa lang always.
 // Default na 1 lagi si userAdmin. Make sure before pushing changes userAdmin ang 1.
-const userAdmin = 0;
-const userCollege = 1;
+const userAdmin = 1;
+const userCollege = 0;
 const userFaculty = 0;
 const userStudentUnderGrad = 0;
 const userStudentGrad = 0;
@@ -27,7 +27,7 @@ function App() {
             <Route path="/" element={<Signin />} />
             <Route path="/home" element={<RootLayoutAdmin />}>
               <Route index element={<AdminHome />} />
-              <Route path="schdule-activities" element={<AdminHome />} />
+              <Route path="schedule-activities" element={<AdminHome />} />
               <Route path="encode-user-type" element={<AdminHome />} />
               <Route path="user-module" element={<AdminHome />} />
               <Route path="encode-room" element={<AdminHome />} />

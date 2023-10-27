@@ -1,10 +1,12 @@
 import { AiOutlineMail } from "react-icons/ai";
-import { FiFacebook } from "react-icons/fi";
+import { FiFacebook, FiTwitter } from "react-icons/fi";
+import { BsGlobe2 } from "react-icons/bs";
+import { BiUserPin } from "react-icons/bi";
 
 const AdminHome = () => {
   return (
     <>
-      <div className="p-10 px-16 grid grid-cols-12 font-montserrat">
+      <div className="p-10 px-16 grid grid-cols-12 font-montserrat ">
         {/* Row 1 */}
         <div className="col-span-12 flex justify-between items-center">
           <div className="px-5 py-1 bg-main-red text-white rounded-lg ">
@@ -57,19 +59,41 @@ const AdminHome = () => {
         </div>
 
         {/* Row 3 */}
-        <div className="col-span-12 flex justify-between items-center">
-          <div className="flex">
+        <div className="col-span-12 flex justify-between items-end mt-24 text-[#434343] text-sm">
+          <div className="flex gap-10">
             <div>Contacts</div>
             <div className="flex flex-col">
-              <div className="flex justify-center items-center">
-                <p className="flex">
-                  <AiOutlineMail /> info@plm.edu.ph
+              <div className="grid grid-cols-12 gap-8 mb-4">
+                <p className="flex gap-3 col-span-6">
+                  <AiOutlineMail size={25} /> info@plm.edu.ph
                 </p>
-                <p className="flex">
-                  <FiFacebook /> @PLM.Haribon
+                <p className="flex gap-3 col-span-6">
+                  <FiFacebook size={25} /> @PLM.Haribon
+                </p>
+              </div>
+
+              <div className="grid grid-cols-12 gap-8 mb-4">
+                <p className="flex gap-3 col-span-6">
+                  <BsGlobe2 size={25} /> plm.edu.ph
+                </p>
+                <p className="flex gap-3 col-span-6">
+                  <FiTwitter size={25} /> @PLM_Manila
+                </p>
+              </div>
+
+              <div className="grid grid-cols-12 gap-8">
+                <p className="flex gap-3 col-span-6">
+                  <BiUserPin size={25} /> Campus Directory
                 </p>
               </div>
             </div>
+          </div>
+
+          <div className="flex flex-col items-end">
+            <h1 className="text-main-blue font-bold text-md">
+              October 27, 2023
+            </h1>
+            <p>10:35 PM</p>
           </div>
         </div>
       </div>
