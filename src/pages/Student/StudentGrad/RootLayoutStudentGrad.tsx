@@ -6,12 +6,13 @@ import {
   faDoorOpen,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link, Outlet } from "react-router-dom";
+import { useLocation, Link, Outlet } from "react-router-dom";
 
 // Add the imported icons to the library
 library.add(faAngleUp, faAngleDown, faDoorOpen);
 
 const RootLayoutStudentGrad = () => {
+  const location = useLocation();
   const [cashierOpen, setCashierOpen] = useState(false);
   const [enrollmentOpen, setEnrollmentOpen] = useState(false);
   const [gradesOpen, setGradesOpen] = useState(false);
@@ -29,6 +30,17 @@ const RootLayoutStudentGrad = () => {
               >
                 <img src="/logo.png" alt="Logo" className="" />
               </a>
+            </li>
+
+            <li className="px-4 py-2 cursor-pointer">
+              <Link
+                to="/home"
+                className={
+                  location.pathname === '/home' ? 'text-main-red font-bold' : ''
+                }
+              >
+                Home
+              </Link>
             </li>
 
             <li className="px-4 py-2 cursor-pointer">
