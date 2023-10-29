@@ -15,8 +15,8 @@ const userAdmin = 0;
 const userCollege = 0;
 const userFaculty = 0;
 const userStudentUnderGrad = 0;
-const userStudentGrad = 1;
-const userCashier = 0;
+const userStudentGrad = 0;
+const userCashier = 1;
 
 function App() {
   return (
