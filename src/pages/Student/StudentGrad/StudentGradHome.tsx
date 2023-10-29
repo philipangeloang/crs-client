@@ -122,7 +122,7 @@ const StudentGradHome = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-7 gap-2 mt-3 mr-10 text-xs">
+            <div className="grid grid-cols-7 gap-3 mt-3 mr-10 text-xs">
               {/* Student Number */}
               <div className="col-span-3">
                 <span className="text-[#676C72]">Payment For : </span>
@@ -165,15 +165,61 @@ const StudentGradHome = () => {
               </div>
 
             </div>
-
-
-
           </div>
 
 
           {/* Enlisted Classes */}
           <div className="w-full md:w-3/5 lg:w-3/5 ">
             <h1 className="font-bold text-main-red text-lg">Enlisted Classes</h1>
+
+            <div className="rounded-lg">
+              <table className="border  text-xs">
+                <thead>
+                  <tr className="bg-main-red text-white text-left">
+                    <th className="w-1/6 p-2">Class / Section</th>
+                    <th className="w-2/6 p-2">Class Title</th>
+                    <th className="w-2/6 p-2">Schedule / Room</th>
+                    <th className="w-1/6 p-2">Instructor</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="border-b">
+                    <td className="p-2">CSC 0413</td>
+                    <td className="p-2">Strategic Management of Technology Management</td>
+                    <td className="p-2">Sat 11:00AM - 2:30 PM at Open Field</td>
+                    <td className="p-2">Juan Dela Cruz</td>
+                  </tr>
+
+                  <tr className="border-b">
+                    <td className="p-2">CSC 0413</td>
+                    <td className="p-2">Strategic Management of Technology Management</td>
+                    <td className="p-2">Sat 11:00AM - 2:30 PM at Open Field</td>
+                    <td className="p-2">Juan Dela Cruz</td>
+                  </tr>
+
+                  <tr className="border-b">
+                    <td className="p-2">CSC 0413</td>
+                    <td className="p-2">Strategic Management of Technology Management</td>
+                    <td className="p-2">Sat 11:00AM - 2:30 PM at Open Field</td>
+                    <td className="p-2">Juan Dela Cruz</td>
+                  </tr>
+
+                  <tr className="border-b">
+                    <td className="p-2">CSC 0413</td>
+                    <td className="p-2">Strategic Management of Technology Management</td>
+                    <td className="p-2">Sat 11:00AM - 2:30 PM at Open Field</td>
+                    <td className="p-2">Juan Dela Cruz</td>
+                  </tr>
+
+                  <tr className="border-b">
+                    <td className="p-2">CSC 0413</td>
+                    <td className="p-2">Strategic Management of Technology Management</td>
+                    <td className="p-2">Sat 11:00AM - 2:30 PM at Open Field</td>
+                    <td className="p-2">Juan Dela Cruz</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
 
