@@ -2,7 +2,9 @@ import { AiOutlineMail } from "react-icons/ai";
 import { FiFacebook, FiTwitter } from "react-icons/fi";
 import { BsGlobe2 } from "react-icons/bs";
 import { BiUserPin } from "react-icons/bi";
+import { PiWarningBold } from "react-icons/Pi"
 import { mockData } from './mockData';
+import DateTimeDisplay from './DateTimeDisplay';
 
 const StudentGradHome = () => {
   return (
@@ -41,7 +43,7 @@ const StudentGradHome = () => {
             <div className="grid grid-cols-7 gap-2 p-3 mt-3 mr-3 rounded-lg border border-black h-full text-xs">
               {/* Student Number */}
               <div className="col-span-2">
-                <span className="text-[#676C72]">Student Number:</span>
+                <span className="text-[#676C72]">Student Number :</span>
               </div>
               <div className="col-span-5">
                 {mockData.studentNumber}
@@ -49,7 +51,7 @@ const StudentGradHome = () => {
 
               {/* Student Name */}
               <div className="col-span-2">
-                <span className="text-[#676C72]">Student Name:</span>
+                <span className="text-[#676C72]">Student Name :</span>
               </div>
               <div className="col-span-5">
                 {mockData.studentFirstName} {mockData.studentLastName}
@@ -57,7 +59,7 @@ const StudentGradHome = () => {
 
               {/* Student Graduate School */}
               <div className="col-span-2">
-                <span className="text-[#676C72]">Graduate School:</span>
+                <span className="text-[#676C72]">Graduate School :</span>
               </div>
               <div className="col-span-5">
                 {mockData.studentGradSchool}
@@ -65,7 +67,7 @@ const StudentGradHome = () => {
 
               {/* Student Graduate Program */}
               <div className="col-span-2">
-                <span className="text-[#676C72]">Program:</span>
+                <span className="text-[#676C72]">Program :</span>
               </div>
               <div className="col-span-5">
                 {mockData.studentProgram}
@@ -73,7 +75,7 @@ const StudentGradHome = () => {
 
               {/* Student Current Year / Term */}
               <div className="col-span-2">
-                <span className="text-[#676C72]">Current School Year / Term:</span>
+                <span className="text-[#676C72]">Current School Year / Term :</span>
               </div>
               <div className="col-span-5">
                 {mockData.studentSchoolYearTerm}
@@ -107,6 +109,91 @@ const StudentGradHome = () => {
         </div>
 
         {/* Row 4 */}
+        <div className="col-span-12 mt-16 flex flex-wrap justify-between">
+
+          {/* Account Status */}
+          <div className="w-full md:w-2/5 lg:w-2/5">
+            <h1 className="font-bold text-main-red text-lg">Account Status</h1>
+
+            <div className=" p-3 mt-3 mr-12 rounded-lg bg-[#FFCDCF] text-xs">
+              <div className="flex items-center gap-3 text-main-red">
+                <PiWarningBold size={35} />
+                <span>Please choose your Type of Payment in Enrollment Page for PLM Cashier Assessment</span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-7 gap-2 mt-3 mr-10 text-xs">
+              {/* Student Number */}
+              <div className="col-span-3">
+                <span className="text-[#676C72]">Payment For : </span>
+              </div>
+              <div className="col-span-4 text-main-blue">
+                {mockData.studentSchoolYearTerm}
+              </div>
+
+              {/* Student Name */}
+              <div className="col-span-3">
+                <span className="text-[#676C72]">Payment Type/Term :</span>
+              </div>
+              <div className="col-span-4">
+                {mockData.studentSchoolYearTerm}
+              </div>
+
+              {/* Student Graduate School */}
+              <div className="col-span-3">
+                <span className="text-[#676C72]">Total Amount (Current YR) :</span>
+              </div>
+              <div className="col-span-4">
+                Php 11, 974.50
+              </div>
+
+              {/* Student Graduate Program */}
+              <div className="col-span-3">
+                <span className="text-[#676C72]">Amount to be paid :</span>
+                <span className="text-[#676C72] block">(for 2nd Payment)</span>
+              </div>
+              <div className="col-span-4">
+                Php 2, 289.90
+              </div>
+
+              {/* Student Current Year / Term */}
+              <div className="col-span-3">
+                <span className="text-main-red text-sm">Overall Balance :</span>
+              </div>
+              <div className="col-span-4 font-bold text-sm">
+                Php 6, 764.10
+              </div>
+
+            </div>
+
+
+
+          </div>
+
+
+          {/* Enlisted Classes */}
+          <div className="w-full md:w-3/5 lg:w-3/5 ">
+            <h1 className="font-bold text-main-red text-lg">Enlisted Classes</h1>
+          </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        {/* Row # */}
         <div className="col-span-12 flex justify-between items-end mt-24 text-[#434343] text-sm">
           <div className="flex gap-10">
             <div>Contacts:</div>
@@ -137,12 +224,7 @@ const StudentGradHome = () => {
             </div>
           </div>
 
-          <div className="flex flex-col items-end">
-            <h1 className="text-main-blue font-bold text-md">
-              October 27, 2023
-            </h1>
-            <p>10:35 PM</p>
-          </div>
+          <DateTimeDisplay />
         </div>
       </div >
     </>
