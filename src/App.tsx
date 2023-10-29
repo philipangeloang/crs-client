@@ -11,11 +11,11 @@ import AdminHome from "./pages/Admin/AdminHome";
 // For now eto muna ang ating way to transfer from different views since wala pa tayong backend
 // Just toggle 1 sa gusto niyong mag appear. Hindi pwedeng may dalawang 1, isa lang always.
 // Default na 1 lagi si userAdmin. Make sure before pushing changes userAdmin ang 1.
-const userAdmin = 1;
+const userAdmin = 0;
 const userCollege = 0;
 const userFaculty = 0;
 const userStudentUnderGrad = 0;
-const userStudentGrad = 0;
+const userStudentGrad = 1;
 const userCashier = 0;
 
 function App() {
@@ -47,7 +47,7 @@ function App() {
             <Route path="/home" element={<RootLayoutCollege />}>
               <Route index element={<AdminHome />} />
               <Route path="activities" element={<AdminHome />} />
-              <Route path="student-records" element={<AdminHome />} />
+              <Route path="students" element={<AdminHome />} />
               <Route path="faculty" element={<AdminHome />} />
               <Route path="sections" element={<AdminHome />} />
               <Route path="classes" element={<AdminHome />} />
@@ -78,13 +78,11 @@ function App() {
             <Route path="/" element={<Signin />} />
             <Route path="/home" element={<RootLayoutStudentUndergrad />}>
               <Route index element={<AdminHome />} />
-              <Route path="nstp-module" element={<AdminHome />} />
-              <Route path="step-1" element={<AdminHome />} />
-              <Route path="step-2" element={<AdminHome />} />
-              <Route path="step-3" element={<AdminHome />} />
-              <Route path="step-4" element={<AdminHome />} />
+              <Route path="nstp" element={<AdminHome />} />
+              <Route path="enrollment" element={<AdminHome />} />
               <Route path="view-grades" element={<AdminHome />} />
               <Route path="view-information" element={<AdminHome />} />
+              <Route path="class-schedule" element={<AdminHome />} />
               <Route path="change-password" element={<AdminHome />} />
             </Route>
           </>
@@ -97,6 +95,7 @@ function App() {
               <Route path="enrollment" element={<AdminHome />} />
               <Route path="view-grades" element={<AdminHome />} />
               <Route path="view-information" element={<AdminHome />} />
+              <Route path="class-schedule" element={<AdminHome />} />
               <Route path="change-password" element={<AdminHome />} />
               <Route path="cashier" element={<AdminHome />} />
             </Route>

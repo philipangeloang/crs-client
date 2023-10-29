@@ -12,6 +12,7 @@ import { Link, Outlet } from "react-router-dom";
 library.add(faAngleUp, faAngleDown, faDoorOpen);
 
 const RootLayoutStudentGrad = () => {
+  const [homeOpen, setHomeOpen] = useState(false);
   const [cashierOpen, setCashierOpen] = useState(false);
   const [enrollmentOpen, setEnrollmentOpen] = useState(false);
   const [gradesOpen, setGradesOpen] = useState(false);
@@ -23,12 +24,25 @@ const RootLayoutStudentGrad = () => {
         <div className="sidebar p-6 fixed left-0 top-0 bottom-0 w-[19rem] flex flex-col justify-between">
           <ul className="space-y-4">
             <li className="mb-14 mt-2">
-              <a
-                href="/home"
-                className="text-black block px-4 py-2 cursor-pointer"
+              <img src="/logo.png" alt="Logo" className="" />
+            </li>
+
+            <li className="px-4 py-2 cursor-pointer">
+              <Link
+                to="/home"
+                className={homeOpen ? "text-main-red font-bold " : ""}
+                onClick={() => {
+                  setHomeOpen(!homeOpen);
+                  if (homeOpen === false) {
+                    setCashierOpen(false);
+                    setStudentDropdownOpen(false);
+                    setGradesOpen(false);
+                    setEnrollmentOpen(false);
+                  }
+                }}
               >
-                <img src="/logo.png" alt="Logo" className="" />
-              </a>
+                Home
+              </Link>
             </li>
 
             <li className="px-4 py-2 cursor-pointer">
@@ -41,6 +55,7 @@ const RootLayoutStudentGrad = () => {
                     setCashierOpen(false);
                     setStudentDropdownOpen(false);
                     setGradesOpen(false);
+                    setHomeOpen(false);
                   }
                 }}
               >
@@ -58,6 +73,7 @@ const RootLayoutStudentGrad = () => {
                     setCashierOpen(false);
                     setEnrollmentOpen(false);
                     setStudentDropdownOpen(false);
+                    setHomeOpen(false);
                   }
                 }}
               >
@@ -77,6 +93,7 @@ const RootLayoutStudentGrad = () => {
                     setEnrollmentOpen(false);
                     setCashierOpen(false);
                     setGradesOpen(false);
+                    setHomeOpen(false);
                   }
                 }}
               >
@@ -101,6 +118,14 @@ const RootLayoutStudentGrad = () => {
                     </Link>
                   </li>
                   <li>
+                    <li>
+                      <Link
+                        to="/home/class-schedule"
+                        className="text-black block py-2"
+                      >
+                        Class Schedule
+                      </Link>
+                    </li>
                     <Link
                       to="/home/change-password"
                       className="text-black block py-2"
@@ -122,6 +147,7 @@ const RootLayoutStudentGrad = () => {
                     setEnrollmentOpen(false);
                     setStudentDropdownOpen(false);
                     setGradesOpen(false);
+                    setHomeOpen(false);
                   }
                 }}
               >

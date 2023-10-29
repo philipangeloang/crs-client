@@ -12,6 +12,7 @@ import { Link, Outlet } from "react-router-dom";
 library.add(faAngleUp, faAngleDown, faDoorOpen);
 
 const RootLayoutFaculty = () => {
+  const [homeOpen, setHomeOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const [classDropdownOpen, setClassDropdownOpen] = useState(false);
 
@@ -21,12 +22,23 @@ const RootLayoutFaculty = () => {
         <div className="sidebar p-6 fixed left-0 top-0 bottom-0 w-[19rem] flex flex-col justify-between">
           <ul className="space-y-4">
             <li className="mb-14 mt-2">
-              <a
-                href="/home"
-                className="text-black block px-4 py-2 cursor-pointer"
+              <img src="/logo.png" alt="Logo" className="" />
+            </li>
+
+            <li className="px-4 py-2 cursor-pointer">
+              <Link
+                to="/home"
+                className={homeOpen ? "text-main-red font-bold " : ""}
+                onClick={() => {
+                  setHomeOpen(!homeOpen);
+                  if (homeOpen === false) {
+                    setUserDropdownOpen(false);
+                    setClassDropdownOpen(false);
+                  }
+                }}
               >
-                <img src="/logo.png" alt="Logo" className="" />
-              </a>
+                Home
+              </Link>
             </li>
 
             <li className="px-4 py-2 cursor-pointer">
@@ -37,6 +49,7 @@ const RootLayoutFaculty = () => {
 
                   if (userDropdownOpen === false) {
                     setClassDropdownOpen(false);
+                    setHomeOpen(false);
                   }
                 }}
               >
@@ -78,6 +91,7 @@ const RootLayoutFaculty = () => {
                   setClassDropdownOpen(!classDropdownOpen);
                   if (classDropdownOpen === false) {
                     setUserDropdownOpen(false);
+                    setHomeOpen(false);
                   }
                 }}
               >

@@ -12,6 +12,7 @@ import { Link, Outlet } from "react-router-dom";
 library.add(faAngleUp, faAngleDown, faDoorOpen);
 
 const RootLayoutStudentUndergrad = () => {
+  const [homeOpen, setHomeOpen] = useState(false);
   const [nstpOpen, setNstpOpen] = useState(false);
   const [enrollmentOpen, setEnrollmentOpen] = useState(false);
   const [gradesOpen, setGradesOpen] = useState(false);
@@ -23,16 +24,30 @@ const RootLayoutStudentUndergrad = () => {
         <div className="sidebar p-6 fixed left-0 top-0 bottom-0 w-[19rem] flex flex-col justify-between">
           <ul className="space-y-4">
             <li className="mb-14 mt-2">
-              <a
-                href="/home"
-                className="text-black block px-4 py-2 cursor-pointer"
-              >
-                <img src="/logo.png" alt="Logo" className="" />
-              </a>
+              <img src="/logo.png" alt="Logo" className="" />
             </li>
 
             <li className="px-4 py-2 cursor-pointer">
-              <a
+              <Link
+                to="/home"
+                className={homeOpen ? "text-main-red font-bold " : ""}
+                onClick={() => {
+                  setHomeOpen(!homeOpen);
+                  if (homeOpen === false) {
+                    setStudentDropdownOpen(false);
+                    setGradesOpen(false);
+                    setEnrollmentOpen(false);
+                    setNstpOpen(false);
+                  }
+                }}
+              >
+                Home
+              </Link>
+            </li>
+
+            <li className="px-4 py-2 cursor-pointer">
+              <Link
+                to="/home/nstp"
                 className={nstpOpen ? "text-main-red font-bold " : ""}
                 onClick={() => {
                   setNstpOpen(!nstpOpen);
@@ -41,6 +56,7 @@ const RootLayoutStudentUndergrad = () => {
                     setEnrollmentOpen(false);
                     setStudentDropdownOpen(false);
                     setGradesOpen(false);
+                    setHomeOpen(false);
                   }
                 }}
               >
@@ -52,16 +68,20 @@ const RootLayoutStudentUndergrad = () => {
                     <FontAwesomeIcon icon="angle-down" />
                   )}
                 </span>
-              </a>
+              </Link>
               {nstpOpen && (
                 <ul>
-                  <li>
-                    <Link
-                      to="/home/nstp-module"
-                      className="text-black block py-2 mt-2"
-                    >
-                      NSTP Module
-                    </Link>
+                  <li className="text-black block py-2 mt-2 cursor-pointer">
+                    Choose ROTC or CWTS
+                  </li>
+                  <li className="text-black block py-2 cursor-pointer">
+                    Choose Schedule
+                  </li>
+                  <li className="text-black block py-2 cursor-pointer">
+                    Finalization
+                  </li>
+                  <li className="text-black block py-2 cursor-pointer">
+                    Enrollment Status
                   </li>
                 </ul>
               )}
@@ -76,6 +96,7 @@ const RootLayoutStudentUndergrad = () => {
                     setNstpOpen(false);
                     setStudentDropdownOpen(false);
                     setGradesOpen(false);
+                    setHomeOpen(false);
                   }
                 }}
               >
@@ -91,28 +112,14 @@ const RootLayoutStudentUndergrad = () => {
               {enrollmentOpen && (
                 <ul>
                   {/* Dropdown items for Class Management */}
-                  <li>
-                    <Link
-                      to="/home/step-1"
-                      className="text-black block py-2 mt-2"
-                    >
-                      Step 1 Class Schedule
-                    </Link>
+                  <li className="text-black block py-2 cursor-pointer mt-2">
+                    View Assessment
                   </li>
-                  <li>
-                    <Link to="/home/step-2" className="text-black block py-2">
-                      Step 2 Assessment
-                    </Link>
+                  <li className="text-black block py-2 cursor-pointer">
+                    Donwload SER
                   </li>
-                  <li>
-                    <Link to="/home/step-3" className="text-black block py-2">
-                      Step 3 Class Start Date
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/home/step-4" className="text-black block py-2">
-                      Step 4 Download SER
-                    </Link>
+                  <li className="text-black block py-2 cursor-pointer">
+                    Enrollment Status
                   </li>
                 </ul>
               )}
@@ -128,6 +135,7 @@ const RootLayoutStudentUndergrad = () => {
                     setNstpOpen(false);
                     setEnrollmentOpen(false);
                     setStudentDropdownOpen(false);
+                    setHomeOpen(false);
                   }
                 }}
               >
@@ -147,6 +155,7 @@ const RootLayoutStudentUndergrad = () => {
                     setEnrollmentOpen(false);
                     setNstpOpen(false);
                     setGradesOpen(false);
+                    setHomeOpen(false);
                   }
                 }}
               >
@@ -168,6 +177,14 @@ const RootLayoutStudentUndergrad = () => {
                       className="text-black block py-2 mt-2"
                     >
                       View Information
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/home/class-schedule"
+                      className="text-black block py-2"
+                    >
+                      Class Schedule
                     </Link>
                   </li>
                   <li>
