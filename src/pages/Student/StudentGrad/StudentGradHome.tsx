@@ -4,7 +4,7 @@ import { BsGlobe2 } from "react-icons/bs";
 import { BiUserPin } from "react-icons/bi";
 import { PiWarningBold } from "react-icons/Pi"
 import { mockData } from './mockData';
-import DateTimeDisplay from './DateTimeDisplay';
+import DateTimeDisplay from '../../../components/ui/DateTimeDisplay';
 
 const StudentGradHome = () => {
   return (
