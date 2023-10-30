@@ -12,6 +12,7 @@ import { Link, Outlet } from "react-router-dom";
 library.add(faAngleUp, faAngleDown, faDoorOpen);
 
 const RootLayoutCollege = () => {
+  const [homeOpen, setHomeOpen] = useState(false);
   const [activitiesOpen, setActivitiesOpen] = useState(false);
   const [studentDropdownOpen, setStudentDropdownOpen] = useState(false);
   const [managementOpen, setManagementOpen] = useState(false);
@@ -23,12 +24,25 @@ const RootLayoutCollege = () => {
         <div className="sidebar p-6 fixed left-0 top-0 bottom-0 w-[19rem] flex flex-col justify-between">
           <ul className="space-y-4">
             <li className="mb-14 mt-2">
-              <a
-                href="/home"
-                className="text-black block px-4 py-2 cursor-pointer"
+              <img src="/logo.png" alt="Logo" className="" />
+            </li>
+
+            <li className="px-4 py-2 cursor-pointer">
+              <Link
+                to="/home"
+                className={homeOpen ? "text-main-red font-bold " : ""}
+                onClick={() => {
+                  setHomeOpen(!homeOpen);
+                  if (homeOpen === false) {
+                    setActivitiesOpen(false);
+                    setStudentDropdownOpen(false);
+                    setManagementOpen(false);
+                    setTransactionOpen(false);
+                  }
+                }}
               >
-                <img src="/logo.png" alt="Logo" className="" />
-              </a>
+                Home
+              </Link>
             </li>
 
             <li className="px-4 py-2 cursor-pointer">
@@ -41,6 +55,7 @@ const RootLayoutCollege = () => {
                     setManagementOpen(false);
                     setTransactionOpen(false);
                     setStudentDropdownOpen(false);
+                    setHomeOpen(false);
                   }
                 }}
               >
@@ -49,42 +64,23 @@ const RootLayoutCollege = () => {
             </li>
 
             <li className="px-4 py-2 cursor-pointer">
-              <a
+              <Link
+                to="/home/students"
                 className={
                   studentDropdownOpen ? "text-main-red font-bold " : ""
                 }
                 onClick={() => {
                   setStudentDropdownOpen(!studentDropdownOpen);
-
                   if (studentDropdownOpen === false) {
-                    setTransactionOpen(false);
                     setManagementOpen(false);
+                    setTransactionOpen(false);
                     setActivitiesOpen(false);
+                    setHomeOpen(false);
                   }
                 }}
               >
                 Students
-                <span className="float-right mr-2">
-                  {studentDropdownOpen ? (
-                    <FontAwesomeIcon icon="angle-up" />
-                  ) : (
-                    <FontAwesomeIcon icon="angle-down" />
-                  )}
-                </span>
-              </a>
-              {studentDropdownOpen && (
-                <ul>
-                  {/* Dropdown items for Student Management */}
-                  <li>
-                    <Link
-                      to="/home/student-records"
-                      className="text-black block py-2 mt-2"
-                    >
-                      Student Records
-                    </Link>
-                  </li>
-                </ul>
-              )}
+              </Link>
             </li>
 
             <li className="px-4 py-2 cursor-pointer">
@@ -97,6 +93,7 @@ const RootLayoutCollege = () => {
                     setTransactionOpen(false);
                     setStudentDropdownOpen(false);
                     setActivitiesOpen(false);
+                    setHomeOpen(false);
                   }
                 }}
               >
@@ -155,10 +152,11 @@ const RootLayoutCollege = () => {
                     setManagementOpen(false);
                     setStudentDropdownOpen(false);
                     setActivitiesOpen(false);
+                    setHomeOpen(false);
                   }
                 }}
               >
-                Class Management
+                Transaction
                 <span className="float-right mr-2">
                   {transactionOpen ? (
                     <FontAwesomeIcon icon="angle-up" />
