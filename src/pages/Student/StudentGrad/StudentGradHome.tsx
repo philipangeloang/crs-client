@@ -84,8 +84,7 @@ const StudentGradHome = () => {
             </div>
           </div>
 
-
-          {/* Student Status Card */}
+          {/* Student Status Card */} 
           <div className="w-full md:w-2/5 lg:w-2/5 ">
             <h1 className="font-bold text-main-red text-lg">Student Status Message</h1>
 
@@ -222,23 +221,7 @@ const StudentGradHome = () => {
             </div>
           </div>
         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
         {/* Row # */}
         <div className="col-span-12 flex justify-between items-end mt-24 text-[#434343] text-sm">
           <div className="flex gap-10">
