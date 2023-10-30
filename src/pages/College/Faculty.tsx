@@ -37,14 +37,14 @@ const Faculty = () => {
 
     };
 
-// Function to close the "Edit" modal
-const closeEditModal = () => {
-    console.log('Close button clicked');
-    setEditModalOpen(false);
-};
+    // Function to close the "Edit" modal
+    const closeEditModal = () => {
+        console.log('Close button clicked');
+        setEditModalOpen(false);
+    };
 
-    
-      
+
+
 
     return (
         <div className="p-10 px-16 grid grid-cols-12 font-montserrat" >
@@ -112,9 +112,9 @@ const closeEditModal = () => {
                                         </td>
                                         <td className="text-center flex justify-center items-center">
                                             <FaEdit className="bg-main-blue text-white rounded text-2xl w-7 h-7 p-1 m-1" onClick={() => { setSelectedFaculty(item); openEditModal() }} />
-                                
-                                            <FaTrash className="bg-main-red text-white rounded text-2xl w-7 h-7 p-1 m-1"/>
-                                      
+
+                                            <FaTrash className="bg-main-red text-white rounded text-2xl w-7 h-7 p-1 m-1" />
+
                                         </td>
 
                                     </tr>
@@ -203,7 +203,7 @@ const closeEditModal = () => {
                                 <div className="flex justify-between">
                                     <h2 className="text-xl font-bold mb-4">Edit Faculty</h2>
                                     <button className="flex bg-main-red items-center text-white p-2"
-                                  onClick={closeEditModal}
+                                        onClick={closeEditModal}
                                     >X</button>
                                 </div>
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
