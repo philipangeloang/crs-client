@@ -12,25 +12,12 @@ const DateTime = () => {
     return () => clearInterval(intervalId);
   }, []);
 
-  const monthNames = [
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December'
-  ];
-
-  const day = currentDate.getDate();
-  const month = currentDate.getMonth();
-  const year = currentDate.getFullYear();
-  const formattedDate = `${monthNames[month]} ${day}, ${year}`;
-
-  const hours = currentDate.getHours();
-  const minutes = currentDate.getMinutes();
-  const amPm = hours >= 12 ? 'PM' : 'AM';
-  const formattedHours = hours > 12 ? hours - 12 : hours;
-  const formattedTime = `${formattedHours}:${minutes} ${amPm}`;
+  const formattedDate = new Intl.DateTimeFormat('en-PH', {year: 'numeric', month: 'long', day: 'numeric'}).format(currentDate);
+  const formattedTime = currentDate.toLocaleTimeString('en-PH', {timeStyle: 'short'});
 
   return (
-    <div>
-      <p className="text-blue-500">{formattedDate}</p> {/* Blue text for the date */}
+    <div className="flex flex-col items-end">
+      <p className="text-main-blue font-bold text-md">{formattedDate}</p> {/* Blue text for the date */}
       <p>{formattedTime}</p> {/* Display time without seconds */}
     </div>
   );

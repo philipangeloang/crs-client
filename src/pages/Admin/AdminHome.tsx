@@ -2,6 +2,7 @@ import { AiOutlineMail } from "react-icons/ai";
 import { FiFacebook, FiTwitter } from "react-icons/fi";
 import { BsGlobe2 } from "react-icons/bs";
 import { BiUserPin } from "react-icons/bi";
+import DateTime from "@/components/DateTime";
 
 const AdminHome = () => {
   return (
@@ -89,12 +90,7 @@ const AdminHome = () => {
             </div>
           </div>
 
-          <div className="flex flex-col items-end">
-            <h1 className="text-main-blue font-bold text-md">
-              October 27, 2023
-            </h1>
-            <p>10:35 PM</p>
-          </div>
+          <DateTime />
         </div>
       </div>
     </>
