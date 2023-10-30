@@ -6,7 +6,7 @@ import {
   faDoorOpen,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useLocation, Link, Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 
 // Add the imported icons to the library
 library.add(faAngleUp, faAngleDown, faDoorOpen);
@@ -22,7 +22,9 @@ const RootLayoutStudentGrad = () => {
     <>
       <div className="flex w-screen">
         <div className="sidebar p-6 fixed left-0 top-0 bottom-0 w-[19rem] flex flex-col justify-between">
-          <ul className="space-y-4">
+          <ul className="space-y-4">   
+
+          
             <li className="mb-14 mt-2">
               <img src="/logo.png" alt="Logo" className="" />
             </li>
@@ -40,17 +42,6 @@ const RootLayoutStudentGrad = () => {
                     setEnrollmentOpen(false);
                   }
                 }}
-              >
-                Home
-              </Link>
-            </li>
-
-            <li className="px-4 py-2 cursor-pointer">
-              <Link
-                to="/home"
-                className={
-                  location.pathname === '/home' ? 'text-main-red font-bold' : ''
-                }
               >
                 Home
               </Link>
