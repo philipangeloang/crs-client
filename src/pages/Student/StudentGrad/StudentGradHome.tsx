@@ -4,7 +4,7 @@ import { BsGlobe2 } from "react-icons/bs";
 import { BiUserPin } from "react-icons/bi";
 import { PiWarningBold } from "react-icons/Pi"
 import { mockData } from './mockData';
-import DateTimeDisplay from '../../../components/ui/DateTimeDisplay';
+import DateTime from '../../../components/DateTime';
 
 const StudentGradHome = () => {
   return (
@@ -122,7 +122,7 @@ const StudentGradHome = () => {
             </div>
 
             <div className="grid grid-cols-7 gap-3 mt-3 mr-10 text-xs">
-              {/* Student Number */}
+ 
               <div className="col-span-3">
                 <span className="text-[#676C72]">Payment For : </span>
               </div>
@@ -130,7 +130,6 @@ const StudentGradHome = () => {
                 {mockData.studentSchoolYearTerm}
               </div>
 
-              {/* Student Name */}
               <div className="col-span-3">
                 <span className="text-[#676C72]">Payment Type/Term :</span>
               </div>
@@ -138,7 +137,6 @@ const StudentGradHome = () => {
                 {mockData.studentSchoolYearTerm}
               </div>
 
-              {/* Student Graduate School */}
               <div className="col-span-3">
                 <span className="text-[#676C72]">Total Amount (Current YR) :</span>
               </div>
@@ -146,7 +144,6 @@ const StudentGradHome = () => {
                 Php 11, 974.50
               </div>
 
-              {/* Student Graduate Program */}
               <div className="col-span-3">
                 <span className="text-[#676C72]">Amount to be paid :</span>
                 <span className="text-[#676C72] block">(for 2nd Payment)</span>
@@ -155,7 +152,6 @@ const StudentGradHome = () => {
                 Php 2, 289.90
               </div>
 
-              {/* Student Current Year / Term */}
               <div className="col-span-3">
                 <span className="text-main-red text-sm">Overall Balance :</span>
               </div>
@@ -166,8 +162,7 @@ const StudentGradHome = () => {
             </div>
           </div>
 
-
-          {/* Enlisted Classes */}
+          {/* Enlisted Classes Table */}
           <div className="w-full md:w-3/5 lg:w-3/5 ">
             <h1 className="font-bold text-main-red text-lg">Enlisted Classes</h1>
 
@@ -222,7 +217,7 @@ const StudentGradHome = () => {
           </div>
         </div>
     
-        {/* Row # */}
+        {/* Row 5 */}
         <div className="col-span-12 flex justify-between items-end mt-24 text-[#434343] text-sm">
           <div className="flex gap-10">
             <div>Contacts:</div>
@@ -253,7 +248,7 @@ const StudentGradHome = () => {
             </div>
           </div>
 
-          <DateTimeDisplay />
+          <DateTime />
         </div>
       </div >
     </>
