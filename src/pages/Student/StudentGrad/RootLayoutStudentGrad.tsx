@@ -22,7 +22,7 @@ const RootLayoutStudentGrad = () => {
     <>
       <div className="flex w-screen">
         <div className="sidebar p-6 fixed left-0 top-0 bottom-0 w-[19rem] flex flex-col justify-between">
-          <ul className="space-y-4">   
+          <ul className="space-y-4">
             <li className="mb-14 mt-2">
               <img src="/logo.png" alt="Logo" className="" />
             </li>
