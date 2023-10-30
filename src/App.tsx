@@ -7,6 +7,13 @@ import RootLayoutStudentUndergrad from "./pages/Student/StudentUndergrad/RootLay
 import RootLayoutStudentGrad from "./pages/Student/StudentGrad/RootLayoutStudentGrad";
 import RootLayoutCashier from "./pages/Cashier/RootLayoutCashier";
 import AdminHome from "./pages/Admin/AdminHome";
+import StudentGradHome from "./pages/Student/StudentGrad/StudentGradHome";
+// import StudentGradEnrollment from "./pages/Student/StudentGrad/StudentGradEnrollment";
+// import StudentGradGrades from "./pages/Student/StudentGrad/StudentGradGrades";
+// import StudentGradInformation from "./pages/Student/StudentGrad/StudentGradInformation";
+// import StudentGradPassword from "./pages/Student/StudentGrad/StudentGradPassword";
+// import StudentGradCashier from "./pages/Student/StudentGrad/StudentGradCashier";
+
 
 // For now eto muna ang ating way to transfer from different views since wala pa tayong backend
 // Just toggle 1 sa gusto niyong mag appear. Hindi pwedeng may dalawang 1, isa lang always.
@@ -93,12 +100,12 @@ function App() {
           <>
             <Route path="/" element={<Signin />} />
             <Route path="/home" element={<RootLayoutStudentGrad />}>
-              <Route index element={<AdminHome />} />
-              <Route path="enrollment" element={<AdminHome />} />
-              <Route path="view-grades" element={<AdminHome />} />
-              <Route path="view-information" element={<AdminHome />} />
-              <Route path="change-password" element={<AdminHome />} />
-              <Route path="cashier" element={<AdminHome />} />
+              <Route index element={<StudentGradHome />} />
+              {/* <Route path="enrollment" element={<StudentGradEnrollment />} />
+              <Route path="view-grades" element={<StudentGradGrades />} /> */}
+              {/* <Route path="view-information" element={<StudentGradInformation />} /> */}
+              {/* <Route path="change-password" element={<StudentGradPassword />} />
+              <Route path="cashier" element={<StudentGradCashier />} /> */}
             </Route>
           </>
         )}
