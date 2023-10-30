@@ -1,7 +1,7 @@
 import DateTime from '@/components/DateTime';
 import React, { useState } from 'react';
 import { FiArrowRight, FiArrowLeft } from 'react-icons/fi';
-import { FaEdit } from 'react-icons/fa';
+import { FaEdit, FaTrash } from 'react-icons/fa';
 
 const Faculty = () => {
     const [editModalOpen, setEditModalOpen] = useState(false);
@@ -106,15 +106,15 @@ const closeEditModal = () => {
                                         <td className="px-4 py-2">{item.college}</td>
                                         <td>
                                             <button
-                                                className="bg-green-500 text-white p-2 rounded mr-2" >
+                                                className=" text-main-green p-2 rounded mr-2" >
                                                 Active
                                             </button>
                                         </td>
                                         <td className="text-center flex justify-center items-center">
-                                            <FaEdit className="bg-main-blue text-white rounded text-2xl h-10 p-1" onClick={() => { setSelectedFaculty(item); openEditModal() }} />
-                                            <button className="bg-main-red text-white rounded text-2xl h-10 p-1 ml-1">
-                                                X
-                                            </button>
+                                            <FaEdit className="bg-main-blue text-white rounded text-2xl w-7 h-7 p-1 m-1" onClick={() => { setSelectedFaculty(item); openEditModal() }} />
+                                
+                                            <FaTrash className="bg-main-red text-white rounded text-2xl w-7 h-7 p-1 m-1"/>
+                                      
                                         </td>
 
                                     </tr>
@@ -197,7 +197,7 @@ const closeEditModal = () => {
                     )}
 
                     {/* Edit/Update Button  */}
-                    {editModalOpen && (
+                    {editModalOpen && selectedFaculty && (
                         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
                             <div className="bg-white p-4 rounded-lg w-full max-w-xl">
                                 <div className="flex justify-between">
@@ -217,7 +217,7 @@ const closeEditModal = () => {
                                     </div>
                                     <div className='mb-3'>
                                         <label className='text-sm font-light'>Status</label>
-                                        <h1 className='text-sm font-light'>Active</h1>
+                                        <h1 className='text-sm font-light text-main-green'>Active</h1>
                                     </div>
                                 </div>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
