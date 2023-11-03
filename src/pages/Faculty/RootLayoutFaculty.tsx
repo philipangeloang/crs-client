@@ -109,7 +109,7 @@ const RootLayoutFaculty = () => {
                   {/* Dropdown items for Class Management */}
                   <li>
                     <Link
-                      to="/home/class-assignment"
+                      to="/home/class-assignments"
                       className="text-black block py-2 mt-2"
                     >
                       Class Assignments
@@ -133,7 +133,7 @@ const RootLayoutFaculty = () => {
                   </li>
                   <li>
                     <Link
-                      to="/home/teaching-assignment"
+                      to="/home/teaching-assignments"
                       className="text-black block py-2"
                     >
                       Teaching Assignments
