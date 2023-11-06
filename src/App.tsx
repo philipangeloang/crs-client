@@ -7,7 +7,6 @@ import RootLayoutStudentUndergrad from "./pages/Student/StudentUndergrad/RootLay
 import RootLayoutStudentGrad from "./pages/Student/StudentGrad/RootLayoutStudentGrad";
 import RootLayoutCashier from "./pages/Cashier/RootLayoutCashier";
 import AdminHome from "./pages/Admin/AdminHome";
-import UndergradHome from "./pages/Student/StudentUndergrad/UndergradHome"
 
 // For now eto muna ang ating way to transfer from different views since wala pa tayong backend
 // Just toggle 1 sa gusto niyong mag appear. Hindi pwedeng may dalawang 1, isa lang always.
@@ -15,9 +14,9 @@ import UndergradHome from "./pages/Student/StudentUndergrad/UndergradHome"
 const userAdmin = 0;
 const userCollege = 0;
 const userFaculty = 0;
-const userStudentUnderGrad = 1;
+const userStudentUnderGrad = 0;
 const userStudentGrad = 0;
-const userCashier = 0;
+const userCashier = 1;
 
 function App() {
   return (
@@ -78,7 +77,7 @@ function App() {
           <>
             <Route path="/" element={<Signin />} />
             <Route path="/home" element={<RootLayoutStudentUndergrad />}>
-              <Route index element={<UndergradHome />} />
+              <Route index element={<AdminHome />} />
               <Route path="nstp" element={<AdminHome />} />
               <Route path="enrollment" element={<AdminHome />} />
               <Route path="view-grades" element={<AdminHome />} />
