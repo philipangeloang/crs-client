@@ -54,30 +54,6 @@ const students = [
   { student_number: "2020-00000", name: "Juan Dela Cruz", college: "BSCS", year: 4, grade: "1.00" },
 ];
 
-type plmClass = {
-  class_code: string,
-  section: number,
-  subject_title: string,
-  schedule: string,
-  instructor: string
-};
-
-type plmClassArray = {
-  data: plmClass[];
-};
-
-function LinkToClassReport({ class_code, section }: { class_code: string, section: number }) {
-  const link = `/home/encode-grades/report-grades?class_code=${class_code}&section=${section}`;
-  return (
-    <Link
-      to={link}
-      className="text-main-blue font-semibold cursor-pointer hover:underline"
-    >
-      {`${class_code}`}
-    </Link>
-  );
-}
-
 function SelectTermsAndAcademicYears({ data }: termAndAcademicYearArray) {
   return (
     <select id="selectTermAndAcademicYear" className="rounded-sm py-2 px-4 border text-left">
@@ -186,8 +162,32 @@ const FacultyChangeGrades = () => {
         </div>
 
         { showGradeChangeModal && (
-            <FullModal modalHeading="Title" onClose={handleGradeClose} onProceed={handleGradeProceed}>
-              <p>This is the modal content.</p>
+            <FullModal modalHeading="Update Grade" onClose={handleGradeClose} onProceed={handleGradeProceed} proceedName="Change Grade">
+              <form id="formChangeGrade">
+                <div className="flex flex-row gap-5 justify-between items-center">
+                  <div className="w-1/2 flex flex-col">
+                    <div className="text-sm">Current Grade</div>
+                    <input type="text" className="w-full rounded-sm py-2 px-4 border text-left font-bold text-lg" value="1.00" disabled>
+                    </input>
+                  </div>
+                  <div className="w-1/2 flex flex-col">
+                    <div className="text-sm">New Grade</div>
+                    <select id="changeGradeTo" className="w-full rounded-sm py-2 px-4 border text-left text-lg">
+                      <option disabled>-</option>
+                      <option value="1.00">1.00</option>
+                      <option value="2.00">2.00</option>
+                      <option value="3.00">3.00</option>
+                      <option value="4.00">4.00</option>
+                      <option value="5.00">5.00</option>
+                      <option value="INC">INC</option>
+                      <option value="DO">DO</option>
+                      <option value="DU">DU</option>
+                      <option value="DC">DC</option>
+                      <option value="PASSED">Passed</option>
+                    </select>
+                  </div>
+                </div>
+              </form>
             </FullModal>
           )}
 
