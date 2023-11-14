@@ -14,6 +14,10 @@ import useRoleStore from "./store/ThemeStore";
 import CollegeHome from "./pages/College/CollegeHome";
 import FacultyHome from "./pages/Faculty/FacultyHome";
 import StudentUndergradHome from "./pages/Student/StudentUndergrad/StudentUndergradHome";
+import StudentUndergradNSTP1 from "./pages/Student/StudentUndergrad/StudentUndergradNSTP1";
+import StudentUndergradNSTP2 from "./pages/Student/StudentUndergrad/StudentUndergradNSTP2";
+import StudentUndergradNSTP3 from "./pages/Student/StudentUndergrad/StudentUndergradNSTP3";
+import StudentUndergradNSTP4 from "./pages/Student/StudentUndergrad/StudentUndergradNSTP4";
 import StudentGradHome from "./pages/Student/StudentGrad/StudentGradHome";
 
 function App() {
@@ -81,7 +85,10 @@ function App() {
             <Route path="/" element={<Signin />} />
             <Route path="/home" element={<RootLayoutStudentUndergrad />}>
               <Route index element={<StudentUndergradHome />} />
-              <Route path="nstp" element={<StudentUndergradHome />} />
+              <Route path="nstp1" element={<StudentUndergradNSTP1 />} />
+              <Route path="nstp2" element={<StudentUndergradNSTP2 />} />
+              <Route path="nstp3" element={<StudentUndergradNSTP3 />} />
+              <Route path="nstp4" element={<StudentUndergradNSTP4 />} />
               <Route path="enrollment" element={<StudentUndergradHome />} />
               <Route path="view-grades" element={<StudentUndergradHome />} />
               <Route

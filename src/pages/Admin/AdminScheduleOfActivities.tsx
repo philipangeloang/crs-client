@@ -1,74 +1,19 @@
-import { IoMdPrint } from "react-icons/io";
+import { AiOutlineCalendar, AiOutlineClockCircle } from "react-icons/ai";
+import { RiEditCircleLine, RiDeleteBin2Line } from "react-icons/ri";
 import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 import DateTime from "@/components/DateTime";
 import TempRoleSelector from "../TempRoleSelector";
-
-// Dummy data
-const tableData = [
-  {
-    id: 1,
-    identity: "202011511",
-    name: "Mike Miguel Gomez",
-    program: "BSCS",
-    registeredAs: "CET",
-    college: "Old Student",
-  },
-  {
-    id: 2,
-    identity: "20205256",
-    name: "Philip Ang",
-    program: "BSCS",
-    registeredAs: "CET",
-    college: "Old Student",
-  },
-  {
-    id: 3,
-    identity: "20201245",
-    name: "Yuanah Cruz",
-    program: "BSCS",
-    registeredAs: "CET",
-    college: "Old Student",
-  },
-  {
-    id: 4,
-    identity: "20212122",
-    name: "Schrodinger's cat",
-    program: "BSCS",
-    registeredAs: "CET",
-    college: "Old Student",
-  },
-  {
-    id: 5,
-    identity: "20232351",
-    name: "Taylor Swift",
-    program: "BSCS",
-    registeredAs: "CET",
-    college: "New Student",
-  },
-  {
-    id: 6,
-    identity: "20216751",
-    name: "Francis Santoyo",
-    program: "BSCS",
-    registeredAs: "CET",
-    college: "Old Student",
-  },
-  {
-    id: 7,
-    identity: "20232133",
-    name: "Ma U. Reed",
-    program: "BSCS",
-    registeredAs: "CET",
-    college: "New Student",
-  },
-  // Add more data as needed
-];
+import { Input } from "@/components/ui/input";
+import { tableData } from "./TestData";
+import { useState } from "react";
 
 const AdminScheduleOfActivities = () => {
+  const [activityModalOpen, setActivityModalOpen] = useState(false);
+
   return (
-    <div className="p-10 px-16 grid grid-cols-12 font-montserrat">
+    <div className="h-screen w-full p-10 px-16 flex flex-col justify-between font-montserrat overflow-x-hidden">
       {/* Row 1 */}
-      <div className="col-span-12 flex justify-between items-center">
+      <div className="flex justify-between items-center">
         <div className="px-5 py-1 bg-main-red text-white rounded-lg ">
           Schedule of Activities
         </div>
@@ -80,62 +25,121 @@ const AdminScheduleOfActivities = () => {
         </div>
       </div>
 
-      {/* Row 2 Table */}
-      <div className="col-span-12 mt-20 font-open-sans ">
-        <div className="overflow-x-auto">
-          <table className="min-w-full table-auto bg-white shadow-md rounded-xl border">
-            <thead>
-              <tr className="bg-main-red text-white rounded-lg border ">
-                <th className="px-4 py-2">Activity</th>
-                <th className="px-4 py-2">AY Sem</th>
-                <th className="px-4 py-2">Schedule Start</th>
-                <th className="px-4 py-2">Schedule End</th>
-                <th className="px-4 py-2">Action</th>
-              </tr>
-            </thead>
-            <tbody className="text-center border">
-              {tableData.map((item) => (
-                <tr className="border" key={item.id}>
-                  <td className="px-4 py-2">{item.id}</td>
-                  <td className="px-4 py-2">{item.identity}</td>
-                  <td className="px-4 py-2">{item.name}</td>
-                  <td className="px-4 py-2">{item.program}</td>
-                  <td className="px-4 py-2 flex items-center justify-center">
-                    <button className="btn">
-                      <IoMdPrint className="bg-main-red text-white text-lg m-2 p-1 w-6 h-6 rounded" />
-                    </button>
-                    <button className="bg-main-blue text-white rounded-lg p-1">
-                      Update
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+      {/* Row 2 */}
+      <div className="mt-10 font-open-sans flex flex-col">
+        <div className="flex justify-between">
+          <div className="flex gap-2">
+            <Input className="border border-main-gray" placeholder="Search" />
+            <div className="border border-main-gray p-2 rounded-lg">
+              <FiArrowRight />
+            </div>
+          </div>
+          <div
+            onClick={() => {
+              setActivityModalOpen(!activityModalOpen);
+            }}
+            className="cursor-pointer px-5 py-1 flex justify-center items-center bg-main-red text-white rounded-lg "
+          >
+            Add New
+          </div>
         </div>
 
-        {/*Row 3 Pagination (right-aligned and smaller) */}
-        <div className="col-span-12 sm:col-span-3 mt-20 text-sm ml-auto">
-          <div className="flex justify-between items-center space-x-2">
-            <ul className="flex space-x-2 justify-center items-center">
-              <li className="border border-main-gray p-1 rounded-lg">
-                <FiArrowLeft size="20" />
-              </li>
-              <li className="border border-main-gray p-1 rounded-lg w-8 flex justify-center">
-                <a href="#">1</a>
-              </li>
-              <li className="border border-main-gray p-1 rounded-lg w-8 flex justify-center">
-                <a href="#">2</a>
-              </li>
-              <li className="border border-main-gray p-1 rounded-lg">
-                <FiArrowRight size="20" />
-              </li>
-              <li>
-                <p>7 out of 12 rows</p>
-              </li>
-            </ul>
-            <DateTime />
+        <div className="grid grid-cols-12 mt-5 ">
+          {/* Table Header */}
+          <div className="font-bold bg-main-red rounded-tl-lg text-white p-3 col-span-2">
+            Activity
           </div>
+          <div className="font-bold bg-main-red text-white p-3 col-span-3 text-center">
+            AY Sem
+          </div>
+          <div className="font-bold bg-main-red text-white p-3 col-span-2 text-center">
+            Schedule Start
+          </div>
+          <div className="font-bold bg-main-red text-white p-3 col-span-2 text-center">
+            Schedule End
+          </div>
+          <div className="font-bold bg-main-red rounded-tr-lg text-white p-3 col-span-3 text-center">
+            Action
+          </div>
+
+          {/* Table Contents */}
+          {tableData.map((item) => (
+            <>
+              <div
+                className="col-span-2 px-2 py-3 border-l border-b border-main-gray"
+                key={item.id}
+              >
+                {item.activity}
+              </div>
+              <div className="text-center col-span-3 px-2 py-3 border-b border-main-gray">
+                <p className="px-7 py-1 border border-main-gray w-36 mx-auto rounded-lg">
+                  {item.semester}
+                </p>
+              </div>
+              <div className="text-center col-span-2 px-2 py-3 flex flex-col border-b border-main-gray">
+                <p className="px-7 py-1 border border-main-gray w-44 mx-auto rounded-lg flex gap-2 justify-between items-center">
+                  {item.startDate}
+                  <span>
+                    <AiOutlineCalendar size="20" />
+                  </span>
+                </p>
+                <p className="px-7 py-1 border border-main-gray w-44 mx-auto rounded-lg flex gap-2 justify-between items-center mt-3">
+                  {item.startTime}
+                  <span>
+                    <AiOutlineClockCircle size="20" />
+                  </span>
+                </p>
+              </div>
+              <div className="text-center col-span-2 px-2 py-3 flex flex-col border-b border-main-gray">
+                <p className="px-7 py-1 border border-main-gray w-44 mx-auto rounded-lg flex gap-2 justify-between items-center">
+                  {item.endDate}
+                  <span>
+                    <AiOutlineCalendar size="20" />
+                  </span>
+                </p>
+                <p className="px-7 py-1 border border-main-gray w-44 mx-auto rounded-lg flex gap-2 justify-between items-center mt-3">
+                  {item.endTime}
+                  <span>
+                    <AiOutlineClockCircle size="20" />
+                  </span>
+                </p>
+              </div>
+              <div className="col-span-3 px-2 py-4 flex justify-center items-center border-b border-r border-main-gray ">
+                <div className="flex gap-2">
+                  <div className="bg-main-blue text-white rounded-lg h-10 w-10 flex justify-center items-center mx-auto">
+                    <RiEditCircleLine size="30" />
+                  </div>
+                  <div className="bg-main-red text-white rounded-lg h-10 w-10 flex justify-center items-center mx-auto">
+                    <RiDeleteBin2Line size="30" />
+                  </div>
+                </div>
+              </div>
+            </>
+          ))}
+        </div>
+      </div>
+
+      {/*Row 3 Pagination (right-aligned and smaller) */}
+      <div className="mt-20 text-sm">
+        <div className="flex justify-between items-center space-x-2">
+          <ul className="flex space-x-2 justify-center items-center">
+            <li className="border border-main-gray p-1 rounded-lg">
+              <FiArrowLeft size="20" />
+            </li>
+            <li className="border border-main-gray p-1 rounded-lg w-8 flex justify-center">
+              <a href="#">1</a>
+            </li>
+            <li className="border border-main-gray p-1 rounded-lg w-8 flex justify-center">
+              <a href="#">2</a>
+            </li>
+            <li className="border border-main-gray p-1 rounded-lg">
+              <FiArrowRight size="20" />
+            </li>
+            <li>
+              <p>7 out of 12 rows</p>
+            </li>
+          </ul>
+          <DateTime />
         </div>
       </div>
     </div>
