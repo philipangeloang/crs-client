@@ -2,6 +2,8 @@ import { AiOutlineMail } from "react-icons/ai";
 import { FiFacebook, FiTwitter } from "react-icons/fi";
 import { BsGlobe2 } from "react-icons/bs";
 import { BiUserPin } from "react-icons/bi";
+import DateTime from "@/components/DateTime";
+import TempRoleSelector from "../TempRoleSelector";
 
 const AdminHome = () => {
   return (
@@ -10,12 +12,12 @@ const AdminHome = () => {
         {/* Row 1 */}
         <div className="col-span-12 flex justify-between items-center">
           <div className="px-5 py-1 bg-main-red text-white rounded-lg ">
-            Home
+            Admin Home
           </div>
           <div className="flex flex-col items-end">
             <h1 className="font-bold">DELA CRUZ. JUAN PEPITO</h1>
             <p className="text-xs ">
-              Logged as: <span className="text-main-red">Administrator</span>
+              Logged as: <TempRoleSelector />
             </p>
           </div>
         </div>
@@ -90,10 +92,7 @@ const AdminHome = () => {
           </div>
 
           <div className="flex flex-col items-end">
-            <h1 className="text-main-blue font-bold text-md">
-              October 27, 2023
-            </h1>
-            <p>10:35 PM</p>
+            <DateTime />
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 const DateTime = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -13,8 +13,18 @@ const DateTime = () => {
   }, []);
 
   const monthNames = [
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December'
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
   ];
 
   const day = currentDate.getDate();
@@ -24,13 +34,14 @@ const DateTime = () => {
 
   const hours = currentDate.getHours();
   const minutes = currentDate.getMinutes();
-  const amPm = hours >= 12 ? 'PM' : 'AM';
+  const amPm = hours >= 12 ? "PM" : "AM";
   const formattedHours = hours > 12 ? hours - 12 : hours;
   const formattedTime = `${formattedHours}:${minutes} ${amPm}`;
 
   return (
     <div>
-      <p className="text-blue-500">{formattedDate}</p> {/* Blue text for the date */}
+      <p className="text-main-blue font-bold">{formattedDate}</p>{" "}
+      {/* Blue text for the date */}
       <p>{formattedTime}</p> {/* Display time without seconds */}
     </div>
   );
