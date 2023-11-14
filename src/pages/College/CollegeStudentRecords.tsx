@@ -1,16 +1,8 @@
-<<<<<<< HEAD:src/pages/College/StudentRecords.tsx
-import React, { useState } from 'react';
-import { IoMdPrint } from 'react-icons/io';
-import { FiArrowLeft, FiArrowRight } from 'react-icons/fi';
-import DateTime from '@/components/DateTime';
-import { FaEdit } from 'react-icons/fa';
-
-=======
-import React from "react";
+import React, { useState } from "react";
 import { IoMdPrint } from "react-icons/io";
 import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 import DateTime from "@/components/DateTime";
->>>>>>> main:src/pages/College/CollegeStudentRecords.tsx
+import { FaEdit } from "react-icons/fa";
 
 // Dummy data
 const tableData = [
@@ -73,10 +65,7 @@ const tableData = [
   // Add more data as needed
 ];
 
-<<<<<<< HEAD:src/pages/College/StudentRecords.tsx
-
 const StudentRecords = () => {
-
   const [studentModalOpen, setStudentModalOpen] = useState(false);
   // Function to open the faculty modal
   const openStudentModal = () => {
@@ -87,11 +76,7 @@ const StudentRecords = () => {
   const closeStudentModal = () => {
     setStudentModalOpen(false);
   };
-  
 
-=======
-const CollegeStudentRecords = () => {
->>>>>>> main:src/pages/College/CollegeStudentRecords.tsx
   return (
     <div className="p-10 px-16 grid grid-cols-12 font-montserrat">
       {/* Row 1 */}
@@ -108,7 +93,6 @@ const CollegeStudentRecords = () => {
       </div>
 
       {/* Row 2 Table */}
-<<<<<<< HEAD:src/pages/College/StudentRecords.tsx
       <div className="col-span-12 mt-20">
         <div className="flex justify-between mb-4">
           <div className="flex items-center">
@@ -122,15 +106,14 @@ const CollegeStudentRecords = () => {
             </button>
           </div>
           <div className="flex items-center">
-
-            <button className=" bg-main-red text-white rounded-lg p-2 ml-3" onClick={openStudentModal}>
+            <button
+              className=" bg-main-red text-white rounded-lg p-2 ml-3"
+              onClick={openStudentModal}
+            >
               Add Student
             </button>
           </div>
         </div>
-=======
-      <div className="col-span-12 mt-20 font-open-sans">
->>>>>>> main:src/pages/College/CollegeStudentRecords.tsx
         <div className="overflow-x-auto">
           <table className="min-w-full table-auto bg-white shadow-md rounded-lg border">
             <thead>
@@ -155,11 +138,10 @@ const CollegeStudentRecords = () => {
                   <td className="px-4 py-2">{item.college}</td>
                   <td className="px-4 py-2 flex items-center justify-center">
                     <button>
-                    <FaEdit className="bg-main-blue text-white text-lg m-2 p-1 w-7 h-7 rounded" />
-                     
+                      <FaEdit className="bg-main-blue text-white text-lg m-2 p-1 w-7 h-7 rounded" />
                     </button>
-                    <button >
-                    <IoMdPrint className="bg-main-blue text-white text-lg m-2 p-1 w-7 h-7 rounded" />
+                    <button>
+                      <IoMdPrint className="bg-main-blue text-white text-lg m-2 p-1 w-7 h-7 rounded" />
                     </button>
                   </td>
                 </tr>
@@ -172,13 +154,19 @@ const CollegeStudentRecords = () => {
               <div className="bg-white p-4 rounded-lg w-full max-w-lg">
                 <div className="flex justify-between">
                   <h2 className="text-xl font-bold mb-4">Add Student</h2>
-                  <button className="flex bg-main-red items-center text-white p-2" onClick={closeStudentModal}>
+                  <button
+                    className="flex bg-main-red items-center text-white p-2"
+                    onClick={closeStudentModal}
+                  >
                     X
                   </button>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="mb-4">
-                    <label htmlFor="selectCollege" className="text-sm font-medium">
+                    <label
+                      htmlFor="selectCollege"
+                      className="text-sm font-medium"
+                    >
                       Select College
                     </label>
                     <select
@@ -193,7 +181,10 @@ const CollegeStudentRecords = () => {
                   </div>
 
                   <div className="mb-4">
-                    <label htmlFor="selectProgram" className="text-sm font-medium">
+                    <label
+                      htmlFor="selectProgram"
+                      className="text-sm font-medium"
+                    >
                       Select a Program
                     </label>
                     <select
@@ -211,7 +202,10 @@ const CollegeStudentRecords = () => {
 
                 {/* Fields for Student Number and Student Name on separate lines */}
                 <div className="mb-4">
-                  <label htmlFor="studentNumber" className="text-sm font-medium">
+                  <label
+                    htmlFor="studentNumber"
+                    className="text-sm font-medium"
+                  >
                     Student Number
                   </label>
                   <input
@@ -240,7 +234,6 @@ const CollegeStudentRecords = () => {
               </div>
             </div>
           )}
-
         </div>
 
         {/*Row 3 Pagination (right-aligned and smaller) */}
@@ -281,4 +274,4 @@ const CollegeStudentRecords = () => {
   );
 };
 
-export default CollegeStudentRecords;
+export default StudentRecords;
