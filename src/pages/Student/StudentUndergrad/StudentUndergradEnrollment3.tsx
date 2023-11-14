@@ -18,7 +18,7 @@ const Enrollment3 = () =>
                 {/* Row 1 */}
                 <div className="col-span-12 flex justify-between items-center">
                     <div className="px-5 py-1 bg-main-red text-white rounded-lg ">
-                    NSTP Enlistment
+                    Enrollment
                     </div>
                     <div className="flex flex-col items-end">
                         <h1 className="font-bold">DELA CRUZ. JUAN PEPITO</h1>
