@@ -2,6 +2,7 @@ import { AiOutlineMail } from "react-icons/ai";
 import { FiFacebook, FiTwitter } from "react-icons/fi";
 import { BsGlobe2 } from "react-icons/bs";
 import { BiUserPin } from "react-icons/bi";
+import TempRoleSelector from "../TempRoleSelector";
 
 const RootLayoutCashier = () => {
   return (
@@ -28,7 +29,7 @@ const RootLayoutCashier = () => {
             <div className="flex flex-col items-end">
               <h1 className="font-bold">DELA CRUZ. JUAN PEPITO</h1>
               <p className="text-xs ">
-                Logged as: <span className="text-main-red">Administrator</span>
+                Logged as: <TempRoleSelector />
               </p>
             </div>
           </div>

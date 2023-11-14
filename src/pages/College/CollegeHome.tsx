@@ -5,14 +5,14 @@ import { BiUserPin } from "react-icons/bi";
 import DateTime from "@/components/DateTime";
 import TempRoleSelector from "../TempRoleSelector";
 
-const AdminHome = () => {
+const CollegeHome = () => {
   return (
     <>
       <div className="p-10 px-16 grid grid-cols-12 font-montserrat ">
         {/* Row 1 */}
         <div className="col-span-12 flex justify-between items-center">
           <div className="px-5 py-1 bg-main-red text-white rounded-lg ">
-            Admin Home
+            College Home
           </div>
           <div className="flex flex-col items-end">
             <h1 className="font-bold">DELA CRUZ. JUAN PEPITO</h1>
@@ -100,4 +100,4 @@ const AdminHome = () => {
   );
 };
 
-export default AdminHome;
+export default CollegeHome;
