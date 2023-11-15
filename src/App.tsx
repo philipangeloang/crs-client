@@ -13,6 +13,14 @@ import AdminScheduleOfActivities from "./pages/Admin/AdminScheduleOfActivities";
 import useRoleStore from "./store/ThemeStore";
 import CollegeHome from "./pages/College/CollegeHome";
 import FacultyHome from "./pages/Faculty/FacultyHome";
+import FacultyProfile from "./pages/Faculty/FacultyProfile";
+import FacultyProfileEdit from "./pages/Faculty/FacultyProfileEdit";
+import FacultyChangePassword from "./pages/Faculty/FacultyChangePassword";
+import FacultyClassAssignments from "./pages/Faculty/FacultyClassAssignments";
+import FacultyEncodingOfGrades from "./pages/Faculty/FacultyEncodingOfGrades";
+import FacultyChangeGrades from "./pages/Faculty/FacultyChangeGrades";
+import FacultyReportOfGrades from "./pages/Faculty/FacultyReportOfGrades";
+import FacultyTeachingAssignments from "./pages/Faculty/FacultyTeachingAssignments";
 import StudentUndergradHome from "./pages/Student/StudentUndergrad/StudentUndergradHome";
 import StudentGradHome from "./pages/Student/StudentGrad/StudentGradHome";
 
@@ -67,12 +75,14 @@ function App() {
             <Route path="/" element={<Signin />} />
             <Route path="/home" element={<RootLayoutFaculty />}>
               <Route index element={<FacultyHome />} />
-              <Route path="profile" element={<FacultyHome />} />
-              <Route path="change-password" element={<FacultyHome />} />
-              <Route path="class-assignment" element={<FacultyHome />} />
-              <Route path="encode-grades" element={<FacultyHome />} />
-              <Route path="change-grades" element={<FacultyHome />} />
-              <Route path="teaching-assignment" element={<FacultyHome />} />
+              <Route path="profile" element={<FacultyProfile />} />
+              <Route path="profile/edit" element={<FacultyProfileEdit />} />
+              <Route path="change-password" element={<FacultyChangePassword />} />
+              <Route path="class-assignments" element={<FacultyClassAssignments />} />
+              <Route path="encode-grades" element={<FacultyEncodingOfGrades />} />
+              <Route path="encode-grades/report-grades" element={<FacultyReportOfGrades />} />
+              <Route path="change-grades" element={<FacultyChangeGrades />} />
+              <Route path="teaching-assignments" element={<FacultyTeachingAssignments />} />
             </Route>
           </>
         )}
