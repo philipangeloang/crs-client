@@ -2,6 +2,7 @@ import DateTime from "@/components/DateTime";
 import { useState } from "react";
 import { FiArrowRight, FiArrowLeft } from "react-icons/fi";
 import { FaEdit } from "react-icons/fa";
+import { FullModal } from "@/components/ui/modal";
 
 const CollegeFaculty = () => {
   const [editModalOpen, setEditModalOpen] = useState(false);
@@ -71,6 +72,11 @@ const CollegeFaculty = () => {
     setFacultyModalOpen(false);
   };
 
+  // Function that happens when a faculty is added
+  const addFacultySuccess = () => {
+    setFacultyModalOpen(false);
+  };
+
   // Function to open the "Edit" modal
   const openEditModal = () => {
     console.log("Open button clicked"); // Add this line
@@ -80,6 +86,11 @@ const CollegeFaculty = () => {
   // Function to close the "Edit" modal
   const closeEditModal = () => {
     console.log("Close button clicked");
+    setEditModalOpen(false);
+  };
+
+  // Function that happens when a faculty is edited
+  const editFacultySuccess = () => {
     setEditModalOpen(false);
   };
 
@@ -167,169 +178,151 @@ const CollegeFaculty = () => {
           </div>
 
           {facultyModalOpen && (
-            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-              <div className="bg-white p-4 rounded-lg w-full max-w-lg">
-                <div className="flex justify-between">
-                  <h2 className="text-xl font-bold mb-4">Add Faculty</h2>
-                  <button
-                    className="flex bg-main-red items-center text-white p-2"
-                    onClick={closeFacultyModal}
-                  >
-                    X
-                  </button>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {/* First Column */}
-                  <div>
-                    <div className="mb-4">
-                      <label
-                        htmlFor="firstName"
-                        className="text-sm font-medium"
-                      >
-                        First Name
-                      </label>
-                      <input
-                        type="text"
-                        id="firstName"
-                        className="w-full border p-2 rounded"
-                      />
-                    </div>
-                    <div className="mb-4">
-                      <label
-                        htmlFor="middleName"
-                        className="text-sm font-medium"
-                      >
-                        Middle Name
-                      </label>
-                      <input
-                        type="text"
-                        id="middleName"
-                        className="w-full border p-2 rounded"
-                      />
-                    </div>
-                    <div className="mb-4">
-                      <label
-                        htmlFor="middleInitial"
-                        className="text-sm font-medium"
-                      >
-                        Middle Initial
-                      </label>
-                      <input
-                        type="text"
-                        id="middleInitial"
-                        className="w-full border p-2 rounded"
-                      />
-                    </div>
-                    <div className="mb-4">
-                      <label htmlFor="lastName" className="text-sm font-medium">
-                        Last Name
-                      </label>
-                      <input
-                        type="text"
-                        id="lastName"
-                        className="w-full border p-2 rounded"
-                      />
-                    </div>
-                    <div className="mb-4">
-                      <label htmlFor="suffix" className="text-sm font-medium">
-                        Suffix
-                      </label>
-                      <input
-                        type="text"
-                        id="suffix"
-                        className="w-full border p-2 rounded"
-                      />
-                    </div>
-                    <div className="mb-4">
-                      <label htmlFor="maiden" className="text-sm font-medium">
-                        Maiden
-                      </label>
-                      <input
-                        type="text"
-                        id="maiden"
-                        className="w-full border p-2 rounded"
-                      />
-                    </div>
+            <FullModal
+              modalHeading="Add Faculty"
+              onClose={closeFacultyModal}
+              onProceed={addFacultySuccess}
+              proceedName="Add Faculty"
+            >
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* First Column */}
+                <div>
+                  <div className="mb-4">
+                    <label htmlFor="firstName" className="text-sm font-medium">
+                      First Name
+                    </label>
+                    <input
+                      type="text"
+                      id="firstName"
+                      className="w-full border p-2 rounded"
+                    />
                   </div>
+                  <div className="mb-4">
+                    <label htmlFor="middleName" className="text-sm font-medium">
+                      Middle Name
+                    </label>
+                    <input
+                      type="text"
+                      id="middleName"
+                      className="w-full border p-2 rounded"
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <label
+                      htmlFor="middleInitial"
+                      className="text-sm font-medium"
+                    >
+                      Middle Initial
+                    </label>
+                    <input
+                      type="text"
+                      id="middleInitial"
+                      className="w-full border p-2 rounded"
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <label htmlFor="lastName" className="text-sm font-medium">
+                      Last Name
+                    </label>
+                    <input
+                      type="text"
+                      id="lastName"
+                      className="w-full border p-2 rounded"
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <label htmlFor="suffix" className="text-sm font-medium">
+                      Suffix
+                    </label>
+                    <input
+                      type="text"
+                      id="suffix"
+                      className="w-full border p-2 rounded"
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <label htmlFor="maiden" className="text-sm font-medium">
+                      Maiden
+                    </label>
+                    <input
+                      type="text"
+                      id="maiden"
+                      className="w-full border p-2 rounded"
+                    />
+                  </div>
+                </div>
 
-                  {/* Second Column */}
-                  <div>
-                    <div className="mb-4">
-                      <label htmlFor="email" className="text-sm font-medium">
-                        Email Address
-                      </label>
-                      <input
-                        type="email"
-                        id="email"
-                        className="w-full border p-2 rounded"
-                      />
-                    </div>
-                    <div className="mb-4">
-                      <label
-                        htmlFor="contactNumber"
-                        className="text-sm font-medium"
-                      >
-                        Contact Number
-                      </label>
-                      <input
-                        type="tel"
-                        id="contactNumber"
-                        className="w-full border p-2 rounded"
-                      />
-                    </div>
-                    <div className="mb-4">
-                      <label htmlFor="sex" className="text-sm font-medium">
-                        Sex
-                      </label>
-                      <select id="sex" className="w-full border p-2 rounded">
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                      </select>
-                    </div>
-                    <div className="mb-4">
-                      <label htmlFor="address" className="text-sm font-medium">
-                        Address
-                      </label>
-                      <input
-                        type="text"
-                        id="address"
-                        className="w-full border p-2 rounded"
-                      />
-                    </div>
-                    <div className="mb-4">
-                      <label
-                        htmlFor="birthdate"
-                        className="text-sm font-medium"
-                      >
-                        Birthdate
-                      </label>
-                      <input
-                        type="date"
-                        id="birthdate"
-                        className="w-full border p-2 rounded"
-                      />
-                    </div>
+                {/* Second Column */}
+                <div>
+                  <div className="mb-4">
+                    <label htmlFor="email" className="text-sm font-medium">
+                      Email Address
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      className="w-full border p-2 rounded"
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <label
+                      htmlFor="contactNumber"
+                      className="text-sm font-medium"
+                    >
+                      Contact Number
+                    </label>
+                    <input
+                      type="tel"
+                      id="contactNumber"
+                      className="w-full border p-2 rounded"
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <label htmlFor="sex" className="text-sm font-medium">
+                      Sex
+                    </label>
+                    <select id="sex" className="w-full border p-2 rounded">
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                    </select>
+                  </div>
+                  <div className="mb-4">
+                    <label htmlFor="address" className="text-sm font-medium">
+                      Address
+                    </label>
+                    <input
+                      type="text"
+                      id="address"
+                      className="w-full border p-2 rounded"
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <label htmlFor="birthdate" className="text-sm font-medium">
+                      Birthdate
+                    </label>
+                    <input
+                      type="date"
+                      id="birthdate"
+                      className="w-full border p-2 rounded"
+                    />
                   </div>
                 </div>
-                <button className="bg-main-red text-white rounded-lg p-2 mt-4 ml-auto flex ">
-                  Add Faculty
-                </button>
               </div>
-            </div>
+            </FullModal>
           )}
 
           {/* Edit/Update Button  */}
           {editModalOpen && (
-            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-              <div className="bg-white p-4 rounded-lg w-full max-w-xl">
-                <div className="flex justify-between">
-                  <h2 className="text-xl font-bold mb-4">Edit Faculty</h2>
-                  <button
-                    className="flex bg-main-red items-center text-white p-2"
-                    onClick={closeEditModal}
-                  >
-                    X
-                  </button>
+            <FullModal
+              modalHeading="Edit Faculty"
+              onClose={closeEditModal}
+              onProceed={editFacultySuccess}
+              proceedName="Edit Faculty"
+            >
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="mb-6">
+                  <label className="text-sm font-light">Full Name</label>
+                  <h1 className="text-sm font-bold">{selectedFaculty.name}</h1>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div className="mb-6">
@@ -349,144 +342,136 @@ const CollegeFaculty = () => {
                     <h1 className="text-sm font-light">Active</h1>
                   </div>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {/* First Column */}
-                  <div>
-                    <div className="mb-4">
-                      <label
-                        htmlFor="firstName"
-                        className="text-sm font-medium"
-                      >
-                        First Name
-                      </label>
-                      <input
-                        type="text"
-                        id="firstName"
-                        className="w-full border p-2 rounded"
-                      />
-                    </div>
-                    <div className="mb-4">
-                      <label
-                        htmlFor="middleName"
-                        className="text-sm font-medium"
-                      >
-                        Middle Name
-                      </label>
-                      <input
-                        type="text"
-                        id="middleName"
-                        className="w-full border p-2 rounded"
-                      />
-                    </div>
-                    <div className="mb-4">
-                      <label
-                        htmlFor="middleInitial"
-                        className="text-sm font-medium"
-                      >
-                        Middle Initial
-                      </label>
-                      <input
-                        type="text"
-                        id="middleInitial"
-                        className="w-full border p-2 rounded"
-                      />
-                    </div>
-                    <div className="mb-4">
-                      <label htmlFor="lastName" className="text-sm font-medium">
-                        Last Name
-                      </label>
-                      <input
-                        type="text"
-                        id="lastName"
-                        className="w-full border p-2 rounded"
-                      />
-                    </div>
-                    <div className="mb-4">
-                      <label htmlFor="suffix" className="text-sm font-medium">
-                        Suffix
-                      </label>
-                      <input
-                        type="text"
-                        id="suffix"
-                        className="w-full border p-2 rounded"
-                      />
-                    </div>
-                    <div className="mb-4">
-                      <label htmlFor="maiden" className="text-sm font-medium">
-                        Maiden
-                      </label>
-                      <input
-                        type="text"
-                        id="maiden"
-                        className="w-full border p-2 rounded"
-                      />
-                    </div>
+                <div className="mb-3">
+                  <label className="text-sm font-light">Status</label>
+                  <h1 className="text-sm font-light">Active</h1>
+                </div>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* First Column */}
+                <div>
+                  <div className="mb-4">
+                    <label htmlFor="firstName" className="text-sm font-medium">
+                      First Name
+                    </label>
+                    <input
+                      type="text"
+                      id="firstName"
+                      className="w-full border p-2 rounded"
+                    />
                   </div>
-
-                  {/* Second Column */}
-                  <div>
-                    <div className="mb-4">
-                      <label htmlFor="email" className="text-sm font-medium">
-                        Email Address
-                      </label>
-                      <input
-                        type="email"
-                        id="email"
-                        className="w-full border p-2 rounded"
-                      />
-                    </div>
-                    <div className="mb-4">
-                      <label
-                        htmlFor="contactNumber"
-                        className="text-sm font-medium"
-                      >
-                        Contact Number
-                      </label>
-                      <input
-                        type="tel"
-                        id="contactNumber"
-                        className="w-full border p-2 rounded"
-                      />
-                    </div>
-                    <div className="mb-4">
-                      <label htmlFor="sex" className="text-sm font-medium">
-                        Sex
-                      </label>
-                      <select id="sex" className="w-full border p-2 rounded">
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                      </select>
-                    </div>
-                    <div className="mb-4">
-                      <label htmlFor="address" className="text-sm font-medium">
-                        Address
-                      </label>
-                      <input
-                        type="text"
-                        id="address"
-                        className="w-full border p-2 rounded"
-                      />
-                    </div>
-                    <div className="mb-4">
-                      <label
-                        htmlFor="birthdate"
-                        className="text-sm font-medium"
-                      >
-                        Birthdate
-                      </label>
-                      <input
-                        type="date"
-                        id="birthdate"
-                        className="w-full border p-2 rounded"
-                      />
-                    </div>
+                  <div className="mb-4">
+                    <label htmlFor="middleName" className="text-sm font-medium">
+                      Middle Name
+                    </label>
+                    <input
+                      type="text"
+                      id="middleName"
+                      className="w-full border p-2 rounded"
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <label
+                      htmlFor="middleInitial"
+                      className="text-sm font-medium"
+                    >
+                      Middle Initial
+                    </label>
+                    <input
+                      type="text"
+                      id="middleInitial"
+                      className="w-full border p-2 rounded"
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <label htmlFor="lastName" className="text-sm font-medium">
+                      Last Name
+                    </label>
+                    <input
+                      type="text"
+                      id="lastName"
+                      className="w-full border p-2 rounded"
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <label htmlFor="suffix" className="text-sm font-medium">
+                      Suffix
+                    </label>
+                    <input
+                      type="text"
+                      id="suffix"
+                      className="w-full border p-2 rounded"
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <label htmlFor="maiden" className="text-sm font-medium">
+                      Maiden
+                    </label>
+                    <input
+                      type="text"
+                      id="maiden"
+                      className="w-full border p-2 rounded"
+                    />
                   </div>
                 </div>
-                <button className="bg-main-red text-white rounded-lg p-2 mt-4 ml-auto flex ">
-                  Add Faculty
-                </button>
+
+                {/* Second Column */}
+                <div>
+                  <div className="mb-4">
+                    <label htmlFor="email" className="text-sm font-medium">
+                      Email Address
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      className="w-full border p-2 rounded"
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <label
+                      htmlFor="contactNumber"
+                      className="text-sm font-medium"
+                    >
+                      Contact Number
+                    </label>
+                    <input
+                      type="tel"
+                      id="contactNumber"
+                      className="w-full border p-2 rounded"
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <label htmlFor="sex" className="text-sm font-medium">
+                      Sex
+                    </label>
+                    <select id="sex" className="w-full border p-2 rounded">
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                    </select>
+                  </div>
+                  <div className="mb-4">
+                    <label htmlFor="address" className="text-sm font-medium">
+                      Address
+                    </label>
+                    <input
+                      type="text"
+                      id="address"
+                      className="w-full border p-2 rounded"
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <label htmlFor="birthdate" className="text-sm font-medium">
+                      Birthdate
+                    </label>
+                    <input
+                      type="date"
+                      id="birthdate"
+                      className="w-full border p-2 rounded"
+                    />
+                  </div>
+                </div>
               </div>
-            </div>
+            </FullModal>
           )}
         </div>
       </div>
