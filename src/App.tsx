@@ -24,6 +24,10 @@ import AdminUserModule from "./pages/Admin/AdminUserModule";
 import AdminEncodeRoom from "./pages/Admin/AdminEncodeRoom";
 import AdminEncomeMeet from "./pages/Admin/AdminEncomeMeet";
 import AdminEncodeBlock from "./pages/Admin/AdminEncodeBlock";
+import AdminCollegeModule from "./pages/Admin/AdminCollegeModule";
+import AdminProgramModule from "./pages/Admin/AdminProgramModule";
+import AdminEmailBlast from "./pages/Admin/AdminEmailBlast";
+import AdminStudentType from "./pages/Admin/AdminStudentType";
 
 function App() {
   const { role } = useRoleStore();
@@ -49,10 +53,10 @@ function App() {
               <Route path="encode-meeting-type" element={<AdminEncomeMeet />} />
               <Route path="encode-blocks" element={<AdminEncodeBlock />} />
               <Route path="room-plot" element={<AdminHome />} />
-              <Route path="college-module" element={<AdminHome />} />
-              <Route path="program-module" element={<AdminHome />} />
-              <Route path="email-blast" element={<AdminHome />} />
-              <Route path="student-type" element={<AdminHome />} />
+              <Route path="college-module" element={<AdminCollegeModule />} />
+              <Route path="program-module" element={<AdminProgramModule />} />
+              <Route path="email-blast" element={<AdminEmailBlast />} />
+              <Route path="student-type" element={<AdminStudentType />} />
             </Route>
           </>
         )}

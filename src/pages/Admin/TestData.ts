@@ -346,3 +346,259 @@ export const tableEncodeBlock = [
 
   // Add more data as needed
 ];
+
+export const tableCollegeModule = [
+  {
+    id: 1,
+    college: "College of Engineering and Technology",
+    collegeID: "1",
+    unit: "CET",
+    term: "3",
+  },
+  {
+    id: 2,
+    college: "College of Engineering and Technology",
+    collegeID: "1",
+    unit: "CET",
+    term: "3",
+  },
+  {
+    id: 3,
+    college: "College of Engineering and Technology",
+    collegeID: "1",
+    unit: "CET",
+    term: "3",
+  },
+  {
+    id: 4,
+    college: "College of Engineering and Technology",
+    collegeID: "1",
+    unit: "CET",
+    term: "3",
+  },
+  {
+    id: 5,
+    college: "College of Engineering and Technology",
+    collegeID: "1",
+    unit: "CET",
+    term: "3",
+  },
+  {
+    id: 6,
+    college: "College of Engineering and Technology",
+    collegeID: "1",
+    unit: "CET",
+    term: "3",
+  },
+
+  // Add more data as needed
+];
+
+export const tableProgramModule = [
+  {
+    id: 1,
+    programTitle:
+      "Bachelor of Business Management - Master in Business Administration",
+    programID: "2",
+    programName: "BBM-MBA",
+    collegeID: "9",
+    curriculumID: "BBM-MBA2016",
+    type: "M",
+  },
+  {
+    id: 2,
+    programTitle:
+      "Bachelor of Business Management - Master in Business Administration",
+    programID: "2",
+    programName: "BBM-MBA",
+    collegeID: "9",
+    curriculumID: "BBM-MBA2016",
+    type: "M",
+  },
+  {
+    id: 3,
+    programTitle:
+      "Bachelor of Business Management - Master in Business Administration",
+    programID: "2",
+    programName: "BBM-MBA",
+    collegeID: "9",
+    curriculumID: "BBM-MBA2016",
+    type: "M",
+  },
+  {
+    id: 4,
+    programTitle:
+      "Bachelor of Business Management - Master in Business Administration",
+    programID: "2",
+    programName: "BBM-MBA",
+    collegeID: "9",
+    curriculumID: "BBM-MBA2016",
+    type: "M",
+  },
+  {
+    id: 5,
+    programTitle:
+      "Bachelor of Business Management - Master in Business Administration",
+    programID: "2",
+    programName: "BBM-MBA",
+    collegeID: "9",
+    curriculumID: "BBM-MBA2016",
+    type: "M",
+  },
+  {
+    id: 6,
+    programTitle:
+      "Bachelor of Business Management - Master in Business Administration",
+    programID: "2",
+    programName: "BBM-MBA",
+    collegeID: "9",
+    curriculumID: "BBM-MBA2016",
+    type: "M",
+  },
+
+  // Add more data as needed
+];
+
+export const tableEmailBlast = [
+  {
+    id: 1,
+    studentNumber: "2023-12345",
+    studentName: "Juanita D. Batumbakal",
+    yearLevel: "1",
+    program: "BSCS",
+    college: "CET",
+    personalEmail: "jdbatumbakal@gmail.com",
+  },
+  {
+    id: 2,
+    studentNumber: "2023-12345",
+    studentName: "Juanita D. Batumbakal",
+    yearLevel: "1",
+    program: "BSCS",
+    college: "CET",
+    personalEmail: "jdbatumbakal@gmail.com",
+  },
+  {
+    id: 3,
+    studentNumber: "2023-12345",
+    studentName: "Juanita D. Batumbakal",
+    yearLevel: "1",
+    program: "BSCS",
+    college: "CET",
+    personalEmail: "jdbatumbakal@gmail.com",
+  },
+  {
+    id: 4,
+    studentNumber: "2023-12345",
+    studentName: "Juanita D. Batumbakal",
+    yearLevel: "1",
+    program: "BSCS",
+    college: "CET",
+    personalEmail: "jdbatumbakal@gmail.com",
+  },
+  {
+    id: 5,
+    studentNumber: "2023-12345",
+    studentName: "Juanita D. Batumbakal",
+    yearLevel: "1",
+    program: "BSCS",
+    college: "CET",
+    personalEmail: "jdbatumbakal@gmail.com",
+  },
+  {
+    id: 6,
+    studentNumber: "2023-12345",
+    studentName: "Juanita D. Batumbakal",
+    yearLevel: "1",
+    program: "BSCS",
+    college: "CET",
+    personalEmail: "jdbatumbakal@gmail.com",
+  },
+
+  // Add more data as needed
+];
+
+export const tableStudentReg = [
+  {
+    id: 1,
+    studentNumber: "2023-12345",
+    studentName: "Juanita D. Batumbakal",
+    yearLevel: "1",
+    program: "BSCS",
+    college: "CET",
+    sem: "20231",
+    status: "Regular",
+  },
+  {
+    id: 2,
+    studentNumber: "2023-12345",
+    studentName: "Juanita D. Batumbakal",
+    yearLevel: "1",
+    program: "BSCS",
+    college: "CET",
+    sem: "20231",
+    status: "Regular",
+  },
+  {
+    id: 3,
+    studentNumber: "2023-12345",
+    studentName: "Juanita D. Batumbakal",
+    yearLevel: "1",
+    program: "BSCS",
+    college: "CET",
+    sem: "20231",
+    status: "Regular",
+  },
+  {
+    id: 4,
+    studentNumber: "2023-12345",
+    studentName: "Juanita D. Batumbakal",
+    yearLevel: "1",
+    program: "BSCS",
+    college: "CET",
+    sem: "20231",
+    status: "Regular",
+  },
+  {
+    id: 5,
+    studentNumber: "2023-12345",
+    studentName: "Juanita D. Batumbakal",
+    yearLevel: "1",
+    program: "BSCS",
+    college: "CET",
+    sem: "20231",
+    status: "Regular",
+  },
+  {
+    id: 6,
+    studentNumber: "2023-12345",
+    studentName: "Juanita D. Batumbakal",
+    yearLevel: "1",
+    program: "BSCS",
+    college: "CET",
+    sem: "20231",
+    status: "Regular",
+  },
+  {
+    id: 7,
+    studentNumber: "2023-12345",
+    studentName: "Juanita D. Batumbakal",
+    yearLevel: "1",
+    program: "BSCS",
+    college: "CET",
+    sem: "20231",
+    status: "Regular",
+  },
+  {
+    id: 8,
+    studentNumber: "2023-12345",
+    studentName: "Juanita D. Batumbakal",
+    yearLevel: "1",
+    program: "BSCS",
+    college: "CET",
+    sem: "20231",
+    status: "Regular",
+  },
+
+  // Add more data as needed
+];
