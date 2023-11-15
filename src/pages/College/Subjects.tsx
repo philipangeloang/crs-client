@@ -144,7 +144,7 @@ const Subjects = () => {
         </div>
 
         <div className="overflow-x-auto">
-          <table className="min-w-full table-auto bg-white shadow-md rounded-lg border shadow">
+          <table className="min-w-full table-auto bg-white shadow-md rounded-lg border">
             <thead>
               <tr className="bg-main-red text-white rounded-lg border ">
                 <th className="px-4 py-2">Class</th>
