@@ -22,7 +22,20 @@ import FacultyChangeGrades from "./pages/Faculty/FacultyChangeGrades";
 import FacultyReportOfGrades from "./pages/Faculty/FacultyReportOfGrades";
 import FacultyTeachingAssignments from "./pages/Faculty/FacultyTeachingAssignments";
 import StudentUndergradHome from "./pages/Student/StudentUndergrad/StudentUndergradHome";
+import StudentUndergradNSTP1 from "./pages/Student/StudentUndergrad/StudentUndergradNSTP1";
+import StudentUndergradNSTP2 from "./pages/Student/StudentUndergrad/StudentUndergradNSTP2";
+import StudentUndergradNSTP3 from "./pages/Student/StudentUndergrad/StudentUndergradNSTP3";
+import StudentUndergradNSTP4 from "./pages/Student/StudentUndergrad/StudentUndergradNSTP4";
 import StudentGradHome from "./pages/Student/StudentGrad/StudentGradHome";
+import AdminEncodeUserType from "./pages/Admin/AdminEncodeUserType";
+import AdminUserModule from "./pages/Admin/AdminUserModule";
+import AdminEncodeRoom from "./pages/Admin/AdminEncodeRoom";
+import AdminEncomeMeet from "./pages/Admin/AdminEncomeMeet";
+import AdminEncodeBlock from "./pages/Admin/AdminEncodeBlock";
+import AdminCollegeModule from "./pages/Admin/AdminCollegeModule";
+import AdminProgramModule from "./pages/Admin/AdminProgramModule";
+import AdminEmailBlast from "./pages/Admin/AdminEmailBlast";
+import AdminStudentType from "./pages/Admin/AdminStudentType";
 
 function App() {
   const { role } = useRoleStore();
@@ -39,16 +52,19 @@ function App() {
                 path="schedule-activities"
                 element={<AdminScheduleOfActivities />}
               />
-              <Route path="encode-user-type" element={<AdminHome />} />
-              <Route path="user-module" element={<AdminHome />} />
-              <Route path="encode-room" element={<AdminHome />} />
-              <Route path="encode-meeting-type" element={<AdminHome />} />
-              <Route path="encode-blocks" element={<AdminHome />} />
+              <Route
+                path="encode-user-type"
+                element={<AdminEncodeUserType />}
+              />
+              <Route path="user-module" element={<AdminUserModule />} />
+              <Route path="encode-room" element={<AdminEncodeRoom />} />
+              <Route path="encode-meeting-type" element={<AdminEncomeMeet />} />
+              <Route path="encode-blocks" element={<AdminEncodeBlock />} />
               <Route path="room-plot" element={<AdminHome />} />
-              <Route path="college-module" element={<AdminHome />} />
-              <Route path="program-module" element={<AdminHome />} />
-              <Route path="email-blast" element={<AdminHome />} />
-              <Route path="student-type" element={<AdminHome />} />
+              <Route path="college-module" element={<AdminCollegeModule />} />
+              <Route path="program-module" element={<AdminProgramModule />} />
+              <Route path="email-blast" element={<AdminEmailBlast />} />
+              <Route path="student-type" element={<AdminStudentType />} />
             </Route>
           </>
         )}
@@ -91,7 +107,10 @@ function App() {
             <Route path="/" element={<Signin />} />
             <Route path="/home" element={<RootLayoutStudentUndergrad />}>
               <Route index element={<StudentUndergradHome />} />
-              <Route path="nstp" element={<StudentUndergradHome />} />
+              <Route path="nstp1" element={<StudentUndergradNSTP1 />} />
+              <Route path="nstp2" element={<StudentUndergradNSTP2 />} />
+              <Route path="nstp3" element={<StudentUndergradNSTP3 />} />
+              <Route path="nstp4" element={<StudentUndergradNSTP4 />} />
               <Route path="enrollment" element={<StudentUndergradHome />} />
               <Route path="view-grades" element={<StudentUndergradHome />} />
               <Route

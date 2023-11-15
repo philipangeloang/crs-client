@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 const DateTime = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -12,12 +12,19 @@ const DateTime = () => {
     return () => clearInterval(intervalId);
   }, []);
 
-  const formattedDate = new Intl.DateTimeFormat('en-PH', {year: 'numeric', month: 'long', day: 'numeric'}).format(currentDate);
-  const formattedTime = currentDate.toLocaleTimeString('en-PH', {timeStyle: 'short'});
+  const formattedDate = new Intl.DateTimeFormat("en-PH", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  }).format(currentDate);
+  const formattedTime = currentDate.toLocaleTimeString("en-PH", {
+    timeStyle: "short",
+  });
 
   return (
     <div className="flex flex-col items-end">
-      <p className="text-main-blue font-bold text-md">{formattedDate}</p> {/* Blue text for the date */}
+      <p className="text-main-blue font-bold text-md">{formattedDate}</p>{" "}
+      {/* Blue text for the date */}
       <p>{formattedTime}</p> {/* Display time without seconds */}
     </div>
   );

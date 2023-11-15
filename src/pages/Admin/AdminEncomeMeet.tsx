@@ -1,21 +1,17 @@
-import { AiOutlineCalendar, AiOutlineClockCircle } from "react-icons/ai";
 import { RiEditCircleLine, RiDeleteBin2Line } from "react-icons/ri";
 import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 import DateTime from "@/components/DateTime";
 import TempRoleSelector from "../TempRoleSelector";
 import { Input } from "@/components/ui/input";
-import { tableSchedActivities } from "./TestData";
-import { useState } from "react";
+import { tableEncomeMeet } from "./TestData";
 
-const AdminScheduleOfActivities = () => {
-  const [activityModalOpen, setActivityModalOpen] = useState(false);
-
+const AdminEncomeMeet = () => {
   return (
     <div className="h-screen w-full p-10 px-16 flex flex-col justify-between font-montserrat overflow-x-hidden">
       {/* Row 1 */}
       <div className="flex justify-between items-center">
         <div className="px-5 py-1 bg-main-red text-white rounded-lg ">
-          Schedule of Activities
+          Encode Meeting Type
         </div>
         <div className="flex flex-col items-end">
           <h1 className="font-bold">DELA CRUZ. JUAN PEPITO</h1>
@@ -37,77 +33,64 @@ const AdminScheduleOfActivities = () => {
               <FiArrowRight />
             </div>
           </div>
-          <div
-            onClick={() => {
-              setActivityModalOpen(!activityModalOpen);
-            }}
-            className="cursor-pointer px-5 py-1 flex justify-center items-center bg-main-red text-white rounded-lg "
-          >
+          <div className="cursor-pointer px-5 py-1 flex justify-center items-center bg-main-red text-white rounded-lg ">
             Add New
           </div>
         </div>
 
         <div className="grid grid-cols-12 mt-5 ">
           {/* Table Header */}
-          <div className="font-bold bg-main-red rounded-tl-lg text-white p-3 col-span-2">
-            Activity
-          </div>
-          <div className="font-bold bg-main-red text-white p-3 col-span-3 text-center">
-            AY Sem
+          <div className="font-bold bg-main-red rounded-tl-lg text-white p-3 col-span-2 text-center">
+            Meet Type ID
           </div>
           <div className="font-bold bg-main-red text-white p-3 col-span-2 text-center">
-            Schedule Start
+            Meet Type Code
           </div>
           <div className="font-bold bg-main-red text-white p-3 col-span-2 text-center">
-            Schedule End
+            Label
           </div>
-          <div className="font-bold bg-main-red rounded-tr-lg text-white p-3 col-span-3 text-center">
+          <div className="font-bold bg-main-red text-white p-3 col-span-2 text-center">
+            Active Status
+          </div>
+          <div className="font-bold bg-main-red  text-white p-3 col-span-2 text-center">
+            Created Date
+          </div>
+
+          <div className="font-bold bg-main-red rounded-tr-lg text-white p-3 col-span-2 text-center">
             Action
           </div>
 
           {/* Table Contents */}
-          {tableSchedActivities.map((item) => (
+          {tableEncomeMeet.map((item) => (
             <>
               <div
-                className="col-span-2 px-2 py-3 border-l border-b border-main-gray"
+                className="col-span-2 px-2 py-3 border-l border-b border-main-gray text-center flex flex-col justify-center"
                 key={item.id}
               >
-                {item.activity}
+                {item.meetTypeID}
               </div>
-              <div className="text-center col-span-3 px-2 py-3 border-b border-main-gray">
-                <p className="px-7 py-1 border border-main-gray w-36 mx-auto rounded-lg">
-                  {item.semester}
-                </p>
-              </div>
-              <div className="text-center col-span-2 px-2 py-3 flex flex-col border-b border-main-gray">
-                <p className="px-7 py-1 border border-main-gray w-44 mx-auto rounded-lg flex gap-2 justify-between items-center">
-                  {item.startDate}
-                  <span>
-                    <AiOutlineCalendar size="20" />
-                  </span>
-                </p>
-                <p className="px-7 py-1 border border-main-gray w-44 mx-auto rounded-lg flex gap-2 justify-between items-center mt-3">
-                  {item.startTime}
-                  <span>
-                    <AiOutlineClockCircle size="20" />
-                  </span>
+              <div className="text-center col-span-2 py-3 border-b border-main-gray flex flex-col justify-center">
+                <p className="px-7 py-1 mx-auto rounded-lg">
+                  {item.meetTypeCode}
                 </p>
               </div>
-              <div className="text-center col-span-2 px-2 py-3 flex flex-col border-b border-main-gray">
-                <p className="px-7 py-1 border border-main-gray w-44 mx-auto rounded-lg flex gap-2 justify-between items-center">
-                  {item.endDate}
-                  <span>
-                    <AiOutlineCalendar size="20" />
-                  </span>
-                </p>
-                <p className="px-7 py-1 border border-main-gray w-44 mx-auto rounded-lg flex gap-2 justify-between items-center mt-3">
-                  {item.endTime}
-                  <span>
-                    <AiOutlineClockCircle size="20" />
-                  </span>
+              <div className="text-center col-span-2 py-3 flex border-b border-main-gray">
+                <p className="px-7 py-1  mx-auto rounded-lg flex gap-2 justify-between items-center">
+                  {item.label}
                 </p>
               </div>
-              <div className="col-span-3 px-2 py-4 flex justify-center items-center border-b border-r border-main-gray ">
+              <div className="text-center col-span-2 py-3 flex border-b border-main-gray">
+                <p className="px-7 py-1  mx-auto rounded-lg flex gap-2 justify-between items-center">
+                  {item.activeStatus}
+                </p>
+              </div>
+              <div className="text-center col-span-2 py-3 flex border-b border-main-gray">
+                <p className="px-7 py-1 mx-auto rounded-lg flex gap-2 justify-between items-center">
+                  {item.createdDate}
+                </p>
+              </div>
+
+              <div className="col-span-2 px-2 py-4 flex justify-center items-center border-b border-r border-main-gray ">
                 <div className="flex gap-2">
                   <div className="bg-main-blue text-white rounded-lg h-10 w-10 flex justify-center items-center mx-auto">
                     <RiEditCircleLine size="30" />
@@ -149,4 +132,4 @@ const AdminScheduleOfActivities = () => {
   );
 };
 
-export default AdminScheduleOfActivities;
+export default AdminEncomeMeet;

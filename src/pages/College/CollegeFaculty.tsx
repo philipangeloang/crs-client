@@ -1,5 +1,5 @@
 import DateTime from "@/components/DateTime";
-import React, { useState } from "react";
+import { useState } from "react";
 import { FiArrowRight, FiArrowLeft } from "react-icons/fi";
 import { FaEdit } from "react-icons/fa";
 import { FullModal } from "@/components/ui/modal";
@@ -178,15 +178,17 @@ const CollegeFaculty = () => {
           </div>
 
           {facultyModalOpen && (
-            <FullModal modalHeading="Add Faculty" onClose={closeFacultyModal} onProceed={addFacultySuccess} proceedName="Add Faculty">
+            <FullModal
+              modalHeading="Add Faculty"
+              onClose={closeFacultyModal}
+              onProceed={addFacultySuccess}
+              proceedName="Add Faculty"
+            >
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* First Column */}
                 <div>
                   <div className="mb-4">
-                    <label
-                      htmlFor="firstName"
-                      className="text-sm font-medium"
-                    >
+                    <label htmlFor="firstName" className="text-sm font-medium">
                       First Name
                     </label>
                     <input
@@ -196,10 +198,7 @@ const CollegeFaculty = () => {
                     />
                   </div>
                   <div className="mb-4">
-                    <label
-                      htmlFor="middleName"
-                      className="text-sm font-medium"
-                    >
+                    <label htmlFor="middleName" className="text-sm font-medium">
                       Middle Name
                     </label>
                     <input
@@ -298,10 +297,7 @@ const CollegeFaculty = () => {
                     />
                   </div>
                   <div className="mb-4">
-                    <label
-                      htmlFor="birthdate"
-                      className="text-sm font-medium"
-                    >
+                    <label htmlFor="birthdate" className="text-sm font-medium">
                       Birthdate
                     </label>
                     <input
@@ -317,17 +313,34 @@ const CollegeFaculty = () => {
 
           {/* Edit/Update Button  */}
           {editModalOpen && (
-            <FullModal modalHeading="Edit Faculty" onClose={closeEditModal} onProceed={editFacultySuccess} proceedName="Edit Faculty">
+            <FullModal
+              modalHeading="Edit Faculty"
+              onClose={closeEditModal}
+              onProceed={editFacultySuccess}
+              proceedName="Edit Faculty"
+            >
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="mb-6">
                   <label className="text-sm font-light">Full Name</label>
-                  <h1 className="text-sm font-bold">
-                    {selectedFaculty.name}
-                  </h1>
+                  <h1 className="text-sm font-bold">{selectedFaculty.name}</h1>
                 </div>
-                <div className="mb-3">
-                  <label className="text-sm font-light">Faculty ID</label>
-                  <h1 className="text-sm">{selectedFaculty.identity}</h1>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div className="mb-6">
+                    <label className="text-sm font-light">Full Name</label>
+                    <h1 className="text-sm font-bold">
+                      {selectedFaculty && selectedFaculty.name}
+                    </h1>
+                  </div>
+                  <div className="mb-3">
+                    <label className="text-sm font-light">Faculty ID</label>
+                    <h1 className="text-sm">
+                      {selectedFaculty && selectedFaculty.identity}
+                    </h1>
+                  </div>
+                  <div className="mb-3">
+                    <label className="text-sm font-light">Status</label>
+                    <h1 className="text-sm font-light">Active</h1>
+                  </div>
                 </div>
                 <div className="mb-3">
                   <label className="text-sm font-light">Status</label>
@@ -338,10 +351,7 @@ const CollegeFaculty = () => {
                 {/* First Column */}
                 <div>
                   <div className="mb-4">
-                    <label
-                      htmlFor="firstName"
-                      className="text-sm font-medium"
-                    >
+                    <label htmlFor="firstName" className="text-sm font-medium">
                       First Name
                     </label>
                     <input
@@ -351,10 +361,7 @@ const CollegeFaculty = () => {
                     />
                   </div>
                   <div className="mb-4">
-                    <label
-                      htmlFor="middleName"
-                      className="text-sm font-medium"
-                    >
+                    <label htmlFor="middleName" className="text-sm font-medium">
                       Middle Name
                     </label>
                     <input
@@ -453,10 +460,7 @@ const CollegeFaculty = () => {
                     />
                   </div>
                   <div className="mb-4">
-                    <label
-                      htmlFor="birthdate"
-                      className="text-sm font-medium"
-                    >
+                    <label htmlFor="birthdate" className="text-sm font-medium">
                       Birthdate
                     </label>
                     <input
