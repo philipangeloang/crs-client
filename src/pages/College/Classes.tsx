@@ -1,5 +1,4 @@
 import DateTime from "@/components/DateTime";
-import React from "react";
 import { FiArrowRight, FiArrowLeft } from "react-icons/fi";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
