@@ -2,7 +2,12 @@ import { AiOutlineMail } from "react-icons/ai";
 import { FiFacebook, FiTwitter } from "react-icons/fi";
 import { BsGlobe2 } from "react-icons/bs";
 import { BiUserPin } from "react-icons/bi";
+<<<<<<< Updated upstream
 import TempRoleSelector from "../TempRoleSelector";
+=======
+import { Link } from "react-router-dom";
+import React, { useState } from 'react';
+>>>>>>> Stashed changes
 
 const RootLayoutCashier = () => {
   return (
@@ -42,6 +47,18 @@ const RootLayoutCashier = () => {
             <h1 className="text-3xl font-bold text-main-red">
               Pamantasan ng Lungsod ng Maynila
             </h1>
+            <div className="flex items-center mt-5">
+            <span className="mr-2">
+              Go to
+            </span>
+            <Link to="/home/payment-student">
+            <button className="btn border p-2 bg-main-red text-white">
+                Student Payment Status
+            </button>
+            </Link>
+          
+            </div>
+      
           </div>
 
           {/* Row 3 */}
