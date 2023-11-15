@@ -1,5 +1,5 @@
 import DateTime from "@/components/DateTime";
-import React, { useState } from "react";
+import { useState } from "react";
 import { FiArrowRight, FiArrowLeft } from "react-icons/fi";
 import { FaEdit } from "react-icons/fa";
 
@@ -335,12 +335,14 @@ const CollegeFaculty = () => {
                   <div className="mb-6">
                     <label className="text-sm font-light">Full Name</label>
                     <h1 className="text-sm font-bold">
-                      {selectedFaculty.name}
+                      {selectedFaculty && selectedFaculty.name}
                     </h1>
                   </div>
                   <div className="mb-3">
                     <label className="text-sm font-light">Faculty ID</label>
-                    <h1 className="text-sm">{selectedFaculty.identity}</h1>
+                    <h1 className="text-sm">
+                      {selectedFaculty && selectedFaculty.identity}
+                    </h1>
                   </div>
                   <div className="mb-3">
                     <label className="text-sm font-light">Status</label>
