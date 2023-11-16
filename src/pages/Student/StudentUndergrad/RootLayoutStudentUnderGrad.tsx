@@ -112,13 +112,16 @@ const RootLayoutStudentUndergrad = () => {
                 <ul>
                   {/* Dropdown items for Class Management */}
                   <li className="text-black block py-2 cursor-pointer mt-2">
-                    View Assessment
+                    <Link to="enrollment1"> View Schedule</Link>
                   </li>
                   <li className="text-black block py-2 cursor-pointer">
-                    Donwload SER
+                    <Link to="enrollment2"> View Assessment</Link>
                   </li>
                   <li className="text-black block py-2 cursor-pointer">
-                    Enrollment Status
+                    <Link to="enrollment3"> Download SER</Link>
+                  </li>
+                  <li className="text-black block py-2 cursor-pointer">
+                    <Link to="enrollment4"> Enrollment Status</Link>
                   </li>
                 </ul>
               )}

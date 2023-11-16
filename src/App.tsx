@@ -139,14 +139,14 @@ function App() {
             <Route path="/home" element={<RootLayoutStudentUndergrad />}>
               <Route index element={<StudentUndergradHome />} />
               <Route path="nstp" element={<StudentUndergradHome />} />
-              <Route path="nstp/nstp1" element={<NSTP1 />} />
-              <Route path="nstp/nstp2" element={<NSTP2 />} />
-              <Route path="nstp/nstp3" element={<NSTP3 />} />
-              <Route path="nstp/nstp4" element={<NSTP4 />} />
-              <Route path="enrollment" element={<Enrollment1 />} />
-              <Route path="enrollment/enrollment2" element={<Enrollment2 />} />
-              <Route path="enrollment/enrollment3" element={<Enrollment3 />} />
-              <Route path="enrollment/enrollment4" element={<Enrollment4 />} />
+              <Route path="nstp1" element={<NSTP1 />} />
+              <Route path="nstp2" element={<NSTP2 />} />
+              <Route path="nstp3" element={<NSTP3 />} />
+              <Route path="nstp4" element={<NSTP4 />} />
+              <Route path="enrollment1" element={<Enrollment1 />} />
+              <Route path="enrollment2" element={<Enrollment2 />} />
+              <Route path="enrollment3" element={<Enrollment3 />} />
+              <Route path="enrollment4" element={<Enrollment4 />} />
               <Route path="view-grades" element={<StudentUndergradHome />} />
               <Route
                 path="view-information"
