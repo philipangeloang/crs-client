@@ -7,7 +7,6 @@ import RootLayoutStudentUndergrad from "./pages/Student/StudentUndergrad/RootLay
 import RootLayoutStudentGrad from "./pages/Student/StudentGrad/RootLayoutStudentGrad";
 import RootLayoutCashier from "./pages/Cashier/RootLayoutCashier";
 import AdminHome from "./pages/Admin/AdminHome";
-import CollegeFaculty from "./pages/College/CollegeFaculty";
 import CollegeStudentRecords from "./pages/College/CollegeStudentRecords";
 import AdminScheduleOfActivities from "./pages/Admin/AdminScheduleOfActivities";
 import useRoleStore from "./store/ThemeStore";
@@ -22,10 +21,14 @@ import FacultyChangeGrades from "./pages/Faculty/FacultyChangeGrades";
 import FacultyReportOfGrades from "./pages/Faculty/FacultyReportOfGrades";
 import FacultyTeachingAssignments from "./pages/Faculty/FacultyTeachingAssignments";
 import StudentUndergradHome from "./pages/Student/StudentUndergrad/StudentUndergradHome";
-import StudentUndergradNSTP1 from "./pages/Student/StudentUndergrad/StudentUndergradNSTP1";
-import StudentUndergradNSTP2 from "./pages/Student/StudentUndergrad/StudentUndergradNSTP2";
-import StudentUndergradNSTP3 from "./pages/Student/StudentUndergrad/StudentUndergradNSTP3";
-import StudentUndergradNSTP4 from "./pages/Student/StudentUndergrad/StudentUndergradNSTP4";
+import NSTP1 from "./pages/Student/StudentUndergrad/StudentUndergradNSTP1";
+import NSTP2 from "./pages/Student/StudentUndergrad/StudentUndergradNSTP2";
+import NSTP3 from "./pages/Student/StudentUndergrad/StudentUndergradNSTP3";
+import NSTP4 from "./pages/Student/StudentUndergrad/StudentUndergradNSTP4";
+import Enrollment1 from "./pages/Student/StudentUndergrad/StudentUndergradEnrollment1";
+import Enrollment2 from "./pages/Student/StudentUndergrad/StudentUndergradEnrollment2";
+import Enrollment3 from "./pages/Student/StudentUndergrad/StudentUndergradEnrollment3";
+import Enrollment4 from "./pages/Student/StudentUndergrad/StudentUndergradEnrollment4";
 import StudentGradHome from "./pages/Student/StudentGrad/StudentGradHome";
 import AdminEncodeUserType from "./pages/Admin/AdminEncodeUserType";
 import AdminUserModule from "./pages/Admin/AdminUserModule";
@@ -36,6 +39,15 @@ import AdminCollegeModule from "./pages/Admin/AdminCollegeModule";
 import AdminProgramModule from "./pages/Admin/AdminProgramModule";
 import AdminEmailBlast from "./pages/Admin/AdminEmailBlast";
 import AdminStudentType from "./pages/Admin/AdminStudentType";
+import Faculty from "./pages/College/Faculty";
+import Sections from "./pages/College/Sections";
+import Classes from "./pages/College/Classes";
+import ClassesAdd from "./pages/College/ClassesAddandEdit/ClassesAdd";
+import ClassesEdit from "./pages/College/ClassesAddandEdit/ClassesEdit";
+import Subjects from "./pages/College/Subjects";
+import Curriculum from "./pages/College/Curriculum";
+import AddDropReq from "./pages/College/AddDropReq";
+import ListOfTeaching from "./pages/College/ListOfTeaching";
 
 function App() {
   const { role } = useRoleStore();
@@ -73,16 +85,17 @@ function App() {
             <Route path="/" element={<Signin />} />
             <Route path="/home" element={<RootLayoutCollege />}>
               <Route index element={<CollegeHome />} />
-              <Route path="activities" element={<CollegeHome />} />
+              <Route path="activities" element={<AdminHome />} />
               <Route path="students" element={<CollegeStudentRecords />} />
-              <Route path="faculty" element={<CollegeFaculty />} />
-              <Route path="sections" element={<CollegeHome />} />
-              <Route path="classes" element={<CollegeHome />} />
-              <Route path="subjects" element={<CollegeHome />} />
-              <Route path="curriculum" element={<CollegeHome />} />
-              <Route path="add-drop" element={<CollegeHome />} />
-              <Route path="teaching-assignment" element={<CollegeHome />} />
-              <Route path="encode-blocks" element={<CollegeHome />} />
+              <Route path="faculty" element={<Faculty />} />
+              <Route path="sections" element={<Sections />} />
+              <Route path="classes" element={<Classes />} />
+              <Route path="classes" element={<ClassesAdd />} />
+              <Route path="classes" element={<ClassesEdit />} />
+              <Route path="subjects" element={<Subjects />} />
+              <Route path="curriculum" element={<Curriculum />} />
+              <Route path="add-drop" element={<AddDropReq />} />
+              <Route path="teaching-assignment" element={<ListOfTeaching />} />
             </Route>
           </>
         )}
@@ -93,12 +106,27 @@ function App() {
               <Route index element={<FacultyHome />} />
               <Route path="profile" element={<FacultyProfile />} />
               <Route path="profile/edit" element={<FacultyProfileEdit />} />
-              <Route path="change-password" element={<FacultyChangePassword />} />
-              <Route path="class-assignments" element={<FacultyClassAssignments />} />
-              <Route path="encode-grades" element={<FacultyEncodingOfGrades />} />
-              <Route path="encode-grades/report-grades" element={<FacultyReportOfGrades />} />
+              <Route
+                path="change-password"
+                element={<FacultyChangePassword />}
+              />
+              <Route
+                path="class-assignments"
+                element={<FacultyClassAssignments />}
+              />
+              <Route
+                path="encode-grades"
+                element={<FacultyEncodingOfGrades />}
+              />
+              <Route
+                path="encode-grades/report-grades"
+                element={<FacultyReportOfGrades />}
+              />
               <Route path="change-grades" element={<FacultyChangeGrades />} />
-              <Route path="teaching-assignments" element={<FacultyTeachingAssignments />} />
+              <Route
+                path="teaching-assignments"
+                element={<FacultyTeachingAssignments />}
+              />
             </Route>
           </>
         )}
@@ -107,11 +135,15 @@ function App() {
             <Route path="/" element={<Signin />} />
             <Route path="/home" element={<RootLayoutStudentUndergrad />}>
               <Route index element={<StudentUndergradHome />} />
-              <Route path="nstp1" element={<StudentUndergradNSTP1 />} />
-              <Route path="nstp2" element={<StudentUndergradNSTP2 />} />
-              <Route path="nstp3" element={<StudentUndergradNSTP3 />} />
-              <Route path="nstp4" element={<StudentUndergradNSTP4 />} />
-              <Route path="enrollment" element={<StudentUndergradHome />} />
+              <Route path="nstp" element={<StudentUndergradHome />} />
+              <Route path="nstp/nstp1" element={<NSTP1 />} />
+              <Route path="nstp/nstp2" element={<NSTP2 />} />
+              <Route path="nstp/nstp3" element={<NSTP3 />} />
+              <Route path="nstp/nstp4" element={<NSTP4 />} />
+              <Route path="enrollment" element={<Enrollment1 />} />
+              <Route path="enrollment/enrollment2" element={<Enrollment2 />} />
+              <Route path="enrollment/enrollment3" element={<Enrollment3 />} />
+              <Route path="enrollment/enrollment4" element={<Enrollment4 />} />
               <Route path="view-grades" element={<StudentUndergradHome />} />
               <Route
                 path="view-information"
