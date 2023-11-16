@@ -48,6 +48,9 @@ import Subjects from "./pages/College/Subjects";
 import Curriculum from "./pages/College/Curriculum";
 import AddDropReq from "./pages/College/AddDropReq";
 import ListOfTeaching from "./pages/College/ListOfTeaching";
+import StudentGradViewInformation from "./pages/Student/StudentGrad/StudentGradViewInformation";
+import StudentGradClassSchedule from "./pages/Student/StudentGrad/StudentGradClassSchedule";
+import StudentGradCashier from "./pages/Student/StudentGrad/StudentGradCashier";
 
 function App() {
   const { role } = useRoleStore();
@@ -164,10 +167,16 @@ function App() {
               <Route index element={<StudentGradHome />} />
               <Route path="enrollment" element={<StudentGradHome />} />
               <Route path="view-grades" element={<StudentGradHome />} />
-              <Route path="view-information" element={<StudentGradHome />} />
-              <Route path="class-schedule" element={<StudentGradHome />} />
+              <Route
+                path="view-information"
+                element={<StudentGradViewInformation />}
+              />
+              <Route
+                path="class-schedule"
+                element={<StudentGradClassSchedule />}
+              />
               <Route path="change-password" element={<StudentGradHome />} />
-              <Route path="cashier" element={<StudentGradHome />} />
+              <Route path="cashier" element={<StudentGradCashier />} />
             </Route>
           </>
         )}
