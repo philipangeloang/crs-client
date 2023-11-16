@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { IoMdPrint } from "react-icons/io";
 import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 import DateTime from "@/components/DateTime";

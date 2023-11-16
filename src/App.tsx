@@ -13,12 +13,29 @@ import AdminScheduleOfActivities from "./pages/Admin/AdminScheduleOfActivities";
 import useRoleStore from "./store/ThemeStore";
 import CollegeHome from "./pages/College/CollegeHome";
 import FacultyHome from "./pages/Faculty/FacultyHome";
+import FacultyProfile from "./pages/Faculty/FacultyProfile";
+import FacultyProfileEdit from "./pages/Faculty/FacultyProfileEdit";
+import FacultyChangePassword from "./pages/Faculty/FacultyChangePassword";
+import FacultyClassAssignments from "./pages/Faculty/FacultyClassAssignments";
+import FacultyEncodingOfGrades from "./pages/Faculty/FacultyEncodingOfGrades";
+import FacultyChangeGrades from "./pages/Faculty/FacultyChangeGrades";
+import FacultyReportOfGrades from "./pages/Faculty/FacultyReportOfGrades";
+import FacultyTeachingAssignments from "./pages/Faculty/FacultyTeachingAssignments";
 import StudentUndergradHome from "./pages/Student/StudentUndergrad/StudentUndergradHome";
 import StudentUndergradNSTP1 from "./pages/Student/StudentUndergrad/StudentUndergradNSTP1";
 import StudentUndergradNSTP2 from "./pages/Student/StudentUndergrad/StudentUndergradNSTP2";
 import StudentUndergradNSTP3 from "./pages/Student/StudentUndergrad/StudentUndergradNSTP3";
 import StudentUndergradNSTP4 from "./pages/Student/StudentUndergrad/StudentUndergradNSTP4";
 import StudentGradHome from "./pages/Student/StudentGrad/StudentGradHome";
+import AdminEncodeUserType from "./pages/Admin/AdminEncodeUserType";
+import AdminUserModule from "./pages/Admin/AdminUserModule";
+import AdminEncodeRoom from "./pages/Admin/AdminEncodeRoom";
+import AdminEncomeMeet from "./pages/Admin/AdminEncomeMeet";
+import AdminEncodeBlock from "./pages/Admin/AdminEncodeBlock";
+import AdminCollegeModule from "./pages/Admin/AdminCollegeModule";
+import AdminProgramModule from "./pages/Admin/AdminProgramModule";
+import AdminEmailBlast from "./pages/Admin/AdminEmailBlast";
+import AdminStudentType from "./pages/Admin/AdminStudentType";
 
 function App() {
   const { role } = useRoleStore();
@@ -35,16 +52,19 @@ function App() {
                 path="schedule-activities"
                 element={<AdminScheduleOfActivities />}
               />
-              <Route path="encode-user-type" element={<AdminHome />} />
-              <Route path="user-module" element={<AdminHome />} />
-              <Route path="encode-room" element={<AdminHome />} />
-              <Route path="encode-meeting-type" element={<AdminHome />} />
-              <Route path="encode-blocks" element={<AdminHome />} />
+              <Route
+                path="encode-user-type"
+                element={<AdminEncodeUserType />}
+              />
+              <Route path="user-module" element={<AdminUserModule />} />
+              <Route path="encode-room" element={<AdminEncodeRoom />} />
+              <Route path="encode-meeting-type" element={<AdminEncomeMeet />} />
+              <Route path="encode-blocks" element={<AdminEncodeBlock />} />
               <Route path="room-plot" element={<AdminHome />} />
-              <Route path="college-module" element={<AdminHome />} />
-              <Route path="program-module" element={<AdminHome />} />
-              <Route path="email-blast" element={<AdminHome />} />
-              <Route path="student-type" element={<AdminHome />} />
+              <Route path="college-module" element={<AdminCollegeModule />} />
+              <Route path="program-module" element={<AdminProgramModule />} />
+              <Route path="email-blast" element={<AdminEmailBlast />} />
+              <Route path="student-type" element={<AdminStudentType />} />
             </Route>
           </>
         )}
@@ -71,12 +91,14 @@ function App() {
             <Route path="/" element={<Signin />} />
             <Route path="/home" element={<RootLayoutFaculty />}>
               <Route index element={<FacultyHome />} />
-              <Route path="profile" element={<FacultyHome />} />
-              <Route path="change-password" element={<FacultyHome />} />
-              <Route path="class-assignment" element={<FacultyHome />} />
-              <Route path="encode-grades" element={<FacultyHome />} />
-              <Route path="change-grades" element={<FacultyHome />} />
-              <Route path="teaching-assignment" element={<FacultyHome />} />
+              <Route path="profile" element={<FacultyProfile />} />
+              <Route path="profile/edit" element={<FacultyProfileEdit />} />
+              <Route path="change-password" element={<FacultyChangePassword />} />
+              <Route path="class-assignments" element={<FacultyClassAssignments />} />
+              <Route path="encode-grades" element={<FacultyEncodingOfGrades />} />
+              <Route path="encode-grades/report-grades" element={<FacultyReportOfGrades />} />
+              <Route path="change-grades" element={<FacultyChangeGrades />} />
+              <Route path="teaching-assignments" element={<FacultyTeachingAssignments />} />
             </Route>
           </>
         )}
