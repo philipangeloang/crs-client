@@ -5,6 +5,7 @@ import { BiUserPin } from "react-icons/bi";
 import { PiWarningBold } from "react-icons/pi";
 import { LuPrinter } from "react-icons/lu";
 import { FiDownload } from "react-icons/fi";
+import { BsMicrosoftTeams } from "react-icons/bs";
 import { mockData } from "./mockData";
 import DateTime from "../../../components/DateTime";
 import TempRoleSelector from "../../TempRoleSelector";
@@ -256,10 +257,10 @@ const StudentGradHome = () => {
             <FiDownload />
           </button>
           <button
-            className="icon-container text-white bg-main-red p-2 rounded"
+            className="icon-container text-[#7C84EC] bg-main-red p-2 rounded"
             onClick={handleMSTeamsClick}
           >
-            <FiDownload />
+            <BsMicrosoftTeams />
           </button>
         </div>
 
