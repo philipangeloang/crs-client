@@ -1,6 +1,6 @@
 import DateTime from "@/components/DateTime";
 import TempRoleSelector from "../../TempRoleSelector";
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 const StudentGradChangePassword = () => {
     const [currentPassword, setCurrentPassword] = useState('');
@@ -21,7 +21,7 @@ const StudentGradChangePassword = () => {
                         Change Password
                     </div>
                     <div className="flex flex-col items-end">
-                        <h1 className="font-bold">DELA CRUZ. JUAN PEPITO</h1>
+                        <h1 className="font-bold">DELA CRUZ, JUAN PEPITO</h1>
                         <p className="text-xs ">
                             Logged as: <TempRoleSelector />
                         </p>
@@ -30,31 +30,25 @@ const StudentGradChangePassword = () => {
 
                 {/* Row 2 */}
                 <div className="col-span-12 mt-12 flex flex-wrap justify-between">
-                    <div className="w-full md:w-3/5 lg:w-3/5">
-                        <div className="p-3 mt-3 rounded-lg bg-[#FFCDCF] text-main-red flex flex-col justify-between">
-                            {/* Enrollment Status*/}
+                    <div className="w-full md:w-1/2 lg:w-1/2 ">
+                        <div className="px-24">
                             <div>
-                                <span className="font-bold">You are not yet Officially Enrolled for this term.</span>
+                                <span className="font-bold text-main-red">Change Password Utility</span>
                             </div>
 
-                            {/* Blockers */}
-                            <div className="text-sm">
-                                <span>Please settle your SFE (Student-Faculty Evaluation) before proceeding to enrollment.</span>
+                            <div className="text-sm text-justify mt-4">
+                                You can now personalize your user password to make it easier for you to remember. However, you should ensure that it is not too easy for anyone else to guess!
                             </div>
-
-                            {/* Payment */}
-                            <div className="text-sm">
-                                <span>Please see and settle your remaining balance.</span>
+                            
+                            <div className="text-sm text-justify mt-4">
+                                Your <span className="text-main-red">password must be at least 8-20 characters long only.</span> Making your password difficult for anyone else to crack will secure your CRS data.
                             </div>
                         </div>
-
-
-
                     </div>
 
-                    <div className="w-full md:w-2/5 lg:w-2/5 ">
+                    <div className="w-full md:w-1/2 lg:w-1/2">
 
-                        <div className="grid grid-cols-7 gap-2 p-4 rounded-lg border border-black text-xs">
+                        <div className="grid grid-cols-7 mr-24 gap-2 p-4 rounded-lg border border-black text-xs">
                             {/* Student Number */}
                             <div className="col-span-2">
                                 <span className="text-[#676C72] font-bold">Student No.:</span>
