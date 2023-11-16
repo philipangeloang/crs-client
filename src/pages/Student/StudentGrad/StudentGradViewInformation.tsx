@@ -1,4 +1,4 @@
-import { PiWarningBold } from "react-icons/Pi"
+import { PiWarningBold } from "react-icons/pi";
 import { mockData } from './mockData';
 import DateTime from '../../../components/DateTime';
 import TempRoleSelector from "../../TempRoleSelector";
@@ -12,7 +12,7 @@ const StudentGradViewInformtion = () => {
     const handleViewScheduleClick= () => {
         console.log('Button clicked!');
          // Add logic here
-     }; ``
+     };
 
     return (
         <>
