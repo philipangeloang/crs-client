@@ -4,6 +4,7 @@ import DateTime from "@/components/DateTime";
 import { Key, useState } from "react";
 import StringCardinal from "@/components/StringCardinal";
 import { FullModal } from "@/components/ui/modal";
+import { UserDisplay } from "@/components/ui/userdisplay";
 
 // Faculty Details
 type termAndAcademicYear = {
@@ -158,12 +159,7 @@ const FacultyChangeGrades = () => {
           <div className="px-5 py-1 border-2 border-main-red bg-main-red text-white rounded-lg ">
             Change of Grades
           </div>
-          <div className="flex flex-col items-end">
-            <h1 className="font-bold">DELA CRUZ. JUAN PEPITO</h1>
-            <p className="text-xs ">
-              Logged as: <span className="text-main-red">Administrator</span>
-            </p>
-          </div>
+          <UserDisplay name="Dela Cruz, Juan Pepito"></UserDisplay>
         </div>
 
         {/* Row 2 */}
