@@ -4,8 +4,8 @@ import { AiOutlineClose } from "react-icons/ai";
 type ModalProps = {
   children: ReactNode; // Accepts a ReactNode that will be inserted as the modal body
   modalHeading?: string; // The title that appears on top of the modal (only in HeadingModal and FullModal)
-  onClose: () => void;  // Happens when the modal is closed or dismissed
-  onProceed: () => void; // Happens when the modal is proceeded through or accepted
+  onClose?: () => void;  // Happens when the modal is closed or dismissed
+  onProceed?: () => void; // Happens when the modal is proceeded through or accepted
   closeName?: string; // Name that appears as the footing close button (only in CloseProceedModal and FullModal)
   proceedName?: string;  // Name that appears as the footing proceed button (only in CloseProceedModal and FullModal)
   closeButton?: boolean; // The toggle whether the heading close X button appears or not (only in HeadingModal and FullModal)
@@ -29,8 +29,8 @@ export const GenericModal: React.FC<ModalProps> = ({ children }) => {
 
   return (
     <>
-      <div className={`${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10' } ease-out duration-300 relative z-10`}>
-        <div className="fixed inset-0 bg-gray-500 bg-opacity-50 transition-opacity"/>
+      <div className={`${isVisible ? 'opacity-100' : 'opacity-0' } ease-out duration-300 relative z-10 transition-opacity`}>
+        <div className="fixed inset-0 bg-gray-500 bg-opacity-50"/>
       </div>
       <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
         <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
@@ -61,8 +61,8 @@ export const CloseProceedModal: React.FC< ModalProps > = ({ children, onClose, o
 
   return (
     <>
-      <div className={`${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10' } ease-out duration-300 relative z-10`}>
-        <div className="fixed inset-0 bg-gray-500 bg-opacity-50 transition-opacity"/>
+      <div className={`${isVisible ? 'opacity-100' : 'opacity-0' } ease-out duration-300 relative z-10 transition-opacity`}>
+        <div className="fixed inset-0 bg-gray-500 bg-opacity-50"/>
       </div>
       <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
         <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
@@ -109,8 +109,8 @@ export const HeadingModal: React.FC< ModalProps > = ({ children, modalHeading = 
 
   return (
     <>
-      <div className={`${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10' } ease-out duration-300 relative z-10`}>
-        <div className="fixed inset-0 bg-gray-500 bg-opacity-50 transition-opacity"/>
+      <div className={`${isVisible ? 'opacity-100' : 'opacity-0' } ease-out duration-300 relative z-10 transition-opacity`}>
+        <div className="fixed inset-0 bg-gray-500 bg-opacity-50"/>
       </div>
       <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
         <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
