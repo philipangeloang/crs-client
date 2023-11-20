@@ -3,12 +3,17 @@ import { FiFacebook, FiTwitter } from "react-icons/fi";
 import { BsGlobe2 } from "react-icons/bs";
 import { BiUserPin } from "react-icons/bi";
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 import TempRoleSelector from "../TempRoleSelector";
 =======
 import { Link } from "react-router-dom";
 import React, { useState } from 'react';
 >>>>>>> Stashed changes
 
+=======
+import { Link, Outlet } from "react-router-dom";
+import DateTime from "@/components/DateTime";
+>>>>>>> Stashed changes
 const RootLayoutCashier = () => {
   return (
     <>
@@ -47,6 +52,7 @@ const RootLayoutCashier = () => {
             <h1 className="text-3xl font-bold text-main-red">
               Pamantasan ng Lungsod ng Maynila
             </h1>
+<<<<<<< Updated upstream
             <div className="flex items-center mt-5">
             <span className="mr-2">
               Go to
@@ -59,6 +65,16 @@ const RootLayoutCashier = () => {
           
             </div>
       
+=======
+            <Link to="payment-student">
+              <span className="mr-2">
+                Go to
+              </span>
+              <button className=" bg-main-red text-white rounded-lg p-2 mt-3">
+                Student Payment Status 
+              </button>
+            </Link>
+>>>>>>> Stashed changes
           </div>
 
           {/* Row 3 */}
@@ -91,13 +107,11 @@ const RootLayoutCashier = () => {
                 </div>
               </div>
             </div>
-
             <div className="flex flex-col items-end">
-              <h1 className="text-main-blue font-bold text-md">
-                October 27, 2023
-              </h1>
-              <p>10:35 PM</p>
+              <DateTime/>
             </div>
+
+
           </div>
         </div>
       </div>
