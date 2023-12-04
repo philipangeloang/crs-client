@@ -1,11 +1,14 @@
 import { AiOutlineCalendar, AiOutlineClockCircle } from "react-icons/ai";
 import { RiEditCircleLine, RiDeleteBin2Line } from "react-icons/ri";
 import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
+import { HiXMark } from "react-icons/hi2";
 import DateTime from "@/components/DateTime";
 import TempRoleSelector from "../TempRoleSelector";
 import { Input } from "@/components/ui/input";
 import { tableSchedActivities } from "./TestData";
 import { useState } from "react";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
 
 const AdminScheduleOfActivities = () => {
   const [activityModalOpen, setActivityModalOpen] = useState(false);
@@ -145,6 +148,54 @@ const AdminScheduleOfActivities = () => {
           <DateTime />
         </div>
       </div>
+      {activityModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white rounded-lg w-full py-4 max-w-lg">
+            <div className="flex justify-between items-center p-4 px-14">
+              <h2 className="text-xl text-main-red">Activity Information</h2>
+              <button
+                className="flex items-center justify-center text-gray-700 border border-gray-700 rounded-full h-6 w-6"
+                onClick={() => {
+                  setActivityModalOpen(!activityModalOpen);
+                }}
+              >
+                <HiXMark />
+              </button>
+            </div>
+            <hr className="w-full mb-3 " />
+
+            <div className="px-14">
+              <div className="mb-3">
+                <Label className="font-normal mb-1">Name of Activity</Label>
+                <Input placeholder="Name" />
+              </div>
+
+              <div className="mb-4">
+                <Label className="font-normal mb-1">
+                  Academic Year and Semester
+                </Label>
+                <Input placeholder="ex. 20231" />
+              </div>
+
+              <div className="grid grid-cols-12 gap-4 w-full">
+                <div className="flex flex-col col-span-6">
+                  <Label className="font-normal mb-1">Schedule Start</Label>
+                  <Input type="date" placeholder="dd/mm/yy" className="mb-3" />
+                  <Input type="time" />
+                </div>
+                <div className="flex flex-col col-span-6">
+                  <Label className="font-normal mb-1">Schedule End</Label>
+                  <Input type="date" placeholder="dd/mm/yy" className="mb-3" />
+                  <Input type="time" />
+                </div>
+              </div>
+            </div>
+            <div className="mt-8 text-center ">
+              <Button className="bg-main-red hover:bg-red-600"> Save </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
