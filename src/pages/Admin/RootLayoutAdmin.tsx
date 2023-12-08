@@ -279,7 +279,7 @@ const RootLayoutAdmin = () => {
             <li className="flex items-center px-4 py-2 cursor-pointer">
               <img className="Logout-icon" src="/Logout.svg" alt="Logo" />
               <a
-                href="/services"
+                href="/logout"
                 className="text-black block px-4 py-2 cursor-pointer"
               >
                 Logout
