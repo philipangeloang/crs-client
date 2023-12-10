@@ -3,6 +3,15 @@ import { Input } from "@/components/ui/input";
 import * as msal from "@azure/msal-browser";
 import axios from "axios";
 
+interface UserRole {
+  id: number;
+  name: string;
+}
+
+interface UserInfo {
+  roles: UserRole[];
+}
+
 const msalConfig = {
   /* The keys should not be hardcoded. Use a configuration file */
   auth: {
@@ -45,37 +54,12 @@ async function sendAccessTokenToAPI(accessToken: string) {
   }
 }
 
-async function logout() {
-  /* The endpoint in our laravel backend is `api/login` but use correct domain:port */
-  const apiUrl = 'https://13.229.75.4/api/logout';
-
-  try {
-      const response = await axios.post(apiUrl, {}, {
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        withCredentials: true /* Necessary for storing cookies */
-    });
-
-      const data = response.data;
-      
-      //for debugging purpose, to see response of login api
-      console.log('API response:', data);
-
-      //temporary redirection to /home, will be changed
-      // window.location.href = "/home";
-  } catch (error) {
-      //for debugging purpose, handle errors properly
-      console.error('API request error:', error);
-  }
-}
-
 async function colleges() {
   /* The endpoint in our laravel backend is `api/login` but use correct domain:port */
   const apiUrl = 'https://13.229.75.4/api/colleges';
 
   try {
-      const response = await axios.post(apiUrl, {}, {
+      const response = await axios.get(apiUrl, {
         headers: {
             'Content-Type': 'application/json',
         },
@@ -95,17 +79,58 @@ async function colleges() {
   }
 }
 
-async function loginWithMicrosoft() {//assign function to a login button
+async function userInfo() {
+  const apiUrl = 'https://13.229.75.4/api/me';
+  try {
+    const response = await axios.get(apiUrl, {
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      withCredentials: true /* Necessary for storing cookies */
+    });
+    const data = response.data;
+    console.log('API response:', data.roles);
+  } catch (error) {
+    console.error('API request error:', error);
+  }
+}
+
+async function getUserData(): Promise<UserInfo> {
+  const apiUrl = 'https://13.229.75.4/api/me';
+  try {
+    const response = await axios.get(apiUrl, {
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      withCredentials: true /* Necessary for storing cookies */
+    });
+    return response.data as UserInfo;
+  } catch (error) {
+    console.error('API request error:', error);
+  }
+}
+
+async function loginWithMicrosoft() {
   const loginRequest = {
       scopes: ['user.read', 'openid', 'profile'],
   };
 
   try {
       const authResult = await msalInstance.loginPopup(loginRequest);
-      //for debugging purpose, to see content of authResult
-      console.log('Authentication result:', authResult);
-
       sendAccessTokenToAPI(authResult.accessToken);
+
+      getUserData().then((data) => {
+        if (data.roles.length === 1) {
+          localStorage.setItem("userRole", data.roles[0]['name']);
+        } else {
+          localStorage.setItem("userRole", "MULTIPLE");
+        }
+        if (location.pathname === "/") window.location.assign("/home");
+      }).catch((error) => {
+        console.error(error);
+      });
+
+      window.location.assign("/home");
   } catch (error) {
       //for debugging purpose, handle login failures properly
       console.error('Authentication error:', error);
@@ -179,13 +204,13 @@ const Signin = () => {
         <div className="max-w-[100rem] px-16 py-12 mx-auto flex flex-col justify-center font-open-sans">
           <div className="flex flex-col justify-between items-center mb-1 text-sm | md:flex-row md:items-start">
             <p className="text-white text-center">
-              This is the official CRS webiste of{" "}
+              This is the official CRS website of{" "}
               <strong>Pamantasan ng Lungsod ng Maynila</strong>
             </p>
-            <p className="text-white" onClick={logout}>For inquiries and concerns:</p>
+            <p className="text-white">For inquiries and concerns:</p>
           </div>
           <div className="text-sm flex flex-col justify-between items-center | md:flex-row md:items-start">
-            <p className="text-main-yellow" onClick={colleges}>
+            <p className="text-main-yellow" onClick={userInfo}>
               © 2023 ONPLM. All rights reserved.
             </p>
             <p className="font-bold text-white">ithelp@plm.edu.ph</p>

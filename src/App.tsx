@@ -1,5 +1,10 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
+import axios from "axios";
+
 import Signin from "./pages/Signin";
+import RoleSelector from "./pages/RoleSelector";
+import useRoleStore from "./store/ThemeStore";
 import RootLayoutAdmin from "./pages/Admin/RootLayoutAdmin";
 import RootLayoutCollege from "./pages/College/RootLayoutCollege";
 import RootLayoutFaculty from "./pages/Faculty/RootLayoutFaculty";
@@ -9,7 +14,6 @@ import RootLayoutCashier from "./pages/Cashier/RootLayoutCashier";
 import AdminHome from "./pages/Admin/AdminHome";
 import CollegeStudentRecords from "./pages/College/CollegeStudentRecords";
 import AdminScheduleOfActivities from "./pages/Admin/AdminScheduleOfActivities";
-import useRoleStore from "./store/ThemeStore";
 import CollegeHome from "./pages/College/CollegeHome";
 import FacultyHome from "./pages/Faculty/FacultyHome";
 import FacultyProfile from "./pages/Faculty/FacultyProfile";
@@ -51,32 +55,69 @@ import ListOfTeaching from "./pages/College/ListOfTeaching";
 import StudentGradViewInformation from "./pages/Student/StudentGrad/StudentGradViewInformation";
 import StudentGradClassSchedule from "./pages/Student/StudentGrad/StudentGradClassSchedule";
 import StudentGradCashier from "./pages/Student/StudentGrad/StudentGradCashier";
-import { useState, useEffect } from "react";
+
+interface UserRole {
+  id: number;
+  name: string;
+}
+
+interface UserInfo {
+  roles: UserRole[];
+}
+
+async function getUserData(): Promise<UserInfo> {
+  const apiUrl = 'https://13.229.75.4/api/me';
+  try {
+    const response = await axios.get(apiUrl, {
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      withCredentials: true /* Necessary for storing cookies */
+    });
+    return response.data as UserInfo;
+  } catch (error) {
+    console.error('API request error:', error);
+  }
+}
 
 function App() {
-  const { role } = useRoleStore();
+  const { setRole } = useRoleStore();
+  const role = localStorage.getItem("userRole") || "NONE";
 
-  const [authenticated, setAuthenticated] = useState<boolean>(false);
-
-  useEffect (() => {
-    if (!authenticated) {
-      const token: string | null  = localStorage.getItem('token');
-      if (token) {
-        setAuthenticated(true);
-        window.location.assign("/home");
-      } else {
-        setAuthenticated(false);
-        window.location.assign("/home");
-      }
+  if (role === "NONE") {
+    try {
+      getUserData().then((data) => {
+        if (data.roles.length === 1) {
+          setRole(data.roles[0]['name']);
+          localStorage.setItem("userRole", data.roles[0]['name']);
+        } else {
+          setRole("MULTIPLE");
+          localStorage.setItem("userRole", "MULTIPLE");
+        }
+        if (location.pathname === "/") window.location.assign("/home");
+      }).catch((error) => {
+        console.error(error);
+      });
+    } catch (error) {
+      console.error('Error loading user roles:', error);
     }
-  }, [authenticated]);
-  
+  }
+
   return (
     <>
       <Routes>
-        {role === "administrator" && (
+        {(
+          <Route path="/" element={<Signin />}/>
+        )}
+        {role === 'MULTIPLE' && (
+          <Route path="/home" element={<RoleSelector roles={async () => {
+              const data = await getUserData();
+              return data.roles;
+            }}/>}
+          />
+        )}
+        {role === 'ADMIN' && (
           <>
-            <Route path="/" element={<Signin />} />
             <Route path="/home" element={<RootLayoutAdmin />}>
               <Route index element={<AdminHome />} />
               <Route
@@ -99,9 +140,8 @@ function App() {
             </Route>
           </>
         )}
-        {role === "college" && (
+        {role === 'COLLEGE' && (
           <>
-            <Route path="/" element={<Signin />} />
             <Route path="/home" element={<RootLayoutCollege />}>
               <Route index element={<CollegeHome />} />
               <Route path="activities" element={<AdminHome />} />
@@ -118,9 +158,8 @@ function App() {
             </Route>
           </>
         )}
-        {role === "faculty" && (
+        {role === 'FACULTY' && (
           <>
-            <Route path="/" element={<Signin />} />
             <Route path="/home" element={<RootLayoutFaculty />}>
               <Route index element={<FacultyHome />} />
               <Route path="profile" element={<FacultyProfile />} />
@@ -149,9 +188,8 @@ function App() {
             </Route>
           </>
         )}
-        {role === "student u" && (
+        {role === 'STUDENT_UNDERGRADUATE' && (
           <>
-            <Route path="/" element={<Signin />} />
             <Route path="/home" element={<RootLayoutStudentUndergrad />}>
               <Route index element={<StudentUndergradHome />} />
               <Route path="nstp" element={<StudentUndergradHome />} />
@@ -176,9 +214,8 @@ function App() {
             </Route>
           </>
         )}
-        {role === "student g" && (
+        {role === 'STUDENT_GRADUATE' && (
           <>
-            <Route path="/" element={<Signin />} />
             <Route path="/home" element={<RootLayoutStudentGrad />}>
               <Route index element={<StudentGradHome />} />
               <Route path="enrollment" element={<StudentGradHome />} />
@@ -196,9 +233,8 @@ function App() {
             </Route>
           </>
         )}
-        {role === "cashier" && (
+        {role === 'CASHIER' && (
           <>
-            <Route path="/" element={<Signin />} />
             <Route path="/home" element={<RootLayoutCashier />}>
               <Route index element={<AdminHome />} />
               <Route path="search-student" element={<AdminHome />} />
