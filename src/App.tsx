@@ -51,10 +51,26 @@ import ListOfTeaching from "./pages/College/ListOfTeaching";
 import StudentGradViewInformation from "./pages/Student/StudentGrad/StudentGradViewInformation";
 import StudentGradClassSchedule from "./pages/Student/StudentGrad/StudentGradClassSchedule";
 import StudentGradCashier from "./pages/Student/StudentGrad/StudentGradCashier";
+import { useState, useEffect } from "react";
 
 function App() {
   const { role } = useRoleStore();
 
+  const [authenticated, setAuthenticated] = useState<boolean>(false);
+
+  useEffect (() => {
+    if (!authenticated) {
+      const token: string | null  = localStorage.getItem('token');
+      if (token) {
+        setAuthenticated(true);
+        window.location.assign("/home");
+      } else {
+        setAuthenticated(false);
+        window.location.assign("/home");
+      }
+    }
+  }, [authenticated]);
+  
   return (
     <>
       <Routes>

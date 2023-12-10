@@ -4,6 +4,9 @@ import DateTime from "@/components/DateTime";
 import { Key, useState } from "react";
 import StringCardinal from "@/components/StringCardinal";
 import { FullModal } from "@/components/ui/modal";
+import { UserDisplay } from "@/components/ui/userdisplay";
+import "@azure/msal-browser";
+import axios from "axios";
 
 // Faculty Details
 type termAndAcademicYear = {
@@ -138,6 +141,20 @@ function SelectTermsAndAcademicYears({ data }: termAndAcademicYearArray) {
   );
 }
 
+function apiCallExample() {
+  axios.get('https://13.229.75.4/api/colleges', {
+    withCredentials: true,
+  })
+  .then(response => {
+    console.log('Response:', response.data);
+    // Handle the response data as needed
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    // Handle the error
+  });
+}
+
 const FacultyChangeGrades = () => {
   const [showGradeChangeModal, setGradeChangeModal] = useState(false);
 
@@ -158,12 +175,7 @@ const FacultyChangeGrades = () => {
           <div className="px-5 py-1 border-2 border-main-red bg-main-red text-white rounded-lg ">
             Change of Grades
           </div>
-          <div className="flex flex-col items-end">
-            <h1 className="font-bold">DELA CRUZ. JUAN PEPITO</h1>
-            <p className="text-xs ">
-              Logged as: <span className="text-main-red">Administrator</span>
-            </p>
-          </div>
+          <UserDisplay name="Dela Cruz, Juan Pepito"></UserDisplay>
         </div>
 
         {/* Row 2 */}
@@ -194,7 +206,7 @@ const FacultyChangeGrades = () => {
                   className="rounded-sm py-2 px-4 border text-left"
                 />
               </div>
-              <div className="flex flex-col justify-start items-start">
+              <div className="flex flex-col justify-start items-start" onClick={apiCallExample}>
                 <span className="text-left text-sm">&nbsp;</span>
                 <FaArrowRight
                   size={40}

@@ -1,6 +1,116 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Link } from "react-router-dom";
+import * as msal from "@azure/msal-browser";
+import axios from "axios";
+
+const msalConfig = {
+  /* The keys should not be hardcoded. Use a configuration file */
+  auth: {
+      clientId: '0aa73793-92c5-429f-9c24-61df5e014bba', //client-id set on azure
+      authority: 'https://login.microsoftonline.com/c83f55a7-7fe8-4934-b759-09926430aef0', //appended tenant-id is set on azure
+      redirectUri: 'http://localhost:5173/', //must match what is set on azure, preferably index of front-end
+  },
+  cache: {
+      cacheLocation: 'localStorage',
+      storeAuthStateInCookie: true,
+  }
+};
+
+const msalInstance = await msal.PublicClientApplication.createPublicClientApplication(msalConfig);
+
+async function sendAccessTokenToAPI(accessToken: string) {
+  /* The endpoint in our laravel backend is `api/login` but use correct domain:port */
+  const apiUrl = 'https://13.229.75.4/api/login';
+
+  try {
+      const response = await axios.post(apiUrl, {
+          access_token: accessToken,
+      }, {
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          withCredentials: true /* Necessary for storing cookies */
+      });
+
+      const data = response.data;
+      
+      //for debugging purpose, to see response of login api
+      console.log('API response:', data);
+
+      //temporary redirection to /home, will be changed
+      // window.location.href = "/home";
+  } catch (error) {
+      //for debugging purpose, handle errors properly
+      console.error('API request error:', error);
+  }
+}
+
+async function logout() {
+  /* The endpoint in our laravel backend is `api/login` but use correct domain:port */
+  const apiUrl = 'https://13.229.75.4/api/logout';
+
+  try {
+      const response = await axios.post(apiUrl, {}, {
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        withCredentials: true /* Necessary for storing cookies */
+    });
+
+      const data = response.data;
+      
+      //for debugging purpose, to see response of login api
+      console.log('API response:', data);
+
+      //temporary redirection to /home, will be changed
+      // window.location.href = "/home";
+  } catch (error) {
+      //for debugging purpose, handle errors properly
+      console.error('API request error:', error);
+  }
+}
+
+async function colleges() {
+  /* The endpoint in our laravel backend is `api/login` but use correct domain:port */
+  const apiUrl = 'https://13.229.75.4/api/colleges';
+
+  try {
+      const response = await axios.post(apiUrl, {}, {
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        withCredentials: true /* Necessary for storing cookies */
+    });
+
+      const data = response.data;
+      
+      //for debugging purpose, to see response of login api
+      console.log('API response:', data);
+
+      //temporary redirection to /home, will be changed
+      // window.location.href = "/home";
+  } catch (error) {
+      //for debugging purpose, handle errors properly
+      console.error('API request error:', error);
+  }
+}
+
+async function loginWithMicrosoft() {//assign function to a login button
+  const loginRequest = {
+      scopes: ['user.read', 'openid', 'profile'],
+  };
+
+  try {
+      const authResult = await msalInstance.loginPopup(loginRequest);
+      //for debugging purpose, to see content of authResult
+      console.log('Authentication result:', authResult);
+
+      sendAccessTokenToAPI(authResult.accessToken);
+  } catch (error) {
+      //for debugging purpose, handle login failures properly
+      console.error('Authentication error:', error);
+  }
+}
 
 const Signin = () => {
   return (
@@ -38,9 +148,10 @@ const Signin = () => {
           <Input type="email" placeholder="email@plm.edu.ph" className="mb-7" />
           <Button
             asChild
-            className="bg-main-red hover:bg-destructive w-24 relative left-56"
+            className="bg-main-red hover:bg-destructive w-24 relative left-56 cursor-pointer"
+            onClick={loginWithMicrosoft}
           >
-            <Link to="home"> Continue</Link>
+            <div>Continue</div>
           </Button>
         </div>
         <div className="w-[28rem] flex justify-between">
@@ -71,10 +182,10 @@ const Signin = () => {
               This is the official CRS webiste of{" "}
               <strong>Pamantasan ng Lungsod ng Maynila</strong>
             </p>
-            <p className="text-white">For inquiries and concerns:</p>
+            <p className="text-white" onClick={logout}>For inquiries and concerns:</p>
           </div>
           <div className="text-sm flex flex-col justify-between items-center | md:flex-row md:items-start">
-            <p className="text-main-yellow">
+            <p className="text-main-yellow" onClick={colleges}>
               © 2023 ONPLM. All rights reserved.
             </p>
             <p className="font-bold text-white">ithelp@plm.edu.ph</p>
