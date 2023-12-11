@@ -1,39 +1,78 @@
 import { create } from "zustand";
+import axios from "axios";
 
 interface UserRole {
-  role: string;
+  name: string;
   roleName: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  setRole: (role: any) => void;
+  setRole: (role: string) => void;
 }
 
 interface roleNameDictionary {
   [key: string]: string;
 }
 
+interface UserInfo {
+  roles: UserRole[];
+}
+
 const roleNameKey: roleNameDictionary = {
-  'administrator': 'Administrator',
-  'college': 'College',
-  'faculty': 'Faculty',
-  'student u': 'Undergraduate Student',
-  'student g': 'Graduate Student',
-  'cashier': 'Cashier',
+  'NONE': 'None',
+  'MULTIPLE': 'Multiple',
+  'ADMIN': 'Administrator',
+  'COLLEGE': 'College',
+  'FACULTY': 'Faculty',
+  'STUDENT_UNDERGRADUATE': 'Undergraduate Student',
+  'STUDENT_GRADUATE': 'Graduate Student',
+  'CASHIER': 'Cashier',
+}
+
+async function getUserData(): Promise<UserInfo> {
+  const apiUrl = 'https://13.229.75.4/api/me';
+  try {
+    const response = await axios.get(apiUrl, {
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      withCredentials: true /* Necessary for storing cookies */
+    });
+    return response.data as UserInfo;
+  } catch (error) {
+    console.error('API request error:', error);
+  }
 }
 
 const useRoleStore = create<UserRole>((set) => {
   // Try to get role from localStorage
-  const storedRole = localStorage.getItem("userRole") || "administrator";
+  let storedRole = localStorage.getItem("userRole") || "NONE";
+
+  if (storedRole === undefined) {
+    try {
+      getUserData().then((data) => {
+        if (data.roles.length === 1) {
+          storedRole = data.roles[0]['name'];
+          localStorage.setItem("userRole", data.roles[0]['name']);
+        } else {
+          storedRole = "MULTIPLE";
+          localStorage.setItem("userRole", "MULTIPLE");
+        }
+        if (location.pathname === "/") window.location.assign("/home");
+      }).catch((error) => {
+        console.error(error);
+      });
+    } catch (error) {
+      console.error('Error loading user roles:', error);
+    }
+  }
 
   const initialState: UserRole = {
-    role: storedRole || "administrator",
-    roleName: roleNameKey[storedRole] || roleNameKey['administrator'],
-    setRole: (role: string) => {
-      // Set the new role in the state
-      set({ role });
+    name: storedRole || 'NONE',
+    roleName: roleNameKey[storedRole] || roleNameKey['NONE'],
+    setRole: (name: string) => {
+      set({ name });
 
       // Store the role in localStorage
-      localStorage.setItem("userRole", role);
-      localStorage.setItem("userRoleName", roleNameKey[role]);
+      localStorage.setItem("userRole", name);
+      localStorage.setItem("userRoleName", roleNameKey[name]);
     },
   };
 
