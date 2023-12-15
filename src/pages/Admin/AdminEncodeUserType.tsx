@@ -17,7 +17,7 @@ const AdminEncodeUserType = () => {
   const [search, setSearch] = useState("");
 
   // State for Moving Along Pages
-  const [schedActivities, setSchedActivities] = useState(tableUserType);
+  const [schedActivities] = useState(tableUserType);
   // const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [postPerPage] = useState(7);

@@ -17,7 +17,6 @@ import { useState } from "react";
 import { HiXMark } from "react-icons/hi2";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Checkbox } from "@/components/ui/checkbox";
 
 const AdminUserModule = () => {
@@ -26,10 +25,9 @@ const AdminUserModule = () => {
 
   // State for Searching and Filtering
   const [search, setSearch] = useState("");
-  const [userType, setUserType] = useState("");
 
   // State for Moving Along Pages
-  const [schedActivities, setSchedActivities] = useState(tableUserModule);
+  const [schedActivities] = useState(tableUserModule);
   // const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [postPerPage] = useState(7);
@@ -83,9 +81,9 @@ const AdminUserModule = () => {
                 <FiArrowRight />
               </div>
               <Select
-                onValueChange={(e) => {
-                  setUserType(e);
-                }}
+              // onValueChange={(e) => {
+              //   setUserType(e);
+              // }}
               >
                 <SelectTrigger>
                   <SelectValue placeholder="All" />
