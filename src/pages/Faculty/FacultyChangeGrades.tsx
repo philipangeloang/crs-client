@@ -142,17 +142,18 @@ function SelectTermsAndAcademicYears({ data }: termAndAcademicYearArray) {
 }
 
 function apiCallExample() {
-  axios.get('https://13.229.75.4/api/colleges', {
-    withCredentials: true,
-  })
-  .then(response => {
-    console.log('Response:', response.data);
-    // Handle the response data as needed
-  })
-  .catch(error => {
-    console.error('Error:', error);
-    // Handle the error
-  });
+  axios
+    .get("https://13.229.75.4/api/colleges", {
+      withCredentials: true,
+    })
+    .then((response) => {
+      console.log("Response:", response.data);
+      // Handle the response data as needed
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      // Handle the error
+    });
 }
 
 const FacultyChangeGrades = () => {
@@ -206,7 +207,10 @@ const FacultyChangeGrades = () => {
                   className="rounded-sm py-2 px-4 border text-left"
                 />
               </div>
-              <div className="flex flex-col justify-start items-start" onClick={apiCallExample}>
+              <div
+                className="flex flex-col justify-start items-start"
+                onClick={apiCallExample}
+              >
                 <span className="text-left text-sm">&nbsp;</span>
                 <FaArrowRight
                   size={40}

@@ -1,116 +1,149 @@
-import React, { useEffect, useState } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import useRoleStore from "@/store/ThemeStore";
-import { FaSchool, FaChalkboardTeacher, FaCashRegister, FaUsersCog, FaUserGraduate, FaUser } from "react-icons/fa";
-import { HeadingModal } from "@/components/ui/modal";
-import axios from "axios";
+import api from "../api/fetch";
+import { useEffect, useState } from "react";
+import { HiXMark } from "react-icons/hi2";
+import {
+  FaCashRegister,
+  FaChalkboardTeacher,
+  FaSchool,
+  FaUser,
+  FaUserGraduate,
+  FaUsersCog,
+} from "react-icons/fa";
 
-type UserDisplayProps = {
-  roles: () => Promise<UserRole[]>;
-  name?: string;
-  role?: string
-  roleName?: string;
-};
+const TempRoleSelector = () => {
+  const { setRole, setAvailRoles, role } = useRoleStore();
 
-interface UserRole {
-  id: number;
-  name: string;
-}
+  const [changeRoleModalOpen, setChangeRoleModalOpen] = useState(false);
 
-interface UserInfo {
-  roles: UserRole[];
-}
-
-async function getUserData(): Promise<UserInfo> {
-  const apiUrl = 'https://13.229.75.4/api/me';
-  try {
-    const response = await axios.get(apiUrl, {
-      headers: {
-          'Content-Type': 'application/json',
-      },
-      withCredentials: true /* Necessary for storing cookies */
-    });
-    return response.data as UserInfo;
-  } catch (error) {
-    console.error('API request error:', error);
-  }
-}
-
-const TempRoleSelector: React.FC<UserDisplayProps> = ({ roles = async () => {
-  const data = await getUserData();
-  return data.roles;},
-  role = localStorage.getItem("userRole"),
-  roleName = localStorage.getItem("userRoleName") }) => {
-
-  const { setRole } = useRoleStore();
-  const [roleChangeModalOpen, setRoleChangeModalOpen] = useState(false);
-
-  const [userRoles, setUserRoles] = useState<UserRole[]>([]);
-  
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchRoles = async () => {
       try {
-        const fetchedUserRoles = await roles();
-        setUserRoles(fetchedUserRoles);
-      } catch (error) {
-        console.error('Error fetching user roles:', error);
+        const response = await api.get("/api/me", {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        });
+
+        const data = response.data;
+        setAvailRoles(data.roles);
+      } catch (err) {
+        console.log(err);
       }
     };
 
-    fetchData();
-  }, [roles]);
+    fetchRoles();
+  }, [setAvailRoles]);
 
   return (
     <>
-      <span className="text-main-red">{roleName}</span>
-      <span className="ml-1 cursor-pointer hover:underline" onClick={() => setRoleChangeModalOpen(true)}>(Change)</span>
+      <span
+        className="text-main-red font-bold cursor-pointer"
+        onClick={() => {
+          setChangeRoleModalOpen(!changeRoleModalOpen);
+        }}
+      >
+        {role
+          .split("_")
+          .filter((x) => x.length > 0)
+          .map((x) => x.charAt(0).toUpperCase() + x.slice(1))
+          .join(" ")
+          .toLowerCase()}
+      </span>
 
-      {roleChangeModalOpen && (
-        <HeadingModal modalHeading="Change Role" onClose={() => setRoleChangeModalOpen(false)}>
-          <div className="w-full flex flex-col gap-2 justify-center items-center text-md">
-            {(userRoles.some(role => role.name === 'ADMIN') && role !== 'ADMIN') && (
-              <div onClick={() => {setRole("ADMIN"); window.location.reload();}} className="w-full flex flex-row gap-8 justify-start items-center p-4 rounded-lg duration-200 hover:bg-gray-200 cursor-pointer">
-                <div><FaUsersCog size={48}></FaUsersCog></div>
+      {changeRoleModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white rounded-lg w-full py-4 max-w-lg">
+            <div className="flex justify-between items-center p-4 px-14">
+              <h2 className="text-xl text-main-red">Roles Available</h2>
+              <button
+                className="flex items-center justify-center text-gray-700 border border-gray-700 rounded-full h-6 w-6"
+                onClick={() => {
+                  setChangeRoleModalOpen(!changeRoleModalOpen);
+                }}
+              >
+                <HiXMark />
+              </button>
+            </div>
+            <hr className="w-full mb-3 " />
+
+            <div className="w-full px-14 flex flex-col gap-2 justify-center items-center text-md">
+              <div
+                onClick={() => {
+                  setRole("ADMIN");
+                }}
+                className="w-full flex flex-row gap-8 justify-start items-center p-4 rounded-lg duration-200 hover:bg-gray-200 cursor-pointer"
+              >
+                <div>
+                  <FaUsersCog size={48}></FaUsersCog>
+                </div>
                 <div className="font-bold">Administrator</div>
               </div>
-              )
-            }
-            {(userRoles.some(role => role.name === 'COLLEGE') && role !== 'COLLEGE') && (
-              <div onClick={() => {setRole("COLLEGE"); window.location.reload();}} className="w-full flex flex-row gap-8 justify-start items-center p-4 rounded-lg duration-200 hover:bg-gray-200 cursor-pointer">
-                <div><FaSchool size={48}></FaSchool></div>
+
+              <div
+                onClick={() => {
+                  setRole("COLLEGE");
+                }}
+                className="w-full flex flex-row gap-8 justify-start items-center p-4 rounded-lg duration-200 hover:bg-gray-200 cursor-pointer"
+              >
+                <div>
+                  <FaSchool size={48}></FaSchool>
+                </div>
                 <div className="font-bold">College</div>
               </div>
-              )
-            }
-            {(userRoles.some(role => role.name === 'FACULTY') && role !== 'FACULTY') && (
-              <div onClick={() => {setRole("FACULTY"); window.location.reload();}} className="w-full flex flex-row gap-8 justify-start items-center p-4 rounded-lg duration-200 hover:bg-gray-200 cursor-pointer">
-                <div><FaChalkboardTeacher size={48}></FaChalkboardTeacher></div>
+
+              <div
+                onClick={() => {
+                  setRole("FACULTY");
+                }}
+                className="w-full flex flex-row gap-8 justify-start items-center p-4 rounded-lg duration-200 hover:bg-gray-200 cursor-pointer"
+              >
+                <div>
+                  <FaChalkboardTeacher size={48}></FaChalkboardTeacher>
+                </div>
                 <div className="font-bold">Faculty</div>
               </div>
-              )
-            }
-            {(userRoles.some(role => role.name === 'STUDENT_UNDERGRADUATE') && role !== 'STUDENT_UNDERGRADUATE') && (
-              <div onClick={() => {setRole("STUDENT_UNDERGRADUATE"); window.location.reload();}} className="w-full flex flex-row gap-8 justify-start items-center p-4 rounded-lg duration-200 hover:bg-gray-200 cursor-pointer">
-                <div><FaUser size={48}></FaUser></div>
+
+              <div
+                onClick={() => {
+                  setRole("STUDENT_UNDERGRADUATE");
+                }}
+                className="w-full flex flex-row gap-8 justify-start items-center p-4 rounded-lg duration-200 hover:bg-gray-200 cursor-pointer"
+              >
+                <div>
+                  <FaUser size={48}></FaUser>
+                </div>
                 <div className="font-bold">Undergraduate Student</div>
               </div>
-              )
-            }
-            {(userRoles.some(role => role.name === 'STUDENT_GRADUATE') && role !== 'STUDENT_GRADUATE') && (
-              <div onClick={() => {setRole("STUDENT_GRADUATE"); window.location.reload();}} className="w-full flex flex-row gap-8 justify-start items-center p-4 rounded-lg duration-200 hover:bg-gray-200 cursor-pointer">
-                <div><FaUserGraduate size={48}></FaUserGraduate></div>
+
+              <div
+                onClick={() => {
+                  setRole("STUDENT_GRADUATE");
+                }}
+                className="w-full flex flex-row gap-8 justify-start items-center p-4 rounded-lg duration-200 hover:bg-gray-200 cursor-pointer"
+              >
+                <div>
+                  <FaUserGraduate size={48}></FaUserGraduate>
+                </div>
                 <div className="font-bold">Graduate Student</div>
               </div>
-              )
-            }
-            {(userRoles.some(role => role.name === 'CASHIER') && role !== 'CASHIER') && (
-              <div onClick={() => {setRole("CASHIER"); window.location.reload();}} className="w-full flex flex-row gap-8 justify-start items-center p-4 rounded-lg duration-200 hover:bg-gray-200 cursor-pointer">
-                <div><FaCashRegister size={48}></FaCashRegister></div>
+
+              <div
+                onClick={() => {
+                  setRole("CASHIER");
+                }}
+                className="w-full flex flex-row gap-8 justify-start items-center p-4 rounded-lg duration-200 hover:bg-gray-200 cursor-pointer"
+              >
+                <div>
+                  <FaCashRegister size={48}></FaCashRegister>
+                </div>
                 <div className="font-bold">Cashier</div>
               </div>
-              )
-            }
+            </div>
           </div>
-        </HeadingModal>
+        </div>
       )}
     </>
   );

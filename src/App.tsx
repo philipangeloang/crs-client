@@ -1,10 +1,5 @@
-import { Routes, Route, useLocation } from "react-router-dom";
-import { useState, useEffect } from "react";
-import axios from "axios";
-
+import { Routes, Route } from "react-router-dom";
 import Signin from "./pages/Signin";
-import RoleSelector from "./pages/RoleSelector";
-import useRoleStore from "./store/ThemeStore";
 import RootLayoutAdmin from "./pages/Admin/RootLayoutAdmin";
 import RootLayoutCollege from "./pages/College/RootLayoutCollege";
 import RootLayoutFaculty from "./pages/Faculty/RootLayoutFaculty";
@@ -14,6 +9,7 @@ import RootLayoutCashier from "./pages/Cashier/RootLayoutCashier";
 import AdminHome from "./pages/Admin/AdminHome";
 import CollegeStudentRecords from "./pages/College/CollegeStudentRecords";
 import AdminScheduleOfActivities from "./pages/Admin/AdminScheduleOfActivities";
+import useRoleStore from "./store/ThemeStore";
 import CollegeHome from "./pages/College/CollegeHome";
 import FacultyHome from "./pages/Faculty/FacultyHome";
 import FacultyProfile from "./pages/Faculty/FacultyProfile";
@@ -56,67 +52,38 @@ import StudentGradViewInformation from "./pages/Student/StudentGrad/StudentGradV
 import StudentGradClassSchedule from "./pages/Student/StudentGrad/StudentGradClassSchedule";
 import StudentGradCashier from "./pages/Student/StudentGrad/StudentGradCashier";
 
-interface UserRole {
-  id: number;
-  name: string;
-}
-
-interface UserInfo {
-  roles: UserRole[];
-}
-
-async function getUserData(): Promise<UserInfo> {
-  const apiUrl = 'https://13.229.75.4/api/me';
-  try {
-    const response = await axios.get(apiUrl, {
-      headers: {
-          'Content-Type': 'application/json',
-      },
-      withCredentials: true /* Necessary for storing cookies */
-    });
-    return response.data as UserInfo;
-  } catch (error) {
-    console.error('API request error:', error);
-  }
-}
+import api from "./api/fetch";
+import { useEffect } from "react";
 
 function App() {
-  const { setRole } = useRoleStore();
-  const role = localStorage.getItem("userRole") || "NONE";
+  const { role, setRole } = useRoleStore();
 
-  if (role === "NONE") {
-    try {
-      getUserData().then((data) => {
-        if (data.roles.length === 1) {
-          setRole(data.roles[0]['name']);
-          localStorage.setItem("userRole", data.roles[0]['name']);
-        } else {
-          setRole("MULTIPLE");
-          localStorage.setItem("userRole", "MULTIPLE");
-        }
-        if (location.pathname === "/") window.location.assign("/home");
-      }).catch((error) => {
-        console.error(error);
-      });
-    } catch (error) {
-      console.error('Error loading user roles:', error);
-    }
-  }
+  useEffect(() => {
+    const fetchRoles = async () => {
+      try {
+        const response = await api.get("/api/me", {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        });
+
+        const data = response.data;
+        setRole(data.roles[0].name);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchRoles();
+  }, [setRole]);
 
   return (
     <>
       <Routes>
-        {(
-          <Route path="/" element={<Signin />}/>
-        )}
-        {role === 'MULTIPLE' && (
-          <Route path="/home" element={<RoleSelector roles={async () => {
-              const data = await getUserData();
-              return data.roles;
-            }}/>}
-          />
-        )}
-        {role === 'ADMIN' && (
+        <Route path="/" element={<Signin />} />
+
+        {role === "ADMIN" && (
           <>
             <Route path="/home" element={<RootLayoutAdmin />}>
               <Route index element={<AdminHome />} />
@@ -140,7 +107,7 @@ function App() {
             </Route>
           </>
         )}
-        {role === 'COLLEGE' && (
+        {role === "COLLEGE" && (
           <>
             <Route path="/home" element={<RootLayoutCollege />}>
               <Route index element={<CollegeHome />} />
@@ -158,7 +125,7 @@ function App() {
             </Route>
           </>
         )}
-        {role === 'FACULTY' && (
+        {role === "FACULTY" && (
           <>
             <Route path="/home" element={<RootLayoutFaculty />}>
               <Route index element={<FacultyHome />} />
@@ -188,7 +155,7 @@ function App() {
             </Route>
           </>
         )}
-        {role === 'STUDENT_UNDERGRADUATE' && (
+        {role === "STUDENT_UNDERGRADUATE" && (
           <>
             <Route path="/home" element={<RootLayoutStudentUndergrad />}>
               <Route index element={<StudentUndergradHome />} />
@@ -214,7 +181,7 @@ function App() {
             </Route>
           </>
         )}
-        {role === 'STUDENT_GRADUATE' && (
+        {role === "STUDENT_GRADUATE" && (
           <>
             <Route path="/home" element={<RootLayoutStudentGrad />}>
               <Route index element={<StudentGradHome />} />
@@ -233,7 +200,7 @@ function App() {
             </Route>
           </>
         )}
-        {role === 'CASHIER' && (
+        {role === "CASHIER" && (
           <>
             <Route path="/home" element={<RootLayoutCashier />}>
               <Route index element={<AdminHome />} />

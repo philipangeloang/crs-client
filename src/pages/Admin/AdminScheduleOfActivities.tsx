@@ -18,7 +18,7 @@ const AdminScheduleOfActivities = () => {
   const [search, setSearch] = useState("");
 
   // State for Moving Along Pages
-  const [schedActivities, setSchedActivities] = useState(tableSchedActivities);
+  const [schedActivities] = useState(tableSchedActivities);
   // const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [postPerPage] = useState(5);
