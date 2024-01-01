@@ -9,17 +9,8 @@ const Sections = () => {
 
     // Dummy data 
     const tableData = [
-        { id: 2121231, section: 'CSC 0413-1', date: '2023-09-20' },
-        { id: 2121231, section: 'CSC 0413-1', date: '2023-09-20' },
-        { id: 2121231, section: 'CSC 0413-1', date: '2023-09-20' },
-        { id: 2121231, section: 'CSC 0413-1', date: '2023-09-20' },
-        { id: 2121231, section: 'CSC 0413-1', date: '2023-09-20' },
-        { id: 2121231, section: 'CSC 0413-1', date: '2023-09-20' },
-        { id: 2121231, section: 'CSC 0413-1', date: '2023-09-20' },
-        { id: 2121231, section: 'CSC 0413-1', date: '2023-09-20' },
-        { id: 2121231, section: 'CSC 0413-1', date: '2023-09-20' },
-        { id: 2121231, section: 'CSC 0413-1', date: '2023-09-20' },
-        { id: 2121231, section: 'CSC 0413-1', date: '2023-09-20' },
+        { id: 2121231, section: '1', college: 'CET', term: '4', slots: '50', enlisted: '37', academic: '2023' },
+
 
         // Add more data as needed
     ];
@@ -105,9 +96,13 @@ const Sections = () => {
                         <table className="min-w-full table-auto  bg-white shadow-md rounded-lg">
                             <thead>
                                 <tr className="bg-main-red text-white rounded-lg border ">
-                                    <th>Section ID</th>
+                                    <th>Block ID</th>
                                     <th>Section</th>
-                                    <th>Date Created</th>
+                                    <th>College Code</th>
+                                    <th>Term</th>
+                                    <th>Slots</th>
+                                    <th>Enlisted</th>
+                                    <th>Academic Year</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -116,7 +111,12 @@ const Sections = () => {
                                     <tr className="border" key={item.id}>
                                         <td className="px-4 py-2">{item.id}</td>
                                         <td className="px-4 py-2">{item.section}</td>
-                                        <td className="px-4 py-2">{item.date}</td>
+                                        <td className="px-4 py-2">{item.college}</td>
+                                        <td className="px-4 py-2">{item.term}</td>
+                                        <td className="px-4 py-2">{item.slots}</td>
+                                        <td className="px-4 py-2">{item.enlisted}</td>
+                                        <td className="px-4 py-2">{item.academic}</td>
+
                                         <td className="text-center flex justify-center items-center">
                                             <FaEdit className="bg-main-blue text-white rounded text-2xl w-7 h-7 p-1 m-1" />
                                             <FaTrash className="bg-main-red text-white rounded text-2xl w-7 h-7 p-1 m-1" />
@@ -132,61 +132,55 @@ const Sections = () => {
                         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
                             <div className="bg-white p-4 rounded-lg w-full max-w-lg">
                                 <div className="flex justify-between">
-                                    <h2 className="text-xl font-bold mb-4">Add Student</h2>
+                                    <h2 className="text-xl font-bold mb-4">Add Section</h2>
                                     <button className="flex bg-main-red items-center text-white p-2" onClick={closeSectionModal}>
                                         X
                                     </button>
                                 </div>
-                                <div className="grid grid-cols-1 gap-4">
-                                    <div className="mb-4">
-                                        <label htmlFor="selectCollege" className="text-sm font-medium">
-                                            Curriculum
-                                        </label>
-                                        <select
-                                            className="w-full border p-2 rounded"
-                                            placeholder="Select"
-                                        >
-                                            <option>BSCS 2023</option>
-                                            <option>BSCS 2022</option>
-                                            <option>BSCS 2021</option>
-                                        </select>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    {/* First Column */}
+                                    <div>
+                                        <div className="mb-4">
+                                            <label htmlFor="firstName" className="text-sm font-medium">Block ID</label>
+                                            <input type="text" className="w-full border p-2 rounded" />
+                                        </div>
+                                        <div className="mb-4">
+                                            <label htmlFor="firstName" className="text-sm font-medium">College</label>
+                                            <select className="w-full border p-2 rounded">
+                                                <option >CET</option>
+                                                <option >CHASS</option>
+                                            </select>
+                                        </div>
+                                        <div className="mb-4">
+                                            <label htmlFor="firstName" className="text-sm font-medium">Slots</label>
+                                            <input type="text" className="w-full border p-2 rounded" />
+                                        </div>
+
                                     </div>
 
-                                    <div className="mb-4">
-                                        <label htmlFor="selectProgram" className="text-sm font-medium">
-                                            Select a Program
-                                        </label>
-                                        <select
-                                            className="w-full border p-2 rounded"
-                                            placeholder="Select"
-                                        >
-                                            <option>CSC 0413</option>
-                                            <option>CSC 0413</option>
-                                            <option>CSC 0413</option>
-                                            <option>CSC 0413</option>
-                                        </select>
-                                    </div>
-
-                                    <div className="mb-4">
-                                        <div className="blocks">
-                                            <label>
-                                                Block(s)
-                                            </label>
-
-                                            <div className='flex justify-between border p-2'>
-                                                <span className='w-full'>BSCS 4-3 </span>
-                                                <FaMinusCircle className="m-1 text-main-red" />
-                                            </div>
+                                    {/* Second Column */}
+                                    <div>
+                                        <div className="mb-4">
+                                            <label htmlFor="birthdate" className="text-sm font-medium">Section</label>
+                                            <input type="text" className="w-full border p-2 rounded" />
 
                                         </div>
-                                        <select className='w-full border mt-1 p-2'>
-                                            <option value="">Add Another Block</option>
-                                            <option value="Block 1">Block 1</option>
-                                            <option value="Block 2">Block 2</option>
-                                            <option value="Block 3">Block 3</option>
-                                        </select>
-                                    </div>
+                                        <div className="mb-4">
+                                            <label htmlFor="birthdate" className="text-sm font-medium">Term</label>
+                                            <select className="w-full border p-2 rounded">
+                                                <option >4</option>
+                                                <option >3</option>
+                                            </select>
 
+                                        </div>
+                                        <div className="mb-4">
+                                            <label htmlFor="birthdate" className="text-sm font-medium">Academic Year</label>
+                                            <input type="text" className="w-full border p-2 rounded" />
+
+                                        </div>
+
+
+                                    </div>
                                 </div>
                                 <button className="bg-main-red text-white rounded-lg p-2 mt-4 ml-auto flex">
                                     Save
