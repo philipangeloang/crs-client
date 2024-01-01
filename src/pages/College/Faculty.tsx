@@ -11,12 +11,7 @@ const Faculty = () => {
 
     // Dummy data 
     const tableData = [
-        { id: 1, identity: '010101', name: 'System Administrator', designation: 'Graduate Program Head', college: 'CET' },
-        { id: 2, identity: '020202', name: 'ictocet', designation: 'Graduate Program Head', college: 'CET' },
-        { id: 3, identity: '020202', name: 'ictocet', designation: 'Graduate Program Head', college: 'CET' },
-        { id: 4, identity: '020202', name: 'ictocet', designation: 'Graduate Program Head', college: 'CET' },
-        { id: 5, identity: '020202', name: 'ictocet', designation: 'Graduate Program Head', college: 'CET' },
-        { id: 6, identity: '020202', name: 'Jane Doe', designation: 'Graduate Program Head', college: 'CET' },
+        { id: 1, identity: '010101', inscode: "admin", name: 'SANTOS, MARIA CLARA REYES', designation: 'Graduate Program Head', college: 'CET' },
         // Add more data as needed
     ];
 
@@ -42,6 +37,17 @@ const Faculty = () => {
         console.log('Close button clicked');
         setEditModalOpen(false);
     };
+
+
+        const [isModalOpen, setModalOpen] = useState(false);
+      
+        const openModal = () => {
+          setModalOpen(true);
+        };
+      
+        const closeModal = () => {
+          setModalOpen(false);
+        };
 
 
 
@@ -72,10 +78,11 @@ const Faculty = () => {
                                 placeholder="Search"
                                 className="border p-2 rounded"
                             />
-                            <button className="ml-2">
+                            <button className="ml-2" onClick={openModal} >
                                 <FiArrowRight className="border text-2xl h-10" />
                             </button>
                         </div>
+                        
                         <div className="flex items-center">
 
                             <button className=" bg-main-red text-white rounded-lg p-2 ml-3" onClick={openFacultyModal}>
@@ -87,11 +94,11 @@ const Faculty = () => {
                         <table className="min-w-full table-auto  bg-white shadow-md rounded-lg">
                             <thead>
                                 <tr className="bg-main-red text-white rounded-lg border ">
-                                    <th>#</th>
-                                    <th>Identity #</th>
+                                    <th>Instructor ID</th>
+                                    <th>Instructor Code</th>
                                     <th>Name</th>
                                     <th>Designation</th>
-                                    <th>College</th>
+                                    <th>Department Name</th>
                                     <th>Status</th>
                                     <th>Actions</th>
                                 </tr>
@@ -100,10 +107,11 @@ const Faculty = () => {
                                 {tableData.map((item) => (
                                     <tr className="border" key={item.id}>
                                         <td className="px-4 py-2">{item.id}</td>
-                                        <td className="px-4 py-2">{item.identity}</td>
+                                        <td className="px-4 py-2">{item.inscode}</td>
                                         <td className="px-4 py-2">{item.name}</td>
                                         <td className="px-4 py-2">{item.designation}</td>
                                         <td className="px-4 py-2">{item.college}</td>
+            
                                         <td>
                                             <button
                                                 className=" text-main-green p-2 rounded mr-2" >
@@ -247,17 +255,18 @@ const Faculty = () => {
                                             <label htmlFor="maiden" className="text-sm font-medium">Maiden</label>
                                             <input type="text" id="maiden" className="w-full border p-2 rounded" />
                                         </div>
+                                        <div className="mb-4">
+                                            <label htmlFor="birthdate" className="text-sm font-medium">Birth Place</label>
+                                            <input type="date" id="birthdate" className="w-full border p-2 rounded" />
+                                        </div>
                                     </div>
 
                                     {/* Second Column */}
                                     <div>
-                                        <div className="mb-4">
-                                            <label htmlFor="email" className="text-sm font-medium">Email Address</label>
-                                            <input type="email" id="email" className="w-full border p-2 rounded" />
-                                        </div>
-                                        <div className="mb-4">
-                                            <label htmlFor="contactNumber" className="text-sm font-medium">Contact Number</label>
-                                            <input type="tel" id="contactNumber" className="w-full border p-2 rounded" />
+                                    <div className="mb-4">
+                                            <label htmlFor="birthdate" className="text-sm font-medium">Birthdate</label>
+                                            <input type="date" id="birthdate" className="w-full border p-2 rounded" />
+                                    
                                         </div>
                                         <div className="mb-4">
                                             <label htmlFor="sex" className="text-sm font-medium">Sex</label>
@@ -267,13 +276,27 @@ const Faculty = () => {
                                             </select>
                                         </div>
                                         <div className="mb-4">
-                                            <label htmlFor="address" className="text-sm font-medium">Address</label>
-                                            <input type="text" id="address" className="w-full border p-2 rounded" />
+                                            <label htmlFor="email" className="text-sm font-medium"> Personal Email Address</label>
+                                            <input type="email" id="email" className="w-full border p-2 rounded" />
                                         </div>
                                         <div className="mb-4">
-                                            <label htmlFor="birthdate" className="text-sm font-medium">Birthdate</label>
-                                            <input type="date" id="birthdate" className="w-full border p-2 rounded" />
+                                            <label htmlFor="contactNumber" className="text-sm font-medium">Contact Number</label>
+                                            <input type="tel" id="contactNumber" className="w-full border p-2 rounded" />
                                         </div>
+                                        <div className="mb-4">
+                                            <label htmlFor="contactNumber" className="text-sm font-medium">Designation</label>
+                                            <input type="text"className="w-full border p-2 rounded" />
+                                        </div>
+                                        <div className="mb-4">
+                                            <label htmlFor="contactNumber" className="text-sm font-medium">Instructor Code</label>
+                                            <input type="text " className="w-full border p-2 rounded" />
+                                        </div>
+                                   
+                                        <div className="mb-4">
+                                            <label htmlFor="address" className="text-sm font-medium">Department name</label>
+                                            <input type="text" id="address" className="w-full border p-2 rounded" />
+                                        </div>
+                                    
                                     </div>
                                 </div>
                                 <button
@@ -287,6 +310,49 @@ const Faculty = () => {
 
 
                 </div>
+                {isModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-4 rounded-lg">
+            <h2 className="text-xl font-bold mb-4">Search Staff</h2>
+
+            {/* Employee Number Input */}
+            <div className="mb-4">
+              <label className="text-sm" htmlFor="employeeNumber">
+                Employee Number
+              </label>
+              <input
+                type="text"
+                id="employeeNumber"
+                className="w-full border p-2 rounded"
+                placeholder="Enter Employee Number"
+              />
+            </div>
+
+            {/* Employee Name Input */}
+            <div className="mb-4">
+              <label className="text-sm" htmlFor="employeeName">
+                Employee Name
+              </label>
+              <input
+                type="text"
+                id="employeeName"
+                className="w-full border p-2 rounded"
+                placeholder="Enter Employee Name"
+              />
+            </div>
+
+            {/* Search Button */}
+            <div className="flex justify-center">
+              <button
+                className="bg-main-red text-white p-2 rounded"
+                onClick={closeModal}
+              >
+                Search
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
             </div>
 
