@@ -18,12 +18,7 @@ const AddDropReq = () => {
 
     // Dummy data 
     const tableData = [
-        { id: 202361003, name: 'FERNANDEZ, JOSE LUIS GARCIA', program: 'MSMANENG', college: 'CET-GP', reqDate: '2023-09-20 12:58:20', status: 'Approved' },
-        { id: 202361003, name: 'FERNANDEZ, JOSE LUIS GARCIA', program: 'MSMANENG', college: 'CET-GP', reqDate: '2023-09-20 12:58:20', status: 'Approved' },
-        { id: 202361003, name: 'FERNANDEZ, JOSE LUIS GARCIA', program: 'MSMANENG', college: 'CET-GP', reqDate: '2023-09-20 12:58:20', status: 'Approved' },
-        { id: 202361003, name: 'FERNANDEZ, JOSE LUIS GARCIA', program: 'MSMANENG', college: 'CET-GP', reqDate: '2023-09-20 12:58:20', status: 'Approved' },
-        { id: 202361003, name: 'FERNANDEZ, JOSE LUIS GARCIA', program: 'MSMANENG', college: 'CET-GP', reqDate: '2023-09-20 12:58:20', status: 'Approved' },
-        { id: 202361003, name: 'FERNANDEZ, JOSE LUIS GARCIA', program: 'MSMANENG', college: 'CET-GP', reqDate: '2023-09-20 12:58:20', status: 'Approved' },
+        { id: 202361003, name: 'FERNANDEZ, JOSE LUIS GARCIA', program: 'MSMANENG', college: 'CET-GP', reqDate: '2023-09-20 12:58:20', status: 'Approved', checker: 'ictocet', date: '2023-09-20 14:23:40' },
     ];
 
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -89,6 +84,8 @@ const AddDropReq = () => {
                                 <th>College</th>
                                 <th>Request Date</th>
                                 <th>Status</th>
+                                <th>Checked By</th>
+                                <th>Checked Date</th>
                             </tr>
                         </thead>
                         <tbody className="text-center border">
@@ -103,6 +100,8 @@ const AddDropReq = () => {
                                     <td className="px-4 py-2">{item.college}</td>
                                     <td className="px-4 py-2">{item.reqDate}</td>
                                     <td className="px-4 py-2 text-main-green">{item.status}</td>
+                                    <td className="px-4 py-2 text-main-green">{item.checker}</td>
+                                    <td className="px-4 py-2 text-main-green">{item.date}</td>
                                 </tr>
                             ))}
                         </tbody>
@@ -156,8 +155,8 @@ const AddDropReq = () => {
                                     <table className="min-w-full table-auto bg-white shadow-md rounded-lg">
                                         <thead>
                                             <tr className="bg-main-red text-white rounded-lg border ">
-                                                <th>Section ID</th>
-                                                <th>Section</th>
+                                                <th>Class ID</th>
+                                                <th>Subject Code / Section</th>
                                                 <th>Date Created</th>
                                             </tr>
                                         </thead>
@@ -179,8 +178,8 @@ const AddDropReq = () => {
                                     <table className="min-w-full table-auto bg-white shadow-md rounded-lg h-[100px]">
                                         <thead>
                                             <tr className="bg-main-red text-white rounded-lg border ">
-                                                <th>Section ID</th>
-                                                <th>Section</th>
+                                                <th>Class ID</th>
+                                                <th>Subject Code / Section</th>
                                                 <th>Date Created</th>
                                             </tr>
                                         </thead>

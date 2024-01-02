@@ -8,11 +8,7 @@ const Classes = () => {
 
     // Dummy data 
     const tableData = [
-        { id: 2121231, subjectCode: 'CSC 0413-1', subjectName: 'ENGINEERING RESEARCH AND DEVELOPMENT', course: 'ME-CE, ME-SE, MEM-CM, MEM-MM, MIT, MS-ICT, MSMANENG', professor: 'PANGAYAO, DENVERT C.' },
-        { id: 2121231, subjectCode: 'CSC 0413-1', subjectName: 'ENGINEERING RESEARCH AND DEVELOPMENT', course: 'ME-CE, ME-SE, MEM-CM, MEM-MM, MIT, MS-ICT, MSMANENG', professor: 'PANGAYAO, DENVERT C.' },
-        { id: 2121231, subjectCode: 'CSC 0413-1', subjectName: 'ENGINEERING RESEARCH AND DEVELOPMENT', course: 'ME-CE, ME-SE, MEM-CM, MEM-MM, MIT, MS-ICT, MSMANENG', professor: 'PANGAYAO, DENVERT C.' },
-        { id: 2121231, subjectCode: 'CSC 0413-1', subjectName: 'ENGINEERING RESEARCH AND DEVELOPMENT', course: 'ME-CE, ME-SE, MEM-CM, MEM-MM, MIT, MS-ICT, MSMANENG', professor: 'PANGAYAO, DENVERT C.' },
-        { id: 2121231, subjectCode: 'CSC 0413-1', subjectName: 'ENGINEERING RESEARCH AND DEVELOPMENT', course: 'ME-CE, ME-SE, MEM-CM, MEM-MM, MIT, MS-ICT, MSMANENG', professor: 'PANGAYAO, DENVERT C.' },
+        { id: 2121231, subjectCode: 'CSC 0413-1', subjectName: 'ENGINEERING RESEARCH AND DEVELOPMENT', course: 'ME-CE, ME-SE, MEM-CM, MEM-MM, MIT, MS-ICT, MSMANENG', professor: 'PANGAYAO, DENVERT C.', slot: '40', start: 'N/A', end: 'N/A' },
     ];
 
 
@@ -48,6 +44,20 @@ const Classes = () => {
                             </button>
                             <div className="mb-5 ml-3">
                                 <label htmlFor="selectCollege" className="text-sm font-medium">
+                                College
+                                </label>
+                                <select
+                                    id="selectCollege"
+                                    className="w-full border p-2 rounded"
+                                    placeholder="Select"
+                                >
+                                    <option>College of Engineering and Technology</option>
+                                    <option>College of Engineering and Technology</option>
+                                    <option>College of Engineering and Technology</option>
+                                </select>
+                            </div>
+                            <div className="mb-5 ml-3">
+                                <label htmlFor="selectCollege" className="text-sm font-medium">
                                     AY Sem
                                 </label>
                                 <select
@@ -77,9 +87,14 @@ const Classes = () => {
                                     <th>Actions</th>
                                     <th>Class ID</th>
                                     <th>Subject Code</th>
-                                    <th>Subject Name</th>
-                                    <th>Course</th>
-                                    <th>Proffesor</th>
+                                    <th>Subject Title</th>
+                                    <th>Program(s)</th>
+                                    <th>Profesor</th>
+                                    <th>Slots</th>
+                                    <th>Enrolled</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    
                                 </tr>
                             </thead>
                             <tbody className="text-center border">
@@ -96,6 +111,9 @@ const Classes = () => {
                                         <td className="px-4 py-2">{item.subjectName}</td>
                                         <td className="px-4 py-2">{item.course}</td>
                                         <td className="px-4 py-2">{item.professor}</td>
+                                        <td className="px-4 py-2">{item.slot}</td>
+                                        <td className="px-4 py-2">{item.start}</td>
+                                        <td className="px-4 py-2">{item.end}</td>
                                     </tr>
                                 ))}
                             </tbody>

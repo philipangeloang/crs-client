@@ -1,6 +1,6 @@
 import DateTime from '@/components/DateTime';
 import React, { useState } from 'react';
-import { FiArrowRight, FiArrowLeft } from 'react-icons/fi';
+import { FiArrowRight, FiArrowLeft }  from 'react-icons/fi';
 import { FaEdit, FaTrash, FaMinusCircle } from 'react-icons/fa';
 
 const Sections = () => {

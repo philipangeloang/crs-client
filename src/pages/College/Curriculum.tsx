@@ -105,6 +105,15 @@ const Curriculum = () => {
     setEditModalOpen(false);
   };
 
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const openModal = () => {
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
 
 
 
@@ -142,7 +151,7 @@ const Curriculum = () => {
               <div className="ml-3 flex flex-row justify-center items-center bg-main-red text-white rounded-lg p-2">
                 <FaExchangeAlt />
                 <button onClick={toggleRow2Visibility} className='pl-1'>
-                  Affected Programs
+                  Program List
                 </button>
               </div>
             </div>
@@ -264,6 +273,57 @@ const Curriculum = () => {
               )}
             </div>
           </div>
+          <button className='rounded mt-2 w-1/4 bg-main-red text-white p-2' onClick={openModal}>
+            Add Curriculum
+          </button>
+          {isModalOpen && (
+            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+              <div className="bg-white p-4 rounded-lg">
+
+                <div className="flex justify-between">
+                  <h2 className="text-xl font-bold mb-4">Curriculum Information</h2>
+                  <button
+                    onClick={closeModal}
+                    className="bg-main-red p-2 rounded text-white font-bold cursor-pointer"
+                  >
+                    X
+                  </button>
+                </div>
+                <div className='w-full mt-5 mb-5'>
+
+                  <div className='w-full mt-5 mb-5'>
+                    <label htmlFor='subjectName'>
+                      Program Code
+                    </label>
+                    <select
+                      className="w-full border p-2 rounded"
+
+                    >
+                      <option value="">Select Subject Name</option>
+                      <option value="CS Elective">CS Elective</option>
+                      <option value="CSC Software Engineering">CSC Software Engineering</option>
+                    </select>
+                  </div>
+                  <div className='w-full mt-5 mb-5'>
+                    <label htmlFor='subjectName'>
+                      Academic Year
+                    </label>
+                   <input type="text" className='w-full border p-2 rounded border' placeholder='2023'/>
+                  </div>
+
+                  <div className="w-full flex justify-center mt-5">
+                    <button className='w-[200px] bg-main-red text-white p-2'>
+                      Save
+                    </button>
+                  </div>
+
+                </div>
+
+                {/* Close Button */}
+
+              </div>
+            </div>
+          )}
         </div>
 
 
@@ -317,7 +377,9 @@ const Curriculum = () => {
                 ))}
               </tbody>
             </table>
+
           </div>
+
           {/* Modal for Editing */}
           {editModalOpen && (
 
@@ -359,6 +421,7 @@ const Curriculum = () => {
             </div>
 
           )}
+
 
 
 

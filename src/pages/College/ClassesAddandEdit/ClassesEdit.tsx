@@ -69,9 +69,15 @@ const ClassesEdit = () => {
         (
             // Step 1 
             <div className="w-full mt-10 p-5 border shadow rounded" key={1}>
-                <div className="mb-3">
-                    <label htmlFor="Course" className="form-label">Course Number: </label>
-                    <select className="form-select ml-3 p-1 w-1/2 border rounded form-control">
+               <div className="mb-3">
+                    <label htmlFor="Course" className="form-label">Program Code: </label>
+                    <select className="form-select ml-4 p-1 w-1/3 border rounded form-control">
+                        <option></option>
+                        <option>2021343</option>
+                        <option>202334</option>
+                    </select>
+                    <label htmlFor="Course" className="form-label ml-2">Subject Code : </label>
+                    <select className="form-select ml-3 p-1 w-1/3 border rounded form-control">
                         <option></option>
                         <option>2021343</option>
                         <option>202334</option>
@@ -294,7 +300,8 @@ const ClassesEdit = () => {
                     <div className="flex justify-end flex-row">
                         <button
                             type="button"
-                            className="bg-main-red text-white mr-2 p-2 flex justify-center items-center">
+                            className="bg-main-red text-white mr-2 p-2 flex justify-center items-center"
+                            >
                             <FaAngleLeft />
                             Cancel
                         </button>

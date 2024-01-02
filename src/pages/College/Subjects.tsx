@@ -10,13 +10,8 @@ const Subjects = () => {
 
     // Dummy data 
     const tableData = [
-        { class: 'ARE 101', section: '2', subjectTitle: 'Theory of Structures', schedule: 'M 4:00-5:30PM LecSyncOL FIELD  Th 4:00-5:30PM F2F GCA 303', instructor: 'Jamillah S. Guialil', slots: '50', students: '40' },
-        { class: 'ARE 101', section: '2', subjectTitle: 'Theory of Structures', schedule: 'M 4:00-5:30PM LecSyncOL FIELD  Th 4:00-5:30PM F2F GCA 303', instructor: 'Jamillah S. Guialil', slots: '50', students: '40' },
-        { class: 'ARE 101', section: '2', subjectTitle: 'Theory of Structures', schedule: 'M 4:00-5:30PM LecSyncOL FIELD  Th 4:00-5:30PM F2F GCA 303', instructor: 'Jamillah S. Guialil', slots: '50', students: '40' },
-        { class: 'ARE 101', section: '2', subjectTitle: 'Theory of Structures', schedule: 'M 4:00-5:30PM LecSyncOL FIELD  Th 4:00-5:30PM F2F GCA 303', instructor: 'Jamillah S. Guialil', slots: '50', students: '40' },
-        { class: 'ARE 101', section: '2', subjectTitle: 'Theory of Structures', schedule: 'M 4:00-5:30PM LecSyncOL FIELD  Th 4:00-5:30PM F2F GCA 303', instructor: 'Jamillah S. Guialil', slots: '50', students: '40' },
-        { class: 'ARE 101', section: '2', subjectTitle: 'Theory of Structures', schedule: 'M 4:00-5:30PM LecSyncOL FIELD  Th 4:00-5:30PM F2F GCA 303', instructor: 'Jamillah S. Guialil', slots: '50', students: '40' },
-        { class: 'ARE 101', section: '2', subjectTitle: 'Theory of Structures', schedule: 'M 4:00-5:30PM LecSyncOL FIELD  Th 4:00-5:30PM F2F GCA 303', instructor: 'Jamillah S. Guialil', slots: '50', students: '40' },
+        { class: 'ARE 101', section: '2', subjectTitle: 'Theory of Structures', schedule: 'M 4:00-5:30PM LecSyncOL FIELD  Th 4:00-5:30PM F2F GCA 303', instructor: 'Jamillah S. Guialil', slots: '50', unit:'30', enroll: '40' },
+
 
     ];
 
@@ -97,13 +92,14 @@ const Subjects = () => {
                     <table className="min-w-full table-auto bg-white shadow-md rounded-lg border shadow">
                         <thead>
                             <tr className="bg-main-red text-white rounded-lg border ">
-                                <th className="px-4 py-2">Class</th>
+                                <th className="px-4 py-2">Subject Code</th>
                                 <th className="px-4 py-2">Section</th>
                                 <th className="px-4 py-2">Subject Title</th>
                                 <th className="px-4 py-2">Schedule</th>
                                 <th className="px-4 py-2">Instructor</th>
+                                <th className="px-4 py-2">Units</th>
                                 <th className="px-4 py-2">Slots</th>
-                                <th className="px-4 py-2">Students</th>
+                                <th className="px-4 py-2">Enrolled</th>
                                 <th className="px-4 py-2">Action</th>
                             </tr>
                         </thead>
@@ -115,8 +111,9 @@ const Subjects = () => {
                                     <td className="px-4 py-2">{item.subjectTitle}</td>
                                     <td className="px-4 py-2">{item.schedule}</td>
                                     <td className="px-4 py-2">{item.instructor}</td>
+                                    <td className="px-4 py-2">{item.unit}</td>
                                     <td className="px-4 py-2">{item.slots}</td>
-                                    <td className="px-4 py-2">{item.students}</td>
+                                    <td className="px-4 py-2">{item.enroll}</td>
                                     <td className="flex items-center justify-center">
                                         <button>
                                             <FaEdit className="bg-main-blue text-white text-lg m-2 p-1 w-7 h-7 rounded" />
