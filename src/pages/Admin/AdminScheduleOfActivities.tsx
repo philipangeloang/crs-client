@@ -1,5 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import moment from "moment";
 
 import { AiOutlineCalendar, AiOutlineClockCircle } from "react-icons/ai";
 import { RiEditCircleLine, RiDeleteBin2Line } from "react-icons/ri";
@@ -19,14 +19,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
-import api from "../../api/fetch";
-
-import toast, { Toaster } from "react-hot-toast";
-
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
 import {
   Form,
   FormControl,
@@ -35,6 +27,14 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+
+import toast, { Toaster } from "react-hot-toast";
+import api from "../../api/fetch";
+import moment from "moment";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
 
 const formSchema = z.object({
   activity: z.string().min(1, {
@@ -59,6 +59,15 @@ const formSchema = z.object({
     message: "Please Enter Time",
   }),
 });
+
+function ActivityName({ activityTypes, activity }) {
+  // Finding the Name equivalent to the ID and rendering it based on the matched value
+  const name = activityTypes.find(
+    (item: { activity_type_id: any }) =>
+      item.activity_type_id === activity.activity_type_id
+  );
+  return name.activity_type_name;
+}
 
 const AdminScheduleOfActivities = () => {
   const form = useForm<z.infer<typeof formSchema>>({
@@ -145,13 +154,8 @@ const AdminScheduleOfActivities = () => {
     }
   };
 
-  // State for Opening and Closing Modal
   const [activityModalOpen, setActivityModalOpen] = useState(false);
-
-  // State for activity_types content
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [activityTypes, setActivityTypes] = useState<any[]>([]);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [activities, setActivities] = useState<any[]>([]);
 
   return (
@@ -221,7 +225,7 @@ const AdminScheduleOfActivities = () => {
                   className="col-span-2 px-2 py-3 border-l border-b border-main-gray text-center"
                   key={item.activity_id}
                 >
-                  {item.activity_type_id}
+                  <ActivityName activityTypes={activityTypes} activity={item} />
                 </div>
                 <div className="text-center col-span-2 px-2 py-3 border-b border-main-gray">
                   <p className="px-4 py-1 border border-main-gray w-24 mx-auto rounded-lg">
