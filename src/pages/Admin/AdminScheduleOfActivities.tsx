@@ -1,3 +1,6 @@
+"use client";
+import moment from "moment";
+
 import { AiOutlineCalendar, AiOutlineClockCircle } from "react-icons/ai";
 import { RiEditCircleLine, RiDeleteBin2Line } from "react-icons/ri";
 import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
@@ -5,40 +8,152 @@ import { HiXMark } from "react-icons/hi2";
 import DateTime from "@/components/DateTime";
 import TempRoleSelector from "../TempRoleSelector";
 import { Input } from "@/components/ui/input";
-import { tableSchedActivities } from "./TestData";
-import { useState } from "react";
-import { Label } from "@/components/ui/label";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
+import api from "../../api/fetch";
+
+import toast, { Toaster } from "react-hot-toast";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+
+const formSchema = z.object({
+  activity: z.string().min(1, {
+    message: "Please Choose Activity",
+  }),
+  academicYear: z.string().min(1, {
+    message: "Please Enter Academic Year",
+  }),
+  term: z.string().min(1, {
+    message: "Please Enter Term",
+  }),
+  startDate: z.string().min(1, {
+    message: "Please Enter Date",
+  }),
+  startTime: z.string().min(1, {
+    message: "Please Enter Time",
+  }),
+  endDate: z.string().min(1, {
+    message: "Please Enter Date",
+  }),
+  endTime: z.string().min(1, {
+    message: "Please Enter Time",
+  }),
+});
 
 const AdminScheduleOfActivities = () => {
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      activity: "",
+      academicYear: "",
+      term: "",
+      startDate: "",
+      startTime: "",
+      endDate: "",
+      endTime: "",
+    },
+  });
+
+  useEffect(() => {
+    const fetchActivities = async () => {
+      try {
+        const response1 = await api.get("/api/activity-types", {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true /* Necessary for storing cookies */,
+        });
+
+        const response2 = await api.get("/api/activities", {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true /* Necessary for storing cookies */,
+        });
+
+        const data1 = await response1.data.data;
+        const data2 = await response2.data;
+
+        if (data1) {
+          setActivityTypes(data1);
+        }
+
+        if (data2) {
+          setActivities(data2.data);
+        }
+
+        console.log("API response:", data1);
+        return data1;
+      } catch (error) {
+        console.error("API request error:", error);
+      }
+    };
+
+    fetchActivities();
+  }, []);
+
+  const handleSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      const responsePost = await api.post(
+        "/api/activities",
+        {
+          activity_type_id: values.activity,
+          academic_year: values.academicYear,
+          term: values.term,
+          start_date: values.startDate + " " + values.startTime + ":00",
+          end_date: values.endDate + " " + values.endTime + ":00",
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true /* Necessary for storing cookies */,
+        }
+      );
+
+      const dataPost = await responsePost.data;
+      console.log("API response:", dataPost);
+
+      if (dataPost) {
+        toast.success("Successfully Created!");
+      } else {
+        toast.error("Error Creating Instance");
+      }
+      return dataPost;
+    } catch (error) {
+      console.error("API request error:", error);
+    }
+  };
+
   // State for Opening and Closing Modal
   const [activityModalOpen, setActivityModalOpen] = useState(false);
 
-  // State for Searching and Filtering
-  const [search, setSearch] = useState("");
+  // State for activity_types content
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [activityTypes, setActivityTypes] = useState<any[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [activities, setActivities] = useState<any[]>([]);
 
-  // State for Moving Along Pages
-  const [schedActivities] = useState(tableSchedActivities);
-  // const [loading, setLoading] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [postPerPage] = useState(5);
-
-  // Logic to get the accurage number of pages
-  const indexOfLastAct = currentPage * postPerPage;
-  const indexOfFirstAct = indexOfLastAct - postPerPage;
-  const currentAct =
-    search === ""
-      ? schedActivities.slice(indexOfFirstAct, indexOfLastAct)
-      : schedActivities.filter((item) => {
-          return search.toLowerCase() === " "
-            ? item
-            : item.activity.toLowerCase().includes(search);
-        });
-  const pageNumbers = [];
-
-  for (let i = 1; i <= Math.ceil(schedActivities.length / postPerPage); i++) {
-    pageNumbers.push(i);
-  }
   return (
     <div className="h-screen w-full p-10 px-16 flex flex-col justify-between font-montserrat overflow-x-hidden">
       {/* Row 1 and 2 */}
@@ -63,9 +178,6 @@ const AdminScheduleOfActivities = () => {
               <Input
                 className="border border-main-gray w-60"
                 placeholder="Search"
-                onChange={(e) => {
-                  setSearch(e.target.value.toLowerCase());
-                }}
               />
               <div className="border border-main-gray p-2 rounded-lg">
                 <FiArrowRight />
@@ -83,11 +195,14 @@ const AdminScheduleOfActivities = () => {
 
           <div className="grid grid-cols-12 mt-5 ">
             {/* Table Header */}
-            <div className="font-bold bg-main-red rounded-tl-lg text-white p-3 col-span-2">
-              Activity
+            <div className="font-bold bg-main-red rounded-tl-lg text-white p-3 col-span-2 text-center">
+              Activity Type Name
             </div>
-            <div className="font-bold bg-main-red text-white p-3 col-span-3 text-center">
-              AY Sem
+            <div className="font-bold bg-main-red text-white p-3 col-span-2 text-center">
+              Academic Year
+            </div>
+            <div className="font-bold bg-main-red text-white p-3 col-span-2 text-center">
+              Term
             </div>
             <div className="font-bold bg-main-red text-white p-3 col-span-2 text-center">
               Schedule Start
@@ -95,70 +210,74 @@ const AdminScheduleOfActivities = () => {
             <div className="font-bold bg-main-red text-white p-3 col-span-2 text-center">
               Schedule End
             </div>
-            <div className="font-bold bg-main-red rounded-tr-lg text-white p-3 col-span-3 text-center">
+            <div className="font-bold bg-main-red rounded-tr-lg text-white p-3 col-span-2 text-center">
               Action
             </div>
 
             {/* Table Contents */}
-            {currentAct
-              .filter((item) => {
-                return search.toLowerCase() === " "
-                  ? item
-                  : item.activity.toLowerCase().includes(search);
-              })
-              .map((item) => (
-                <>
-                  <div
-                    className="col-span-2 px-2 py-3 border-l border-b border-main-gray"
-                    key={item.id}
-                  >
-                    {item.activity}
-                  </div>
-                  <div className="text-center col-span-3 px-2 py-3 border-b border-main-gray">
-                    <p className="px-7 py-1 border border-main-gray w-36 mx-auto rounded-lg">
-                      {item.semester}
-                    </p>
-                  </div>
-                  <div className="text-center col-span-2 px-2 py-3 flex flex-col border-b border-main-gray">
-                    <p className="px-7 py-1 border border-main-gray w-44 mx-auto rounded-lg flex gap-2 justify-between items-center">
-                      {item.startDate}
-                      <span>
-                        <AiOutlineCalendar size="20" />
-                      </span>
-                    </p>
-                    <p className="px-7 py-1 border border-main-gray w-44 mx-auto rounded-lg flex gap-2 justify-between items-center mt-3">
-                      {item.startTime}
-                      <span>
-                        <AiOutlineClockCircle size="20" />
-                      </span>
-                    </p>
-                  </div>
-                  <div className="text-center col-span-2 px-2 py-3 flex flex-col border-b border-main-gray">
-                    <p className="px-7 py-1 border border-main-gray w-44 mx-auto rounded-lg flex gap-2 justify-between items-center">
-                      {item.endDate}
-                      <span>
-                        <AiOutlineCalendar size="20" />
-                      </span>
-                    </p>
-                    <p className="px-7 py-1 border border-main-gray w-44 mx-auto rounded-lg flex gap-2 justify-between items-center mt-3">
-                      {item.endTime}
-                      <span>
-                        <AiOutlineClockCircle size="20" />
-                      </span>
-                    </p>
-                  </div>
-                  <div className="col-span-3 px-2 py-4 flex justify-center items-center border-b border-r border-main-gray ">
-                    <div className="flex gap-2">
-                      <div className="bg-main-blue text-white rounded-lg h-10 w-10 flex justify-center items-center mx-auto">
-                        <RiEditCircleLine size="30" />
-                      </div>
-                      <div className="bg-main-red text-white rounded-lg h-10 w-10 flex justify-center items-center mx-auto">
-                        <RiDeleteBin2Line size="30" />
-                      </div>
+            {activities.map((item) => (
+              <>
+                <div
+                  className="col-span-2 px-2 py-3 border-l border-b border-main-gray text-center"
+                  key={item.activity_id}
+                >
+                  {item.activity_type_id}
+                </div>
+                <div className="text-center col-span-2 px-2 py-3 border-b border-main-gray">
+                  <p className="px-4 py-1 border border-main-gray w-24 mx-auto rounded-lg">
+                    {item.academic_year}
+                  </p>
+                </div>
+                <div className="text-center col-span-2 px-2 py-3 border-b border-main-gray">
+                  <p className="px-4 py-1 border border-main-gray w-24 mx-auto rounded-lg">
+                    {item.term}
+                  </p>
+                </div>
+                <div className="text-center col-span-2 px-2 py-3 flex flex-col border-b border-main-gray">
+                  <p className="px-7 py-1 border border-main-gray w-48 mx-auto rounded-lg flex gap-2 justify-between items-center">
+                    {item.start_date.split(" ")[0]}
+
+                    <span>
+                      <AiOutlineCalendar size="20" />
+                    </span>
+                  </p>
+                  <p className="px-7 py-1 border border-main-gray w-48 mx-auto rounded-lg flex gap-2 justify-between items-center mt-3">
+                    {moment(item.start_date.split(" ")[1], "HH:mm:ss").format(
+                      "h:mm:ss A"
+                    )}
+                    <span>
+                      <AiOutlineClockCircle size="20" />
+                    </span>
+                  </p>
+                </div>
+                <div className="text-center col-span-2 px-2 py-3 flex flex-col border-b border-main-gray">
+                  <p className="px-7 py-1 border border-main-gray w-48 mx-auto rounded-lg flex gap-2 justify-between items-center">
+                    {item.end_date.split(" ")[0]}
+                    <span>
+                      <AiOutlineCalendar size="20" />
+                    </span>
+                  </p>
+                  <p className="px-7 py-1 border border-main-gray w-48 mx-auto rounded-lg flex gap-2 justify-between items-center mt-3">
+                    {moment(item.end_date.split(" ")[1], "HH:mm:ss").format(
+                      "h:mm:ss A"
+                    )}
+                    <span>
+                      <AiOutlineClockCircle size="20" />
+                    </span>
+                  </p>
+                </div>
+                <div className="col-span-2 px-2 py-4 flex justify-center items-center border-b border-r border-main-gray ">
+                  <div className="flex gap-2">
+                    <div className="bg-main-blue text-white rounded-lg h-10 w-10 flex justify-center items-center mx-auto">
+                      <RiEditCircleLine size="30" />
+                    </div>
+                    <div className="bg-main-red text-white rounded-lg h-10 w-10 flex justify-center items-center mx-auto">
+                      <RiDeleteBin2Line size="30" />
                     </div>
                   </div>
-                </>
-              ))}
+                </div>
+              </>
+            ))}
           </div>
         </div>
       </div>
@@ -167,43 +286,19 @@ const AdminScheduleOfActivities = () => {
       <div className="mt-20 text-sm">
         <div className="flex justify-between items-center space-x-2">
           <ul className="flex space-x-2 justify-center items-center">
-            <li
-              className="border border-main-gray p-1 rounded-lg cursor-pointer"
-              onClick={() => {
-                setCurrentPage(
-                  currentPage === 1 ? currentPage : currentPage - 1
-                );
-              }}
-            >
+            <li className="border border-main-gray p-1 rounded-lg cursor-pointer">
               <FiArrowLeft size="20" />
             </li>
-            {pageNumbers.map((number) => (
-              <li
-                key={number}
-                className="border border-main-gray p-1 rounded-lg w-8 flex justify-center cursor-pointer"
-                onClick={() => {
-                  setCurrentPage(number);
-                }}
-              >
-                <a>{number}</a>
-              </li>
-            ))}
+            <li className="border border-main-gray p-1 rounded-lg w-8 flex justify-center cursor-pointer">
+              <a>1</a>
+            </li>
 
-            <li
-              className="border border-main-gray p-1 rounded-lg cursor-pointer"
-              onClick={() => {
-                setCurrentPage(
-                  currentPage === pageNumbers.length
-                    ? currentPage
-                    : currentPage + 1
-                );
-              }}
-            >
+            <li className="border border-main-gray p-1 rounded-lg cursor-pointer">
               <FiArrowRight size="20" />
             </li>
             <li>
               <p>
-                {currentPage} out of {pageNumbers.length}
+                {1} out of {2}
               </p>
             </li>
           </ul>
@@ -227,35 +322,183 @@ const AdminScheduleOfActivities = () => {
             </div>
             <hr className="w-full mb-3 " />
 
-            <div className="px-14">
-              <div className="mb-3">
-                <Label className="font-normal mb-1">Name of Activity</Label>
-                <Input placeholder="Name" />
-              </div>
-
-              <div className="mb-4">
-                <Label className="font-normal mb-1">
-                  Academic Year and Semester
-                </Label>
-                <Input placeholder="ex. 20231" />
-              </div>
-
-              <div className="grid grid-cols-12 gap-4 w-full">
-                <div className="flex flex-col col-span-6">
-                  <Label className="font-normal mb-1">Schedule Start</Label>
-                  <Input type="date" placeholder="dd/mm/yy" className="mb-3" />
-                  <Input type="time" />
+            <Form {...form}>
+              <form
+                className="px-14"
+                onSubmit={form.handleSubmit(handleSubmit)}
+              >
+                <div className="mb-3">
+                  <FormField
+                    control={form.control}
+                    name="activity"
+                    render={({ field }) => {
+                      return (
+                        <FormItem>
+                          <FormLabel>Activity Name</FormLabel>
+                          <Select
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                            value={field.value}
+                          >
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Activity Name" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              <SelectGroup>
+                                <SelectLabel>Name</SelectLabel>
+                                {activityTypes.map((data) => (
+                                  <SelectItem
+                                    key={data.activity_type_id}
+                                    value={data.activity_type_id.toString()}
+                                  >
+                                    {data.activity_type_name}
+                                  </SelectItem>
+                                ))}
+                              </SelectGroup>
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      );
+                    }}
+                  ></FormField>
                 </div>
-                <div className="flex flex-col col-span-6">
-                  <Label className="font-normal mb-1">Schedule End</Label>
-                  <Input type="date" placeholder="dd/mm/yy" className="mb-3" />
-                  <Input type="time" />
+
+                <div className="grid grid-cols-12 gap-4 w-full mb-3">
+                  <div className="col-span-6">
+                    <FormField
+                      control={form.control}
+                      name="academicYear"
+                      render={({ field }) => {
+                        return (
+                          <FormItem>
+                            <FormLabel>Academic Year</FormLabel>
+                            <FormControl>
+                              <Input
+                                placeholder="ex. 2023"
+                                type="number"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        );
+                      }}
+                    ></FormField>
+                  </div>
+
+                  <div className="col-span-6">
+                    <FormField
+                      control={form.control}
+                      name="term"
+                      render={({ field }) => {
+                        return (
+                          <FormItem>
+                            <FormLabel>Term</FormLabel>
+                            <FormControl>
+                              <Input
+                                placeholder="ex. 1"
+                                type="number"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        );
+                      }}
+                    ></FormField>
+                  </div>
                 </div>
-              </div>
-            </div>
-            <div className="mt-8 text-center ">
-              <Button className="bg-main-red hover:bg-red-600"> Save </Button>
-            </div>
+
+                <div className="grid grid-cols-12 gap-4 w-full">
+                  <div className="col-span-6 flex flex-col gap-2">
+                    <FormField
+                      control={form.control}
+                      name="startDate"
+                      render={({ field }) => {
+                        return (
+                          <FormItem>
+                            <FormLabel>Start Date</FormLabel>
+                            <FormControl>
+                              <Input
+                                placeholder="yy/mm/dd"
+                                type="date"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        );
+                      }}
+                    ></FormField>
+
+                    <FormField
+                      control={form.control}
+                      name="startTime"
+                      render={({ field }) => {
+                        return (
+                          <FormItem>
+                            <FormControl>
+                              <Input type="time" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        );
+                      }}
+                    ></FormField>
+                  </div>
+
+                  <div className="col-span-6 flex flex-col gap-2">
+                    <FormField
+                      control={form.control}
+                      name="endDate"
+                      render={({ field }) => {
+                        return (
+                          <FormItem>
+                            <FormLabel>End Date</FormLabel>
+                            <FormControl>
+                              <Input
+                                placeholder="yy/mm/dd"
+                                type="date"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        );
+                      }}
+                    ></FormField>
+
+                    <FormField
+                      control={form.control}
+                      name="endTime"
+                      render={({ field }) => {
+                        return (
+                          <FormItem>
+                            <FormControl>
+                              <Input type="time" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        );
+                      }}
+                    ></FormField>
+                  </div>
+                </div>
+
+                <div className="mt-8 text-center ">
+                  <Button
+                    type="submit"
+                    className="bg-main-red hover:bg-red-600"
+                  >
+                    Save
+                  </Button>
+                  <Toaster />
+                </div>
+              </form>
+            </Form>
           </div>
         </div>
       )}

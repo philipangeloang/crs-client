@@ -16,8 +16,6 @@ import { Button } from "@/components/ui/button";
 import { CgArrowsExchange } from "react-icons/cg";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
-import { HiXMark } from "react-icons/hi2";
-import { Label } from "@/components/ui/label";
 
 const AdminEncodeRoom = () => {
   const [buildingListView, setBuildingListView] = useState(false);
@@ -26,8 +24,8 @@ const AdminEncodeRoom = () => {
   const [roomInformationOpen, setRoomInformationOpen] = useState(false);
 
   // State for Searching and Filtering
-  // const [search, setSearch] = useState("");
-  // const [userType, setUserType] = useState("");
+  const [search, setSearch] = useState("");
+  const [userType, setUserType] = useState("");
 
   // State for Moving Along Pages
   const [schedActivities] = useState(tableEncodeRoomBuilding);
@@ -205,9 +203,9 @@ const AdminEncodeRoom = () => {
                   </h2>
                   <button
                     className="flex items-center justify-center text-gray-700 border border-gray-700 rounded-full h-6 w-6"
-                    // onClick={() => {
-                    //   setUserTypeModalOpen(!userTypeModalOpen);
-                    // }}
+                    onClick={() => {
+                      setUserTypeModalOpen(!userTypeModalOpen);
+                    }}
                   >
                     <HiXMark />
                   </button>

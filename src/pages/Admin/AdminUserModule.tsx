@@ -25,6 +25,7 @@ const AdminUserModule = () => {
 
   // State for Searching and Filtering
   const [search, setSearch] = useState("");
+  const [userType, setUserType] = useState("");
 
   // State for Moving Along Pages
   const [schedActivities] = useState(tableUserModule);
@@ -81,9 +82,9 @@ const AdminUserModule = () => {
                 <FiArrowRight />
               </div>
               <Select
-              // onValueChange={(e) => {
-              //   setUserType(e);
-              // }}
+                onValueChange={(e) => {
+                  setUserType(e);
+                }}
               >
                 <SelectTrigger>
                   <SelectValue placeholder="All" />

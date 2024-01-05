@@ -13,7 +13,7 @@ import { logout } from "@/lib/logout";
 library.add(faAngleUp, faAngleDown, faDoorOpen);
 
 const RootLayoutAdmin = () => {
-  const [homeOpen, setHomeOpen] = useState(false);
+  const [homeOpen, setHomeOpen] = useState(true);
   const [scheduleActivitiesOpen, setScheduleActivitiesOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const [classDropdownOpen, setClassDropdownOpen] = useState(false);
@@ -34,7 +34,7 @@ const RootLayoutAdmin = () => {
                 to="/home"
                 className={homeOpen ? "text-main-red font-bold " : ""}
                 onClick={() => {
-                  setHomeOpen(!homeOpen);
+                  setHomeOpen(true);
                   if (homeOpen === false) {
                     setScheduleActivitiesOpen(false);
                     setUserDropdownOpen(false);
@@ -55,7 +55,7 @@ const RootLayoutAdmin = () => {
                   scheduleActivitiesOpen ? "text-main-red font-bold " : ""
                 }
                 onClick={() => {
-                  setScheduleActivitiesOpen(!scheduleActivitiesOpen);
+                  setScheduleActivitiesOpen(true);
                   if (scheduleActivitiesOpen === false) {
                     setUserDropdownOpen(false);
                     setClassDropdownOpen(false);
@@ -73,7 +73,7 @@ const RootLayoutAdmin = () => {
               <a
                 className={userDropdownOpen ? "text-main-red font-bold " : ""}
                 onClick={() => {
-                  setUserDropdownOpen(!userDropdownOpen);
+                  setUserDropdownOpen(true);
 
                   if (userDropdownOpen === false) {
                     setClassDropdownOpen(false);
@@ -100,7 +100,7 @@ const RootLayoutAdmin = () => {
                       to="/home/encode-user-type"
                       className="text-black block py-2 mt-2"
                     >
-                      Encode User Type
+                      Encode User Role
                     </Link>
                   </li>
                   <li>
@@ -119,7 +119,7 @@ const RootLayoutAdmin = () => {
               <a
                 className={classDropdownOpen ? "text-main-red font-bold " : ""}
                 onClick={() => {
-                  setClassDropdownOpen(!classDropdownOpen);
+                  setClassDropdownOpen(true);
                   if (classDropdownOpen === false) {
                     setUserDropdownOpen(false);
                     setCollegeDropdownOpen(false);
@@ -183,7 +183,7 @@ const RootLayoutAdmin = () => {
                   collegeDropdownOpen ? "text-main-red font-bold " : ""
                 }
                 onClick={() => {
-                  setCollegeDropdownOpen(!collegeDropdownOpen);
+                  setCollegeDropdownOpen(true);
                   if (collegeDropdownOpen === false) {
                     setClassDropdownOpen(false);
                     setUserDropdownOpen(false);
@@ -231,7 +231,7 @@ const RootLayoutAdmin = () => {
                   studentDropdownOpen ? "text-main-red font-bold " : ""
                 }
                 onClick={() => {
-                  setStudentDropdownOpen(!studentDropdownOpen);
+                  setStudentDropdownOpen(true);
 
                   if (studentDropdownOpen === false) {
                     setClassDropdownOpen(false);
