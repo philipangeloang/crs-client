@@ -35,6 +35,7 @@ import moment from "moment";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
+import useRoleStore from "@/store/ThemeStore";
 
 const formSchema = z.object({
   activity: z.string().min(1, {
@@ -70,6 +71,8 @@ function ActivityName({ activityTypes, activity }) {
 }
 
 const AdminScheduleOfActivities = () => {
+const {adminActivities, setAdminActivities} = useRoleStore();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -108,7 +111,7 @@ const AdminScheduleOfActivities = () => {
         }
 
         if (data2) {
-          setActivities(data2.data);
+          setAdminActivities(data2.data);
         }
 
         console.log("API response:", data1);
@@ -119,7 +122,7 @@ const AdminScheduleOfActivities = () => {
     };
 
     fetchActivities();
-  }, []);
+  }, [setAdminActivities]);
 
   const handleSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
@@ -154,7 +157,41 @@ const AdminScheduleOfActivities = () => {
     }
   };
 
+  const handleDelete = async (activity_id: string) => {
+    try {
+      const response = await api.delete(
+        "/api/activities/" + activity_id,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true /* Necessary for storing cookies */,
+        }
+      );
+      console.log(response)
+
+      const data = await response.data;
+      console.log("API response:", data);
+
+      if (response) {
+        toast.success("Successfully Deleted!");
+      } else {
+        toast.error("Error Deleting Instance");
+      }
+
+      // const newAdminActivities = adminActivities.filter(item =>)
+
+      // setAdminActivities()  
+
+      return data;
+    } catch (error) {
+      console.error("API request error:", error);
+    }
+  }
+
   const [activityModalOpen, setActivityModalOpen] = useState(false);
+  const [updateActivityModalOpen, setUpdateActivityModalOpen] = useState(false);
+
   const [activityTypes, setActivityTypes] = useState<any[]>([]);
   const [activities, setActivities] = useState<any[]>([]);
 
@@ -199,7 +236,7 @@ const AdminScheduleOfActivities = () => {
 
           <div className="grid grid-cols-12 mt-5 ">
             {/* Table Header */}
-            <div className="font-bold bg-main-red rounded-tl-lg text-white p-3 col-span-2 text-center">
+            <div className="font-bold bg-main-red rounded-tl-lg text-white p-3 col-span-2 text-left">
               Activity Type Name
             </div>
             <div className="font-bold bg-main-red text-white p-3 col-span-2 text-center">
@@ -219,10 +256,10 @@ const AdminScheduleOfActivities = () => {
             </div>
 
             {/* Table Contents */}
-            {activities.map((item) => (
+            {adminActivities.map((item) => (
               <>
                 <div
-                  className="col-span-2 px-2 py-3 border-l border-b border-main-gray text-center"
+                  className="col-span-2 px-2 py-3 border-l border-b border-main-gray text-left"
                   key={item.activity_id}
                 >
                   <ActivityName activityTypes={activityTypes} activity={item} />
@@ -273,13 +310,19 @@ const AdminScheduleOfActivities = () => {
                 <div className="col-span-2 px-2 py-4 flex justify-center items-center border-b border-r border-main-gray ">
                   <div className="flex gap-2">
                     <div className="bg-main-blue text-white rounded-lg h-10 w-10 flex justify-center items-center mx-auto">
-                      <RiEditCircleLine size="30" />
+                      <RiEditCircleLine className="cursor-pointer" onClick={() => {
+                        setUpdateActivityModalOpen(!updateActivityModalOpen)
+                      }} size="30" />
                     </div>
                     <div className="bg-main-red text-white rounded-lg h-10 w-10 flex justify-center items-center mx-auto">
-                      <RiDeleteBin2Line size="30" />
+                      <RiDeleteBin2Line className="cursor-pointer" onClick={() => {
+                        handleDelete(item.activity_id)
+                      }} size="30" />
                     </div>
                   </div>
                 </div>
+                <Toaster />
+
               </>
             ))}
           </div>
@@ -319,6 +362,203 @@ const AdminScheduleOfActivities = () => {
                 className="flex items-center justify-center text-gray-700 border border-gray-700 rounded-full h-6 w-6"
                 onClick={() => {
                   setActivityModalOpen(!activityModalOpen);
+                }}
+              >
+                <HiXMark />
+              </button>
+            </div>
+            <hr className="w-full mb-3 " />
+
+            <Form {...form}>
+              <form
+                className="px-14"
+                onSubmit={form.handleSubmit(handleSubmit)}
+              >
+                <div className="mb-3">
+                  <FormField
+                    control={form.control}
+                    name="activity"
+                    render={({ field }) => {
+                      return (
+                        <FormItem>
+                          <FormLabel>Activity Name</FormLabel>
+                          <Select
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                            value={field.value}
+                          >
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Activity Name" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              <SelectGroup>
+                                <SelectLabel>Name</SelectLabel>
+                                {activityTypes.map((data) => (
+                                  <SelectItem
+                                    key={data.activity_type_id}
+                                    value={data.activity_type_id.toString()}
+                                  >
+                                    {data.activity_type_name}
+                                  </SelectItem>
+                                ))}
+                              </SelectGroup>
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      );
+                    }}
+                  ></FormField>
+                </div>
+
+                <div className="grid grid-cols-12 gap-4 w-full mb-3">
+                  <div className="col-span-6">
+                    <FormField
+                      control={form.control}
+                      name="academicYear"
+                      render={({ field }) => {
+                        return (
+                          <FormItem>
+                            <FormLabel>Academic Year</FormLabel>
+                            <FormControl>
+                              <Input
+                                placeholder="ex. 2023"
+                                type="number"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        );
+                      }}
+                    ></FormField>
+                  </div>
+
+                  <div className="col-span-6">
+                    <FormField
+                      control={form.control}
+                      name="term"
+                      render={({ field }) => {
+                        return (
+                          <FormItem>
+                            <FormLabel>Term</FormLabel>
+                            <FormControl>
+                              <Input
+                                placeholder="ex. 1"
+                                type="number"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        );
+                      }}
+                    ></FormField>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-12 gap-4 w-full">
+                  <div className="col-span-6 flex flex-col gap-2">
+                    <FormField
+                      control={form.control}
+                      name="startDate"
+                      render={({ field }) => {
+                        return (
+                          <FormItem>
+                            <FormLabel>Start Date</FormLabel>
+                            <FormControl>
+                              <Input
+                                placeholder="yy/mm/dd"
+                                type="date"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        );
+                      }}
+                    ></FormField>
+
+                    <FormField
+                      control={form.control}
+                      name="startTime"
+                      render={({ field }) => {
+                        return (
+                          <FormItem>
+                            <FormControl>
+                              <Input type="time" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        );
+                      }}
+                    ></FormField>
+                  </div>
+
+                  <div className="col-span-6 flex flex-col gap-2">
+                    <FormField
+                      control={form.control}
+                      name="endDate"
+                      render={({ field }) => {
+                        return (
+                          <FormItem>
+                            <FormLabel>End Date</FormLabel>
+                            <FormControl>
+                              <Input
+                                placeholder="yy/mm/dd"
+                                type="date"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        );
+                      }}
+                    ></FormField>
+
+                    <FormField
+                      control={form.control}
+                      name="endTime"
+                      render={({ field }) => {
+                        return (
+                          <FormItem>
+                            <FormControl>
+                              <Input type="time" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        );
+                      }}
+                    ></FormField>
+                  </div>
+                </div>
+
+                <div className="mt-8 text-center ">
+                  <Button
+                    type="submit"
+                    className="bg-main-red hover:bg-red-600"
+                  >
+                    Save
+                  </Button>
+                  <Toaster />
+                </div>
+              </form>
+            </Form>
+          </div>
+        </div>
+      )}
+
+{updateActivityModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white rounded-lg w-full py-4 max-w-lg">
+            <div className="flex justify-between items-center p-4 px-14">
+              <h2 className="text-xl text-main-red">Activity Information</h2>
+              <button
+                className="flex items-center justify-center text-gray-700 border border-gray-700 rounded-full h-6 w-6"
+                onClick={() => {
+                  setUpdateActivityModalOpen(!updateActivityModalOpen);
                 }}
               >
                 <HiXMark />

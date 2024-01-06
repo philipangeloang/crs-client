@@ -1,28 +1,25 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { create } from "zustand";
 
 interface UserRole {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   role: string;
-  accessToken: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   availRoles: any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  adminActivities: any;
+  accessToken: string;
   setAvailRoles: (availRoles: any) => void;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   setRole: (role: any) => void;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  setAdminActivities: (adminActivities: any) => void;
   setAccessToken: (accessToken: any) => void;
 }
 
 const useRoleStore = create<UserRole>()((set) => ({
-  accessToken: "",
   role: "",
   availRoles: [],
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  adminActivities: [],
+  accessToken: "",
   setAvailRoles: (availRoles: any) => set({ availRoles }),
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   setRole: (role: any) => set({ role }),
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  setAdminActivities: (adminActivities: any) => set({ adminActivities }),
   setAccessToken: (accessToken: any) => set({ accessToken }),
 }));
 
