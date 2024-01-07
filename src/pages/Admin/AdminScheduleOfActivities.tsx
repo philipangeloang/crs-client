@@ -97,7 +97,8 @@ const AdminScheduleOfActivities = () => {
           withCredentials: true /* Necessary for storing cookies */,
         });
 
-        const response2 = await api.get("/api/activities", {
+        // Start here - Formula to get last page total/perPage display last page first
+        const response2 = await api.get("/api/activities?perPage=5", {
           headers: {
             "Content-Type": "application/json",
           },
@@ -116,7 +117,7 @@ const AdminScheduleOfActivities = () => {
           setActivities(data2.data);
         }
 
-        console.log("API response:", data1);
+        console.log("API response:", data2);
         return data1;
       } catch (error) {
         console.error("API request error:", error);
