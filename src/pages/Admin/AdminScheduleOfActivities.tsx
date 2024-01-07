@@ -8,7 +8,7 @@ import { HiXMark } from "react-icons/hi2";
 import DateTime from "@/components/DateTime";
 import TempRoleSelector from "../TempRoleSelector";
 import { Input } from "@/components/ui/input";
-import { useEffect, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -35,8 +35,8 @@ import moment from "moment";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import useRoleStore from "@/store/ThemeStore";
 
+// Form Schema
 const formSchema = z.object({
   activity: z.string().min(1, {
     message: "Please Choose Activity",
@@ -61,6 +61,7 @@ const formSchema = z.object({
   }),
 });
 
+// Function for displaying Activity Name Because it is on another table
 function ActivityName({ activityTypes, activity }) {
   // Finding the Name equivalent to the ID and rendering it based on the matched value
   const name = activityTypes.find(
@@ -71,8 +72,7 @@ function ActivityName({ activityTypes, activity }) {
 }
 
 const AdminScheduleOfActivities = () => {
-const {adminActivities, setAdminActivities} = useRoleStore();
-
+  // Form Hook
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -86,6 +86,7 @@ const {adminActivities, setAdminActivities} = useRoleStore();
     },
   });
 
+  // GET
   useEffect(() => {
     const fetchActivities = async () => {
       try {
@@ -111,7 +112,8 @@ const {adminActivities, setAdminActivities} = useRoleStore();
         }
 
         if (data2) {
-          setAdminActivities(data2.data);
+          data2.data.reverse();
+          setActivities(data2.data);
         }
 
         console.log("API response:", data1);
@@ -122,8 +124,9 @@ const {adminActivities, setAdminActivities} = useRoleStore();
     };
 
     fetchActivities();
-  }, [setAdminActivities]);
+  }, []);
 
+  // POST
   const handleSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const responsePost = await api.post(
@@ -144,23 +147,39 @@ const {adminActivities, setAdminActivities} = useRoleStore();
       );
 
       const dataPost = await responsePost.data;
+
+      // Real Time State Addition of Activity
+      const tempTotalPost = activities;
+      tempTotalPost.unshift(dataPost);
+      setActivities(tempTotalPost);
       console.log("API response:", dataPost);
 
       if (dataPost) {
         toast.success("Successfully Created!");
+        form.reset();
+        setActivityModalOpen(false);
       } else {
         toast.error("Error Creating Instance");
       }
+
       return dataPost;
     } catch (error) {
       console.error("API request error:", error);
     }
   };
 
-  const handleDelete = async (activity_id: string) => {
+  // UPDATE
+  const handleUpdate = async (values: z.infer<typeof formSchema>) => {
     try {
-      const response = await api.delete(
-        "/api/activities/" + activity_id,
+      const response = await api.put(
+        "/api/activities/" + activityID,
+        {
+          activity_type_id: values.activity,
+          academic_year: values.academicYear,
+          term: values.term,
+          start_date: values.startDate + " " + values.startTime + ":00",
+          end_date: values.endDate + " " + values.endTime + ":00",
+        },
         {
           headers: {
             "Content-Type": "application/json",
@@ -168,7 +187,42 @@ const {adminActivities, setAdminActivities} = useRoleStore();
           withCredentials: true /* Necessary for storing cookies */,
         }
       );
-      console.log(response)
+
+      const data = await response.data;
+      console.log("API response:", data);
+
+      if (data) {
+        toast.success("Successfully Updated!");
+        form.reset();
+        setUpdateActivityModalOpen(false);
+      } else {
+        toast.error("Error Updating Instance");
+      }
+
+      // Real Time State Updating of Activity
+      const updateIndex = activities.findIndex(
+        (item: { activity_id: any }) => item.activity_id === activityID
+      );
+
+      const newAdminActivities = activities;
+      newAdminActivities[updateIndex] = data;
+      setActivities(newAdminActivities);
+
+      return data;
+    } catch (error) {
+      console.error("API request error:", error);
+    }
+  };
+
+  // DELETE
+  const handleDelete = async (activity_id: string) => {
+    try {
+      const response = await api.delete("/api/activities/" + activity_id, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true /* Necessary for storing cookies */,
+      });
 
       const data = await response.data;
       console.log("API response:", data);
@@ -179,21 +233,29 @@ const {adminActivities, setAdminActivities} = useRoleStore();
         toast.error("Error Deleting Instance");
       }
 
-      // const newAdminActivities = adminActivities.filter(item =>)
+      // Real Time State Deletion of Activity
 
-      // setAdminActivities()  
+      const newAdminActivities: SetStateAction<any[]> = [];
+      activities
+        .filter(
+          (item: { activity_id: string }) => item.activity_id !== activity_id
+        )
+        .map((item) => newAdminActivities.push(item));
+
+      setActivities(newAdminActivities);
 
       return data;
     } catch (error) {
       console.error("API request error:", error);
     }
-  }
+  };
 
   const [activityModalOpen, setActivityModalOpen] = useState(false);
   const [updateActivityModalOpen, setUpdateActivityModalOpen] = useState(false);
 
   const [activityTypes, setActivityTypes] = useState<any[]>([]);
   const [activities, setActivities] = useState<any[]>([]);
+  const [activityID, setActivityID] = useState<any[]>([]);
 
   return (
     <div className="h-screen w-full p-10 px-16 flex flex-col justify-between font-montserrat overflow-x-hidden">
@@ -256,7 +318,7 @@ const {adminActivities, setAdminActivities} = useRoleStore();
             </div>
 
             {/* Table Contents */}
-            {adminActivities.map((item) => (
+            {activities.map((item) => (
               <>
                 <div
                   className="col-span-2 px-2 py-3 border-l border-b border-main-gray text-left"
@@ -310,19 +372,27 @@ const {adminActivities, setAdminActivities} = useRoleStore();
                 <div className="col-span-2 px-2 py-4 flex justify-center items-center border-b border-r border-main-gray ">
                   <div className="flex gap-2">
                     <div className="bg-main-blue text-white rounded-lg h-10 w-10 flex justify-center items-center mx-auto">
-                      <RiEditCircleLine className="cursor-pointer" onClick={() => {
-                        setUpdateActivityModalOpen(!updateActivityModalOpen)
-                      }} size="30" />
+                      <RiEditCircleLine
+                        className="cursor-pointer"
+                        onClick={() => {
+                          setUpdateActivityModalOpen(!updateActivityModalOpen);
+                          setActivityID(item.activity_id);
+                        }}
+                        size="30"
+                      />
                     </div>
                     <div className="bg-main-red text-white rounded-lg h-10 w-10 flex justify-center items-center mx-auto">
-                      <RiDeleteBin2Line className="cursor-pointer" onClick={() => {
-                        handleDelete(item.activity_id)
-                      }} size="30" />
+                      <RiDeleteBin2Line
+                        className="cursor-pointer"
+                        onClick={() => {
+                          handleDelete(item.activity_id);
+                        }}
+                        size="30"
+                      />
                     </div>
                   </div>
                 </div>
                 <Toaster />
-
               </>
             ))}
           </div>
@@ -550,7 +620,7 @@ const {adminActivities, setAdminActivities} = useRoleStore();
         </div>
       )}
 
-{updateActivityModalOpen && (
+      {updateActivityModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white rounded-lg w-full py-4 max-w-lg">
             <div className="flex justify-between items-center p-4 px-14">
@@ -569,7 +639,7 @@ const {adminActivities, setAdminActivities} = useRoleStore();
             <Form {...form}>
               <form
                 className="px-14"
-                onSubmit={form.handleSubmit(handleSubmit)}
+                onSubmit={form.handleSubmit(handleUpdate)}
               >
                 <div className="mb-3">
                   <FormField
