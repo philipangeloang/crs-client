@@ -1,12 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-
+import DateTime from "@/components/DateTime";
+import TempRoleSelector from "../TempRoleSelector";
 import { AiOutlineCalendar, AiOutlineClockCircle } from "react-icons/ai";
 import { RiEditCircleLine, RiDeleteBin2Line } from "react-icons/ri";
 import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 import { HiXMark } from "react-icons/hi2";
-import DateTime from "@/components/DateTime";
-import TempRoleSelector from "../TempRoleSelector";
 import { Input } from "@/components/ui/input";
 import { SetStateAction, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -29,12 +28,18 @@ import {
 } from "@/components/ui/form";
 
 import toast, { Toaster } from "react-hot-toast";
-import api from "../../api/fetch";
 import moment from "moment";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
+import { useActivityTypes } from "@/hooks/useActivityTypes";
+import {
+  useActivities,
+  useAddActivities,
+  useDeleteActivities,
+  useUpdateActivities,
+} from "@/hooks/useActivities";
 
 // Form Schema
 const formSchema = z.object({
@@ -65,13 +70,16 @@ const formSchema = z.object({
 function ActivityName({ activityTypes, activity }) {
   // Finding the Name equivalent to the ID and rendering it based on the matched value
   const name = activityTypes.find(
-    (item: { activity_type_id: any }) =>
-      item.activity_type_id === activity.activity_type_id
+    (item) => item.activity_type_id === activity.activity_type_id
   );
   return name.activity_type_name;
 }
 
 const AdminScheduleOfActivities = () => {
+  const [activityModalOpen, setActivityModalOpen] = useState(false);
+  const [updateActivityModalOpen, setUpdateActivityModalOpen] = useState(false);
+  const [activityID, setActivityID] = useState<any[]>([]);
+
   // Form Hook
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -86,177 +94,84 @@ const AdminScheduleOfActivities = () => {
     },
   });
 
-  // GET
-  useEffect(() => {
-    const fetchActivities = async () => {
-      try {
-        const response1 = await api.get("/api/activity-types", {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          withCredentials: true /* Necessary for storing cookies */,
-        });
+  // React-Query Values
 
-        // Start here - Formula to get last page total/perPage display last page first
-        const response2 = await api.get("/api/activities?perPage=5", {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          withCredentials: true /* Necessary for storing cookies */,
-        });
+  const onSuccess = (data: any) => {
+    console.log("Success ", data);
+  };
 
-        const data1 = await response1.data.data;
-        const data2 = await response2.data;
+  const onError = (error: any) => {
+    console.log("Error ", error);
+  };
 
-        if (data1) {
-          setActivityTypes(data1);
-        }
+  const {
+    data: activityTypesData,
+    // refetch - for clicking before query
+  } = useActivityTypes(onSuccess, onError);
 
-        if (data2) {
-          data2.data.reverse();
-          setActivities(data2.data);
-        }
+  const { data: activitiesData } = useActivities(onSuccess, onError);
 
-        console.log("API response:", data2);
-        return data1;
-      } catch (error) {
-        console.error("API request error:", error);
-      }
-    };
+  const { mutate: addActivity, isSuccess: addActivitySuccess } =
+    useAddActivities(onSuccess, onError);
 
-    fetchActivities();
-  }, []);
+  const { mutate: deleteActivity, isSuccess: deleteActivitySuccess } =
+    useDeleteActivities(onSuccess, onError);
+
+  const { mutate: updateActivity, isSuccess: updateActivitySuccess } =
+    useUpdateActivities(onSuccess, onError);
 
   // POST
   const handleSubmit = async (values: z.infer<typeof formSchema>) => {
-    try {
-      const responsePost = await api.post(
-        "/api/activities",
-        {
-          activity_type_id: values.activity,
-          academic_year: values.academicYear,
-          term: values.term,
-          start_date: values.startDate + " " + values.startTime + ":00",
-          end_date: values.endDate + " " + values.endTime + ":00",
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          withCredentials: true /* Necessary for storing cookies */,
-        }
-      );
+    const activity = {
+      activity_type_id: values.activity,
+      academic_year: values.academicYear,
+      term: values.term,
+      start_date: values.startDate + " " + values.startTime + ":00",
+      end_date: values.endDate + " " + values.endTime + ":00",
+    };
 
-      const dataPost = await responsePost.data;
-
-      // Real Time State Addition of Activity
-      const tempTotalPost = activities;
-      tempTotalPost.unshift(dataPost);
-      setActivities(tempTotalPost);
-      console.log("API response:", dataPost);
-
-      if (dataPost) {
-        toast.success("Successfully Created!");
-        form.reset();
-        setActivityModalOpen(false);
-      } else {
-        toast.error("Error Creating Instance");
-      }
-
-      return dataPost;
-    } catch (error) {
-      console.error("API request error:", error);
+    addActivity(activity);
+    if (addActivitySuccess) {
+      // form.reset();
+      // setActivityModalOpen(!activityModalOpen);
+      toast.success("Successfully Added");
+    } else {
+      toast.error("Failed Adding Activity");
     }
   };
 
   // UPDATE
   const handleUpdate = async (values: z.infer<typeof formSchema>) => {
-    try {
-      const response = await api.put(
-        "/api/activities/" + activityID,
-        {
-          activity_type_id: values.activity,
-          academic_year: values.academicYear,
-          term: values.term,
-          start_date: values.startDate + " " + values.startTime + ":00",
-          end_date: values.endDate + " " + values.endTime + ":00",
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          withCredentials: true /* Necessary for storing cookies */,
-        }
-      );
+    const activity = {
+      activity_type_id: values.activity,
+      academic_year: values.academicYear,
+      term: values.term,
+      start_date: values.startDate + " " + values.startTime + ":00",
+      end_date: values.endDate + " " + values.endTime + ":00",
+      activity_id: activityID,
+    };
 
-      const data = await response.data;
-      console.log("API response:", data);
-
-      if (data) {
-        toast.success("Successfully Updated!");
-        form.reset();
-        setUpdateActivityModalOpen(false);
-      } else {
-        toast.error("Error Updating Instance");
-      }
-
-      // Real Time State Updating of Activity
-      const updateIndex = activities.findIndex(
-        (item: { activity_id: any }) => item.activity_id === activityID
-      );
-
-      const newAdminActivities = activities;
-      newAdminActivities[updateIndex] = data;
-      setActivities(newAdminActivities);
-
-      return data;
-    } catch (error) {
-      console.error("API request error:", error);
+    updateActivity(activity);
+    if (!updateActivitySuccess) {
+      form.reset();
+      setUpdateActivityModalOpen(!updateActivityModalOpen);
+      toast.success("Successfully Updated");
+    } else {
+      toast.error("Failed Updating Activity");
     }
   };
 
   // DELETE
   const handleDelete = async (activity_id: string) => {
-    try {
-      const response = await api.delete("/api/activities/" + activity_id, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        withCredentials: true /* Necessary for storing cookies */,
-      });
+    deleteActivity(activity_id);
 
-      const data = await response.data;
-      console.log("API response:", data);
-
-      if (response) {
-        toast.success("Successfully Deleted!");
-      } else {
-        toast.error("Error Deleting Instance");
-      }
-
-      // Real Time State Deletion of Activity
-
-      const newAdminActivities: SetStateAction<any[]> = [];
-      activities
-        .filter(
-          (item: { activity_id: string }) => item.activity_id !== activity_id
-        )
-        .map((item) => newAdminActivities.push(item));
-
-      setActivities(newAdminActivities);
-
-      return data;
-    } catch (error) {
-      console.error("API request error:", error);
+    console.log(deleteActivitySuccess);
+    if (!deleteActivitySuccess) {
+      toast.success("Successfully Deleted");
+    } else {
+      toast.error("Failed Deleting Activity");
     }
   };
-
-  const [activityModalOpen, setActivityModalOpen] = useState(false);
-  const [updateActivityModalOpen, setUpdateActivityModalOpen] = useState(false);
-
-  const [activityTypes, setActivityTypes] = useState<any[]>([]);
-  const [activities, setActivities] = useState<any[]>([]);
-  const [activityID, setActivityID] = useState<any[]>([]);
 
   return (
     <div className="h-screen w-full p-10 px-16 flex flex-col justify-between font-montserrat overflow-x-hidden">
@@ -319,13 +234,16 @@ const AdminScheduleOfActivities = () => {
             </div>
 
             {/* Table Contents */}
-            {activities.map((item) => (
+            {activitiesData?.data.data.map((item) => (
               <>
                 <div
                   className="col-span-2 px-2 py-3 border-l border-b border-main-gray text-left"
                   key={item.activity_id}
                 >
-                  <ActivityName activityTypes={activityTypes} activity={item} />
+                  <ActivityName
+                    activityTypes={activityTypesData?.data.data}
+                    activity={item}
+                  />
                 </div>
                 <div className="text-center col-span-2 px-2 py-3 border-b border-main-gray">
                   <p className="px-4 py-1 border border-main-gray w-24 mx-auto rounded-lg">
@@ -466,7 +384,7 @@ const AdminScheduleOfActivities = () => {
                             <SelectContent>
                               <SelectGroup>
                                 <SelectLabel>Name</SelectLabel>
-                                {activityTypes.map((data) => (
+                                {activityTypesData?.data.data.map((data) => (
                                   <SelectItem
                                     key={data.activity_type_id}
                                     value={data.activity_type_id.toString()}
@@ -663,7 +581,7 @@ const AdminScheduleOfActivities = () => {
                             <SelectContent>
                               <SelectGroup>
                                 <SelectLabel>Name</SelectLabel>
-                                {activityTypes.map((data) => (
+                                {activityTypesData?.data.data.map((data) => (
                                   <SelectItem
                                     key={data.activity_type_id}
                                     value={data.activity_type_id.toString()}

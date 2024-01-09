@@ -1,4 +1,6 @@
 import { Routes, Route } from "react-router-dom";
+import { QueryClientProvider, QueryClient } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
 import Signin from "./pages/Signin";
 import RootLayoutAdmin from "./pages/Admin/RootLayoutAdmin";
 import RootLayoutCollege from "./pages/College/RootLayoutCollege";
@@ -78,137 +80,151 @@ function App() {
     fetchRoles();
   }, [setRole]);
 
+  const queryClient = new QueryClient();
+
   return (
     <>
-      <Routes>
-        <Route path="/" element={<Signin />} />
+      <QueryClientProvider client={queryClient}>
+        <Routes>
+          <Route path="/" element={<Signin />} />
 
-        {role === "ADMIN" && (
-          <>
-            <Route path="/home" element={<RootLayoutAdmin />}>
-              <Route index element={<AdminHome />} />
-              <Route
-                path="schedule-activities"
-                element={<AdminScheduleOfActivities />}
-              />
-              <Route
-                path="encode-user-type"
-                element={<AdminEncodeUserType />}
-              />
-              <Route path="user-module" element={<AdminUserModule />} />
-              <Route path="encode-room" element={<AdminEncodeRoom />} />
-              <Route path="encode-meeting-type" element={<AdminEncomeMeet />} />
-              <Route path="encode-blocks" element={<AdminEncodeBlock />} />
-              <Route path="room-plot" element={<AdminHome />} />
-              <Route path="college-module" element={<AdminCollegeModule />} />
-              <Route path="program-module" element={<AdminProgramModule />} />
-              <Route path="email-blast" element={<AdminEmailBlast />} />
-              <Route path="student-type" element={<AdminStudentType />} />
-            </Route>
-          </>
-        )}
-        {role === "COLLEGE" && (
-          <>
-            <Route path="/home" element={<RootLayoutCollege />}>
-              <Route index element={<CollegeHome />} />
-              <Route path="activities" element={<AdminHome />} />
-              <Route path="students" element={<CollegeStudentRecords />} />
-              <Route path="faculty" element={<Faculty />} />
-              <Route path="sections" element={<Sections />} />
-              <Route path="classes" element={<Classes />} />
-              <Route path="classes" element={<ClassesAdd />} />
-              <Route path="classes" element={<ClassesEdit />} />
-              <Route path="subjects" element={<Subjects />} />
-              <Route path="curriculum" element={<Curriculum />} />
-              <Route path="add-drop" element={<AddDropReq />} />
-              <Route path="teaching-assignment" element={<ListOfTeaching />} />
-            </Route>
-          </>
-        )}
-        {role === "FACULTY" && (
-          <>
-            <Route path="/home" element={<RootLayoutFaculty />}>
-              <Route index element={<FacultyHome />} />
-              <Route path="profile" element={<FacultyProfile />} />
-              <Route path="profile/edit" element={<FacultyProfileEdit />} />
-              <Route
-                path="change-password"
-                element={<FacultyChangePassword />}
-              />
-              <Route
-                path="class-assignments"
-                element={<FacultyClassAssignments />}
-              />
-              <Route
-                path="encode-grades"
-                element={<FacultyEncodingOfGrades />}
-              />
-              <Route
-                path="encode-grades/report-grades"
-                element={<FacultyReportOfGrades />}
-              />
-              <Route path="change-grades" element={<FacultyChangeGrades />} />
-              <Route
-                path="teaching-assignments"
-                element={<FacultyTeachingAssignments />}
-              />
-            </Route>
-          </>
-        )}
-        {role === "STUDENT_UNDERGRADUATE" && (
-          <>
-            <Route path="/home" element={<RootLayoutStudentUndergrad />}>
-              <Route index element={<StudentUndergradHome />} />
-              <Route path="nstp" element={<StudentUndergradHome />} />
-              <Route path="nstp1" element={<NSTP1 />} />
-              <Route path="nstp2" element={<NSTP2 />} />
-              <Route path="nstp3" element={<NSTP3 />} />
-              <Route path="nstp4" element={<NSTP4 />} />
-              <Route path="enrollment1" element={<Enrollment1 />} />
-              <Route path="enrollment2" element={<Enrollment2 />} />
-              <Route path="enrollment3" element={<Enrollment3 />} />
-              <Route path="enrollment4" element={<Enrollment4 />} />
-              <Route path="view-grades" element={<StudentUndergradHome />} />
-              <Route
-                path="view-information"
-                element={<StudentUndergradHome />}
-              />
-              <Route path="class-schedule" element={<StudentUndergradHome />} />
-              <Route
-                path="change-password"
-                element={<StudentUndergradHome />}
-              />
-            </Route>
-          </>
-        )}
-        {role === "STUDENT_GRADUATE" && (
-          <>
-            <Route path="/home" element={<RootLayoutStudentGrad />}>
-              <Route index element={<StudentGradHome />} />
-              <Route path="enrollment" element={<StudentGradHome />} />
-              <Route path="view-grades" element={<StudentGradHome />} />
-              <Route
-                path="view-information"
-                element={<StudentGradViewInformation />}
-              />
-              <Route
-                path="class-schedule"
-                element={<StudentGradClassSchedule />}
-              />
-              <Route path="change-password" element={<StudentGradHome />} />
-              <Route path="cashier" element={<StudentGradCashier />} />
-            </Route>
-          </>
-        )}
-        {role === "CASHIER" && (
-          <>
-            <Route path="/home" element={<RootLayoutCashier />}>
-              <Route index element={<AdminHome />} />
-              <Route path="search-student" element={<AdminHome />} />
-            </Route>
-          </>
-        )}
-      </Routes>
+          {role === "ADMIN" && (
+            <>
+              <Route path="/home" element={<RootLayoutAdmin />}>
+                <Route index element={<AdminHome />} />
+                <Route
+                  path="schedule-activities"
+                  element={<AdminScheduleOfActivities />}
+                />
+                <Route
+                  path="encode-user-type"
+                  element={<AdminEncodeUserType />}
+                />
+                <Route path="user-module" element={<AdminUserModule />} />
+                <Route path="encode-room" element={<AdminEncodeRoom />} />
+                <Route
+                  path="encode-meeting-type"
+                  element={<AdminEncomeMeet />}
+                />
+                <Route path="encode-blocks" element={<AdminEncodeBlock />} />
+                <Route path="room-plot" element={<AdminHome />} />
+                <Route path="college-module" element={<AdminCollegeModule />} />
+                <Route path="program-module" element={<AdminProgramModule />} />
+                <Route path="email-blast" element={<AdminEmailBlast />} />
+                <Route path="student-type" element={<AdminStudentType />} />
+              </Route>
+            </>
+          )}
+          {role === "COLLEGE" && (
+            <>
+              <Route path="/home" element={<RootLayoutCollege />}>
+                <Route index element={<CollegeHome />} />
+                <Route path="activities" element={<AdminHome />} />
+                <Route path="students" element={<CollegeStudentRecords />} />
+                <Route path="faculty" element={<Faculty />} />
+                <Route path="sections" element={<Sections />} />
+                <Route path="classes" element={<Classes />} />
+                <Route path="classes" element={<ClassesAdd />} />
+                <Route path="classes" element={<ClassesEdit />} />
+                <Route path="subjects" element={<Subjects />} />
+                <Route path="curriculum" element={<Curriculum />} />
+                <Route path="add-drop" element={<AddDropReq />} />
+                <Route
+                  path="teaching-assignment"
+                  element={<ListOfTeaching />}
+                />
+              </Route>
+            </>
+          )}
+          {role === "FACULTY" && (
+            <>
+              <Route path="/home" element={<RootLayoutFaculty />}>
+                <Route index element={<FacultyHome />} />
+                <Route path="profile" element={<FacultyProfile />} />
+                <Route path="profile/edit" element={<FacultyProfileEdit />} />
+                <Route
+                  path="change-password"
+                  element={<FacultyChangePassword />}
+                />
+                <Route
+                  path="class-assignments"
+                  element={<FacultyClassAssignments />}
+                />
+                <Route
+                  path="encode-grades"
+                  element={<FacultyEncodingOfGrades />}
+                />
+                <Route
+                  path="encode-grades/report-grades"
+                  element={<FacultyReportOfGrades />}
+                />
+                <Route path="change-grades" element={<FacultyChangeGrades />} />
+                <Route
+                  path="teaching-assignments"
+                  element={<FacultyTeachingAssignments />}
+                />
+              </Route>
+            </>
+          )}
+          {role === "STUDENT_UNDERGRADUATE" && (
+            <>
+              <Route path="/home" element={<RootLayoutStudentUndergrad />}>
+                <Route index element={<StudentUndergradHome />} />
+                <Route path="nstp" element={<StudentUndergradHome />} />
+                <Route path="nstp1" element={<NSTP1 />} />
+                <Route path="nstp2" element={<NSTP2 />} />
+                <Route path="nstp3" element={<NSTP3 />} />
+                <Route path="nstp4" element={<NSTP4 />} />
+                <Route path="enrollment1" element={<Enrollment1 />} />
+                <Route path="enrollment2" element={<Enrollment2 />} />
+                <Route path="enrollment3" element={<Enrollment3 />} />
+                <Route path="enrollment4" element={<Enrollment4 />} />
+                <Route path="view-grades" element={<StudentUndergradHome />} />
+                <Route
+                  path="view-information"
+                  element={<StudentUndergradHome />}
+                />
+                <Route
+                  path="class-schedule"
+                  element={<StudentUndergradHome />}
+                />
+                <Route
+                  path="change-password"
+                  element={<StudentUndergradHome />}
+                />
+              </Route>
+            </>
+          )}
+          {role === "STUDENT_GRADUATE" && (
+            <>
+              <Route path="/home" element={<RootLayoutStudentGrad />}>
+                <Route index element={<StudentGradHome />} />
+                <Route path="enrollment" element={<StudentGradHome />} />
+                <Route path="view-grades" element={<StudentGradHome />} />
+                <Route
+                  path="view-information"
+                  element={<StudentGradViewInformation />}
+                />
+                <Route
+                  path="class-schedule"
+                  element={<StudentGradClassSchedule />}
+                />
+                <Route path="change-password" element={<StudentGradHome />} />
+                <Route path="cashier" element={<StudentGradCashier />} />
+              </Route>
+            </>
+          )}
+          {role === "CASHIER" && (
+            <>
+              <Route path="/home" element={<RootLayoutCashier />}>
+                <Route index element={<AdminHome />} />
+                <Route path="search-student" element={<AdminHome />} />
+              </Route>
+            </>
+          )}
+        </Routes>
+        <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
+      </QueryClientProvider>
     </>
   );
 }
