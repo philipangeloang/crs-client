@@ -7,7 +7,7 @@ import { RiEditCircleLine, RiDeleteBin2Line } from "react-icons/ri";
 import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 import { HiXMark } from "react-icons/hi2";
 import { Input } from "@/components/ui/input";
-import { SetStateAction, useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -97,8 +97,7 @@ const AdminScheduleOfActivities = () => {
     },
   });
 
-  // Search on Enter
-
+  // Search on Enter A
   function StartSearch() {
     setStartSearch(search);
   }
@@ -124,13 +123,15 @@ const AdminScheduleOfActivities = () => {
     onError
   );
 
-  const { mutate: addActivity, isSuccess: addActivitySuccess } =
-    useAddActivities(onSuccess, onError);
+  const { mutate: addActivity, isError: addActivitySuccess } = useAddActivities(
+    onSuccess,
+    onError
+  );
 
-  const { mutate: deleteActivity, isSuccess: deleteActivitySuccess } =
+  const { mutate: deleteActivity, isError: deleteActivitySuccess } =
     useDeleteActivities(onSuccess, onError);
 
-  const { mutate: updateActivity, isSuccess: updateActivitySuccess } =
+  const { mutate: updateActivity, isError: updateActivitySuccess } =
     useUpdateActivities(onSuccess, onError);
 
   // Dynamic Pages
@@ -153,7 +154,7 @@ const AdminScheduleOfActivities = () => {
     };
 
     addActivity(activity);
-    if (addActivitySuccess) {
+    if (!addActivitySuccess) {
       form.reset();
       setActivityModalOpen(!activityModalOpen);
       toast.success("Successfully Added");
@@ -187,7 +188,6 @@ const AdminScheduleOfActivities = () => {
   const handleDelete = async (activity_id: string) => {
     deleteActivity(activity_id);
 
-    console.log(deleteActivitySuccess);
     if (!deleteActivitySuccess) {
       toast.success("Successfully Deleted");
     } else {
@@ -353,7 +353,16 @@ const AdminScheduleOfActivities = () => {
         <div className="flex justify-between items-center space-x-2">
           <ul className="flex space-x-2 justify-center items-center">
             <li className="border border-main-gray p-1 rounded-lg cursor-pointer">
-              <FiArrowLeft size="20" />
+              <FiArrowLeft
+                onClick={() => {
+                  if (page === 1) {
+                    setPage(1);
+                  } else {
+                    setPage(page - 1);
+                  }
+                }}
+                size="20"
+              />
             </li>
             {pages.map((item) => (
               <li
@@ -374,11 +383,20 @@ const AdminScheduleOfActivities = () => {
             ))}
 
             <li className="border border-main-gray p-1 rounded-lg cursor-pointer">
-              <FiArrowRight size="20" />
+              <FiArrowRight
+                onClick={() => {
+                  if (page === activitiesData?.data.last_page) {
+                    setPage(activitiesData?.data.last_page);
+                  } else {
+                    setPage(page + 1);
+                  }
+                }}
+                size="20"
+              />
             </li>
             <li>
               <p>
-                {1} out of {2}
+                {pages[0]} out of {activitiesData?.data.last_page}
               </p>
             </li>
           </ul>
