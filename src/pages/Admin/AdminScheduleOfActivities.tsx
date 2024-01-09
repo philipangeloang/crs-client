@@ -69,7 +69,7 @@ const formSchema = z.object({
 // Function for displaying Activity Name Because it is on another table
 function ActivityName({ activityTypes, activity }) {
   // Finding the Name equivalent to the ID and rendering it based on the matched value
-  const name = activityTypes.find(
+  const name = activityTypes?.find(
     (item) => item.activity_type_id === activity.activity_type_id
   );
   return name.activity_type_name;
@@ -79,6 +79,9 @@ const AdminScheduleOfActivities = () => {
   const [activityModalOpen, setActivityModalOpen] = useState(false);
   const [updateActivityModalOpen, setUpdateActivityModalOpen] = useState(false);
   const [activityID, setActivityID] = useState<any[]>([]);
+  const [page, setPage] = useState(1);
+  const [search, setSearch] = useState("");
+  const [startSearch, setStartSearch] = useState("");
 
   // Form Hook
   const form = useForm<z.infer<typeof formSchema>>({
@@ -94,8 +97,13 @@ const AdminScheduleOfActivities = () => {
     },
   });
 
-  // React-Query Values
+  // Search on Enter
 
+  function StartSearch() {
+    setStartSearch(search);
+  }
+
+  // React-Query Values
   const onSuccess = (data: any) => {
     console.log("Success ", data);
   };
@@ -109,7 +117,12 @@ const AdminScheduleOfActivities = () => {
     // refetch - for clicking before query
   } = useActivityTypes(onSuccess, onError);
 
-  const { data: activitiesData } = useActivities(onSuccess, onError);
+  const { data: activitiesData } = useActivities(
+    page,
+    startSearch,
+    onSuccess,
+    onError
+  );
 
   const { mutate: addActivity, isSuccess: addActivitySuccess } =
     useAddActivities(onSuccess, onError);
@@ -119,6 +132,15 @@ const AdminScheduleOfActivities = () => {
 
   const { mutate: updateActivity, isSuccess: updateActivitySuccess } =
     useUpdateActivities(onSuccess, onError);
+
+  // Dynamic Pages
+  const pages = [];
+  for (let i = 0; i < activitiesData?.data.last_page; i++) {
+    pages.push(i + 1);
+  }
+  if (pages.length < page) {
+    setPage(pages.length);
+  }
 
   // POST
   const handleSubmit = async (values: z.infer<typeof formSchema>) => {
@@ -132,8 +154,8 @@ const AdminScheduleOfActivities = () => {
 
     addActivity(activity);
     if (addActivitySuccess) {
-      // form.reset();
-      // setActivityModalOpen(!activityModalOpen);
+      form.reset();
+      setActivityModalOpen(!activityModalOpen);
       toast.success("Successfully Added");
     } else {
       toast.error("Failed Adding Activity");
@@ -197,9 +219,17 @@ const AdminScheduleOfActivities = () => {
               <Input
                 className="border border-main-gray w-60"
                 placeholder="Search"
+                onChange={(e) => {
+                  setSearch(e.target.value);
+                }}
               />
               <div className="border border-main-gray p-2 rounded-lg">
-                <FiArrowRight />
+                <FiArrowRight
+                  className="cursor-pointer"
+                  onClick={() => {
+                    StartSearch();
+                  }}
+                />
               </div>
             </div>
             <div
@@ -325,9 +355,23 @@ const AdminScheduleOfActivities = () => {
             <li className="border border-main-gray p-1 rounded-lg cursor-pointer">
               <FiArrowLeft size="20" />
             </li>
-            <li className="border border-main-gray p-1 rounded-lg w-8 flex justify-center cursor-pointer">
-              <a>1</a>
-            </li>
+            {pages.map((item) => (
+              <li
+                className={
+                  item === page
+                    ? "border border-main-gray p-1 rounded-lg w-8 flex justify-center cursor-pointer bg-main-red text-white"
+                    : "border border-main-gray p-1 rounded-lg w-8 flex justify-center cursor-pointer"
+                }
+              >
+                <a
+                  onClick={() => {
+                    setPage(item);
+                  }}
+                >
+                  {item}
+                </a>
+              </li>
+            ))}
 
             <li className="border border-main-gray p-1 rounded-lg cursor-pointer">
               <FiArrowRight size="20" />

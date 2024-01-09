@@ -3,8 +3,8 @@ import { useMutation, useQuery } from "react-query";
 import api from "../api/fetch";
 
 // Functions
-const fetchActivities = () => {
-  return api.get("/api/activities?perPage=5", {
+const fetchActivities = (page: any, search: any) => {
+  return api.get(`/api/activities?perPage=5&page=${page}&search=${search}`, {
     headers: {
       "Content-Type": "application/json",
     },
@@ -50,12 +50,24 @@ const updateActivities = (activity: any) => {
 };
 
 // Exports
-export const useActivities = (onSuccess: any, onError: any) => {
-  return useQuery("activities", fetchActivities, {
-    onSuccess,
-    onError,
-    refetchInterval: 2000, //To update UI - underhanded method
-  });
+export const useActivities = (
+  page: number,
+  search: string,
+  onSuccess: any,
+  onError: any
+) => {
+  return useQuery(
+    "activities",
+
+    () => {
+      return fetchActivities(page, search);
+    },
+    {
+      onSuccess,
+      onError,
+      refetchInterval: 2000, //To update UI - underhanded method
+    }
+  );
 };
 
 export const useAddActivities = (onSuccess: any, onError: any) => {
