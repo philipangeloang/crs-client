@@ -201,28 +201,25 @@ const ClassesEdit = () => {
         </span>
       </div>
 
-      <div className="border mt-5">
-        <div className="overflow-x-auto">
-          <table className="min-w-full table-auto bg-white shadow rounded-lg border">
-            <thead>
-              <tr className="bg-main-red text-white rounded-lg border ">
-                <th className="px-4 py-2"></th>
-                <th className="px-4 py-2">Day</th>
-                <th className="px-4 py-2">Time (Start - Finish)</th>
-                <th className="px-4 py-2">Room</th>
-                <th className="px-4 py-2">Meeting Type</th>
-              </tr>
-            </thead>
-            <tbody className="text-center border">
-              {Array.from({ length: 7 }, (_, index) => (
-                <tr className="border" key={index}>
-                  <td className="px-4 py-2">{index + 1}</td>
-                  <td className="px-4 py-2">
-                    <select className="form-select p-1 w-full border rounded">
-                      <option value="true"></option>
-                      <option value="true">Monday</option>
-                      <option>Tuesday</option>
-                      <option>Wednesday</option>
+
+    // Transitional Div's for each step 
+    const divs = [
+        (
+            // Step 1 
+            <div className="w-full mt-10 p-5 border shadow rounded" key={1}>
+               <div className="mb-3">
+                    <label htmlFor="Course" className="form-label">Program Code: </label>
+                    <select className="form-select ml-4 p-1 w-1/3 border rounded form-control">
+                        <option></option>
+                        <option>2021343</option>
+                        <option>202334</option>
+                    </select>
+                    <label htmlFor="Course" className="form-label ml-2">Subject Code : </label>
+                    <select className="form-select ml-3 p-1 w-1/3 border rounded form-control">
+                        <option></option>
+                        <option>2021343</option>
+                        <option>202334</option>
+
                     </select>
                   </td>
                   <td className="px-4 py-2">
@@ -307,21 +304,25 @@ const ClassesEdit = () => {
     </div>,
   ];
 
-  // Main Layout
-  return (
-    // Row 1
-    <div className="p-10 px-16 grid grid-cols-12 font-montserrat relative">
-      <div className="col-span-12 flex justify-between items-center">
-        <div className="px-5 py-1 bg-main-red text-white rounded-lg">
-          Classes
-        </div>
-        <div className="flex flex-col items-end">
-          <h1 className="font-bold">DELA CRUZ. JUAN PEPITO</h1>
-          <p className="text-xs">
-            Logged as: <span className="text-main-red">Administrator</span>
-          </p>
-        </div>
-      </div>
+
+            <div className="col-span-12 mt-20">
+                <div className="flex justify-between">
+                    <div className="flex-start ">{renderStep()}</div>
+                    <div className="flex justify-end flex-row">
+                        <button
+                            type="button"
+                            className="bg-main-red text-white mr-2 p-2 flex justify-center items-center"
+                            >
+                            <FaAngleLeft />
+                            Cancel
+                        </button>
+                        {currentStep > 1 && (
+                            <button
+                                type="button"
+                                onClick={handleBackStep}
+                                className="mr-2 bg-main-red text-white p-2 flex justify-center items-center "
+                            >
+
 
       <div className="col-span-12 mt-20">
         <div className="flex justify-between">
