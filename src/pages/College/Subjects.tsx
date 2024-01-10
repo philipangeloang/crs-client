@@ -1,19 +1,71 @@
 import DateTime from '@/components/DateTime';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FiArrowRight, FiArrowLeft } from 'react-icons/fi';
 import { FaEdit, FaTrash, FaMinusCircle } from 'react-icons/fa';
 import { Link } from "react-router-dom";
 import { IoMdPrint } from 'react-icons/io';
-
+import api from "../../api/fetch";
 
 const Subjects = () => {
 
     // Dummy data 
     const tableData = [
-        { class: 'ARE 101', section: '2', subjectTitle: 'Theory of Structures', schedule: 'M 4:00-5:30PM LecSyncOL FIELD  Th 4:00-5:30PM F2F GCA 303', instructor: 'Jamillah S. Guialil', slots: '50', unit:'30', enroll: '40' },
+        { class: 'ARE 101', section: '2', subjectTitle: 'Theory of Structures', schedule: 'M 4:00-5:30PM LecSyncOL FIELD  Th 4:00-5:30PM F2F GCA 303', instructor: 'Jamillah S. Guialil', slots: '50', unit: '30', enroll: '40' },
 
 
     ];
+
+
+    const [subject, setSubject] = useState<any[]>([]);
+    const [classes, setClasses] = useState<any[]>([]);
+
+    const fetchDataFromSubjectEndpoint = async () => {
+        try {
+            const response = await api.get("api/subjects", {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                withCredentials: true,
+            });
+            const data = await response.data.data;
+
+            if (data) {
+                setSubject(data);
+            }
+            console.log("API response from api/subjects", data);
+        } catch (error) {
+            console.error("API request error:", error);
+        }
+    };
+
+    const fetchDataFromClassEndpoint = async () => {
+        try {
+            const response = await api.get("api/classes", {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                withCredentials: true,
+            });
+            const data = await response.data.data;
+
+            if (data) {
+                setClasses(data);
+            }
+            console.log("API response from api/classes", data);
+        } catch (error) {
+            console.error("API request error:", error);
+        }
+    };
+
+
+
+    useEffect(() => {
+        fetchDataFromClassEndpoint();
+        fetchDataFromSubjectEndpoint();
+
+
+    }, []);
+
 
     const [subjectModalOpen, setSubjectModalOpen] = useState(false);
     // Function to open the faculty modal
@@ -103,25 +155,68 @@ const Subjects = () => {
                                 <th className="px-4 py-2">Action</th>
                             </tr>
                         </thead>
-                        <tbody className="text-center border">
-                            {tableData.map((item) => (
-                                <tr className="border" key={item.class}>
-                                    <td className="px-4 py-2">{item.class}</td>
-                                    <td className="px-4 py-2">{item.section}</td>
-                                    <td className="px-4 py-2">{item.subjectTitle}</td>
-                                    <td className="px-4 py-2">{item.schedule}</td>
-                                    <td className="px-4 py-2">{item.instructor}</td>
-                                    <td className="px-4 py-2">{item.unit}</td>
-                                    <td className="px-4 py-2">{item.slots}</td>
-                                    <td className="px-4 py-2">{item.enroll}</td>
-                                    <td className="flex items-center justify-center">
-                                        <button>
-                                            <FaEdit className="bg-main-blue text-white text-lg m-2 p-1 w-7 h-7 rounded" />
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
+
+
+                        <tbody>
+                            {subject.map((subjectItem) => {
+                                const matchingClass = classes.find((classItem) => classItem.subject_id);
+
+                                if (matchingClass) {
+
+
+
+
+                                    return (
+                                        <tr className="border" key={`${subjectItem.subject_id}`}>
+                                            <td className="text-center">
+                                                {subjectItem.subject_code}
+                                            </td>
+                                            <td className="text-center">
+                                                {subjectItem.subject_title}
+                                            </td>
+                                            <td className="text-center">
+                                                {subjectItem.subject_type}
+                                            </td>
+                                            <td className="text-center">
+                                                -
+                                            </td>
+                                            <td className="text-center">
+                                                -
+                                            </td>
+                                            <td className="text-center">
+                                                {subjectItem.units}
+                                            </td>
+                                            <td className="text-center">
+                                                {matchingClass.slots}
+                                            </td>
+                                            <td className="text-center">
+                                                -
+                                            </td>
+                                            <td className="flex items-center justify-center">
+                                                <button>
+                                                    <FaEdit className="bg-main-blue text-white text-lg m-2 p-1 w-7 h-7 rounded" />
+                                                </button>
+                                            </td>
+
+
+                                        </tr>
+                                    );
+
+
+                                } else {
+                                    // Only faculty has this staff_id
+                                    return (
+                                        <tr className="border" key={`${subjectItem.subject_id}`}>
+                                            {/* Render faculty data here */}
+                                        </tr>
+                                    );
+                                }
+                            })}
                         </tbody>
+
+
+
+
                     </table>
                 </div>
 
