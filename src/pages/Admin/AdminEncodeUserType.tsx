@@ -27,12 +27,15 @@ import * as z from "zod";
 import { useState } from "react";
 
 import { tableUserType } from "./TestData";
+import {
+  useAddRoles,
+  useDeleteRoles,
+  useRoles,
+  useUpdateRoles,
+} from "@/hooks/useRoles";
 
 // Form Schema
 const formSchema = z.object({
-  roleID: z.string().min(1, {
-    message: "Please Enter Role ID",
-  }),
   roleName: z.string().min(1, {
     message: "Please Enter Role Name",
   }),
@@ -40,16 +43,109 @@ const formSchema = z.object({
 
 const AdminEncodeUserType = () => {
   const [userTypeModalOpen, setUserTypeModalOpen] = useState(false);
+  const [updateUserTypeModelOpen, setUpdateUserTypeModelOpen] = useState(false);
+  const [roleID, setRoleID] = useState<any[]>([]);
+  const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
+  const [startSearch, setStartSearch] = useState("");
 
   // Form Hook
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      roleID: "",
       roleName: "",
     },
   });
+
+  // Search on Enter
+  function StartSearch() {
+    setStartSearch(search);
+  }
+
+  // React-Query Values
+  const onSuccess = (data: any) => {
+    console.log("Success ", data);
+  };
+
+  const onError = (error: any) => {
+    console.log("Error ", error);
+  };
+
+  const {
+    data: roles,
+    //refetch
+  } = useRoles(page, startSearch, onSuccess, onError);
+
+  const { mutate: addRoles, isError: addRolesSuccess } = useAddRoles(
+    onSuccess,
+    onError
+  );
+
+  const { mutate: deleteRoles, isError: deleteRolesSuccess } = useDeleteRoles(
+    onSuccess,
+    onError
+  );
+
+  const { mutate: updateRoles, isError: updateRolesSuccess } = useUpdateRoles(
+    onSuccess,
+    onError
+  );
+
+  // Dynamic Pages
+  const pages = [];
+  for (let i = 0; i < roles?.data.last_page; i++) {
+    pages.push(i + 1);
+  }
+  // if page num exceeds total allowable page - no more increasing of page may happen
+
+  if (pages.length < page) {
+    setPage(pages.length);
+  }
+
+  // POST
+  const handleSubmit = async (values: z.infer<typeof formSchema>) => {
+    const role = {
+      role_name: values.roleName,
+    };
+
+    addRoles(role);
+
+    if (!addRolesSuccess) {
+      form.reset();
+      setUserTypeModalOpen(!userTypeModalOpen);
+      toast.success("Successfully Added");
+    } else {
+      toast.error("Failed Adding Activity");
+    }
+  };
+
+  // UPDATE
+  const handleUpdate = async (values: z.infer<typeof formSchema>) => {
+    const role = {
+      role_id: roleID,
+      role_name: values.roleName,
+    };
+
+    updateRoles(role);
+    if (!updateRolesSuccess) {
+      form.reset();
+      setUpdateUserTypeModelOpen(!updateUserTypeModelOpen);
+      toast.success("Successfully Updated");
+    } else {
+      toast.error("Failed Updating Activity");
+    }
+  };
+
+  // DELETE
+  const handleDelete = async (role_id: string) => {
+    deleteRoles(role_id);
+
+    if (!deleteRolesSuccess) {
+      toast.success("Successfully Deleted");
+    } else {
+      toast.error("Failed Deleting Activity");
+    }
+  };
 
   return (
     <div className="h-screen w-full p-10 px-16 flex flex-col justify-between font-montserrat overflow-x-hidden">
@@ -76,11 +172,16 @@ const AdminEncodeUserType = () => {
                 className="border border-main-gray  w-60"
                 placeholder="Search"
                 onChange={(e) => {
-                  setSearch(e.target.value.toLowerCase());
+                  setSearch(e.target.value);
                 }}
               />
               <div className="border border-main-gray p-2 rounded-lg">
-                <FiArrowRight />
+                <FiArrowRight
+                  className="cursor-pointer"
+                  onClick={() => {
+                    StartSearch();
+                  }}
+                />
               </div>
             </div>
             <div
@@ -106,34 +207,50 @@ const AdminEncodeUserType = () => {
             </div>
 
             {/* Table Contents */}
-            {currentAct
-              .filter((item) => {
-                return search.toLowerCase() === "" ? item : item.roleId;
-              })
-              .map((item) => (
-                <>
-                  <div
-                    className="col-span-4 px-2 py-3 border-l border-b border-main-gray text-center pr-32 flex flex-col justify-center"
-                    key={item.id}
-                  >
-                    {item.roleId}
-                  </div>
-                  <div className="text-center col-span-4 px-2 py-3 border-b border-main-gray flex flex-col justify-center">
-                    <p className=" w-36 mx-auto rounded-lg">{item.roleName}</p>
-                  </div>
+            {roles?.data.data.map((item) => (
+              <>
+                <div
+                  className="col-span-4 px-2 py-3 border-l border-b border-main-gray text-center pr-32 flex flex-col justify-center"
+                  key={item.role_id}
+                >
+                  {item.role_id}
+                </div>
+                <div className="text-center col-span-4 px-2 py-3 border-b border-main-gray flex flex-col justify-center">
+                  <p className=" w-36 mx-auto rounded-lg">
+                    {item.role_name
+                      .split("_")
+                      .filter((x) => x.length > 0)
+                      .map((x) => x.charAt(0).toUpperCase() + x.slice(1))
+                      .join(" ")}
+                  </p>
+                </div>
 
-                  <div className="col-span-4 px-2 py-4 flex justify-center items-center border-b border-r border-main-gray ">
-                    <div className="flex gap-2">
-                      <div className="bg-main-blue text-white rounded-lg h-10 w-10 flex justify-center items-center mx-auto">
-                        <RiEditCircleLine size="30" />
-                      </div>
-                      <div className="bg-main-red text-white rounded-lg h-10 w-10 flex justify-center items-center mx-auto">
-                        <RiDeleteBin2Line size="30" />
-                      </div>
+                <div className="col-span-4 px-2 py-4 flex justify-center items-center border-b border-r border-main-gray ">
+                  <div className="flex gap-2">
+                    <div className="bg-main-blue text-white rounded-lg h-10 w-10 flex justify-center items-center mx-auto">
+                      <RiEditCircleLine
+                        size="30"
+                        className="cursor-pointer"
+                        onClick={() => {
+                          setUpdateUserTypeModelOpen(!updateUserTypeModelOpen);
+                          setRoleID(item.role_id);
+                        }}
+                      />
+                    </div>
+                    <div className="bg-main-red text-white rounded-lg h-10 w-10 flex justify-center items-center mx-auto">
+                      <RiDeleteBin2Line
+                        className="cursor-pointer"
+                        size="30"
+                        onClick={() => {
+                          handleDelete(item.role_id);
+                        }}
+                      />
                     </div>
                   </div>
-                </>
-              ))}
+                </div>
+                <Toaster />
+              </>
+            ))}
           </div>
         </div>
       </div>
@@ -142,43 +259,51 @@ const AdminEncodeUserType = () => {
       <div className="mt-20 text-sm">
         <div className="flex justify-between items-center space-x-2">
           <ul className="flex space-x-2 justify-center items-center">
-            <li
-              className="border border-main-gray p-1 rounded-lg cursor-pointer"
-              onClick={() => {
-                setCurrentPage(
-                  currentPage === 1 ? currentPage : currentPage - 1
-                );
-              }}
-            >
-              <FiArrowLeft size="20" />
-            </li>
-            {pageNumbers.map((number) => (
-              <li
-                key={number}
-                className="border border-main-gray p-1 rounded-lg w-8 flex justify-center cursor-pointer"
+            <li className="border border-main-gray p-1 rounded-lg cursor-pointer">
+              <FiArrowLeft
                 onClick={() => {
-                  setCurrentPage(number);
+                  if (page === 1) {
+                    setPage(1);
+                  } else {
+                    setPage(page - 1);
+                  }
                 }}
+                size="20"
+              />
+            </li>
+            {pages.map((item) => (
+              <li
+                className={
+                  item === page
+                    ? "border border-main-gray p-1 rounded-lg w-8 flex justify-center cursor-pointer bg-main-red text-white"
+                    : "border border-main-gray p-1 rounded-lg w-8 flex justify-center cursor-pointer"
+                }
               >
-                <a>{number}</a>
+                <a
+                  onClick={() => {
+                    setPage(item);
+                  }}
+                >
+                  {item}
+                </a>
               </li>
             ))}
 
-            <li
-              className="border border-main-gray p-1 rounded-lg cursor-pointer"
-              onClick={() => {
-                setCurrentPage(
-                  currentPage === pageNumbers.length
-                    ? currentPage
-                    : currentPage + 1
-                );
-              }}
-            >
-              <FiArrowRight size="20" />
+            <li className="border border-main-gray p-1 rounded-lg cursor-pointer">
+              <FiArrowRight
+                onClick={() => {
+                  if (page === roles?.data.last_page) {
+                    setPage(roles?.data.last_page);
+                  } else {
+                    setPage(page + 1);
+                  }
+                }}
+                size="20"
+              />
             </li>
             <li>
               <p>
-                {currentPage} out of {pageNumbers.length}
+                {pages[0]} out of {roles?.data.last_page}
               </p>
             </li>
           </ul>
@@ -202,20 +327,100 @@ const AdminEncodeUserType = () => {
             </div>
             <hr className="w-full mb-3 " />
 
-            <div className="px-14">
-              <div className="mb-3">
-                <Label className="font-normal mb-1">Role ID</Label>
-                <Input placeholder="ex. AGRAD01" />
-              </div>
+            <Form {...form}>
+              <form
+                className="px-14"
+                onSubmit={form.handleSubmit(handleSubmit)}
+              >
+                <div className="mb-3">
+                  <FormField
+                    control={form.control}
+                    name="roleName"
+                    render={({ field }) => {
+                      return (
+                        <FormItem>
+                          <FormLabel>Role Name</FormLabel>
+                          <FormControl>
+                            <Input
+                              placeholder="ADMINISTRATOR"
+                              type="text"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      );
+                    }}
+                  ></FormField>
+                </div>
+                <div className="mt-8 text-center ">
+                  <Button
+                    type="submit"
+                    className="bg-main-red hover:bg-red-600"
+                  >
+                    Save
+                  </Button>
+                  <Toaster />
+                </div>
+              </form>
+            </Form>
+          </div>
+        </div>
+      )}
 
-              <div className="mb-4">
-                <Label className="font-normal mb-1">Role Name</Label>
-                <Input placeholder="ex. Administrator" />
-              </div>
+      {updateUserTypeModelOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white rounded-lg w-full py-4 max-w-lg">
+            <div className="flex justify-between items-center p-4 px-14">
+              <h2 className="text-xl text-main-red">User Type Information</h2>
+              <button
+                className="flex items-center justify-center text-gray-700 border border-gray-700 rounded-full h-6 w-6"
+                onClick={() => {
+                  setUpdateUserTypeModelOpen(!updateUserTypeModelOpen);
+                }}
+              >
+                <HiXMark />
+              </button>
             </div>
-            <div className="mt-8 text-center ">
-              <Button className="bg-main-red hover:bg-red-600"> Save </Button>
-            </div>
+            <hr className="w-full mb-3 " />
+
+            <Form {...form}>
+              <form
+                className="px-14"
+                onSubmit={form.handleSubmit(handleUpdate)}
+              >
+                <div className="mb-3">
+                  <FormField
+                    control={form.control}
+                    name="roleName"
+                    render={({ field }) => {
+                      return (
+                        <FormItem>
+                          <FormLabel>Role Name</FormLabel>
+                          <FormControl>
+                            <Input
+                              placeholder="ADMINISTRATOR"
+                              type="text"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      );
+                    }}
+                  ></FormField>
+                </div>
+                <div className="mt-8 text-center ">
+                  <Button
+                    type="submit"
+                    className="bg-main-red hover:bg-red-600"
+                  >
+                    Save
+                  </Button>
+                  <Toaster />
+                </div>
+              </form>
+            </Form>
           </div>
         </div>
       )}

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { MdCheck } from "react-icons/md";
 import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
 import DateTime from "@/components/DateTime";
@@ -64,9 +64,9 @@ const ClassesAdd = () => {
   };
 
   // For backend
-  //   const handleFinish = () => {
-  //     // Submit the form data to the server
-  //   };
+  const handleFinish = () => {
+    // Submit the form data to the server
+  };
 
   const addMoreRows = () => {
     setRowCount(rowCount + 1);
@@ -122,9 +122,17 @@ const ClassesAdd = () => {
     <div className="w-full mt-10 p-5 border shadow rounded" key={1}>
       <div className="mb-3">
         <label htmlFor="Course" className="form-label">
-          Course Number:{" "}
+          Program Code:{" "}
         </label>
-        <select className="form-select ml-3 p-1 w-1/2 border rounded form-control">
+        <select className="form-select ml-4 p-1 w-1/3 border rounded form-control">
+          <option></option>
+          <option>2021343</option>
+          <option>202334</option>
+        </select>
+        <label htmlFor="Course" className="form-label ml-2">
+          Subject Code :{" "}
+        </label>
+        <select className="form-select ml-3 p-1 w-1/3 border rounded form-control">
           <option></option>
           <option>2021343</option>
           <option>202334</option>
@@ -230,24 +238,52 @@ const ClassesAdd = () => {
           </span>
         </div>
 
-    // Transitional Div's for each step 
-    const divs = [
-        (
-            // Step 1 
-            <div className="w-full mt-10 p-5 border shadow rounded" key={1}>
-                <div className="mb-3">
-                    <label htmlFor="Course" className="form-label">Program Code: </label>
-                    <select className="form-select ml-4 p-1 w-1/3 border rounded form-control">
-                        <option></option>
-                        <option>2021343</option>
-                        <option>202334</option>
-                    </select>
-                    <label htmlFor="Course" className="form-label ml-2">Subject Code : </label>
-                    <select className="form-select ml-3 p-1 w-1/3 border rounded form-control">
-                        <option></option>
-                        <option>2021343</option>
-                        <option>202334</option>
+        <div className="mb-3 flex flex-row items-center justify-start mt-5">
+          <label className="form-label">Instruction Language: </label>
+          <select className="form-select ml-1 p-1 w-1/4 border rounded">
+            <option>English</option>
+            <option>Tagalog</option>
+            <option>Japanese</option>
+          </select>
+          <label className="form-label ml-2">Minimum Year Level: </label>
+          <select className="form-select ml-2 p-1 w-1/4 border rounded">
+            <option>1st year</option>
+            <option>2nd year</option>
+            <option>3rd year</option>
+          </select>
+        </div>
+      </div>
+    </div>,
+    <div className="w-full p-10" key={2}>
+      <div className="flex flex-row justify-start items-center">
+        <input className="mr-2" type="checkbox" />
+        <span>
+          Check box if class has NO DEFINITE TIME AND DAY (e.g. Thesis)
+        </span>
+      </div>
 
+      <div className="border mt-5">
+        <div className="overflow-x-auto">
+          <table className="min-w-full table-auto bg-white shadow rounded-lg border">
+            <thead>
+              <tr className="bg-main-red text-white rounded-lg border ">
+                <th className="px-4 py-2"></th>
+                <th className="px-4 py-2">Day</th>
+                <th className="px-4 py-2">Time (Start - Finish)</th>
+                <th className="px-4 py-2">Room</th>
+                <th className="px-4 py-2">Meeting Type</th>
+              </tr>
+            </thead>
+            <tbody className="text-center border">
+              {Array.from({ length: 7 }, (_, index) => (
+                <tr className="border" key={index}>
+                  <td className="px-4 py-2">{index + 1}</td>
+                  <td className="px-4 py-2">
+                    <select className="form-select p-1 w-full border rounded">
+                      <option value="true"></option>
+                      <option value="true">Monday</option>
+                      <option>Tuesday</option>
+                      <option>Wednesday</option>
                     </select>
                   </td>
                   <td className="px-4 py-2">
