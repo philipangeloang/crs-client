@@ -7,6 +7,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, Outlet } from "react-router-dom";
+import { logout } from "@/lib/logout";
 
 // Add the imported icons to the library
 library.add(faAngleUp, faAngleDown, faDoorOpen);
@@ -109,7 +110,7 @@ const RootLayoutFaculty = () => {
                   {/* Dropdown items for Class Management */}
                   <li>
                     <Link
-                      to="/home/class-assignment"
+                      to="/home/class-assignments"
                       className="text-black block py-2 mt-2"
                     >
                       Class Assignments
@@ -133,7 +134,7 @@ const RootLayoutFaculty = () => {
                   </li>
                   <li>
                     <Link
-                      to="/home/teaching-assignment"
+                      to="/home/teaching-assignments"
                       className="text-black block py-2"
                     >
                       Teaching Assignments
@@ -149,7 +150,7 @@ const RootLayoutFaculty = () => {
             <li className="flex items-center px-4 py-2 cursor-pointer">
               <img className="Logout-icon" src="/Logout.svg" alt="Logo" />
               <a
-                href="/services"
+                onClick={logout}
                 className="text-black block px-4 py-2 cursor-pointer"
               >
                 Logout

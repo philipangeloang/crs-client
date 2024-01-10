@@ -83,6 +83,7 @@ const Sections = () => {
   }, []);
 
 
+
   // Function to open the faculty modal
   const openSectionModal = () => {
     setSectionModalOpen(true);
@@ -95,6 +96,7 @@ const Sections = () => {
 
   return (
     <div className="p-10 px-16 grid grid-cols-12 font-montserrat" >
+
 
       {/* Row 1 */}
       <div className="col-span-12 flex justify-between items-center">
@@ -150,6 +152,7 @@ const Sections = () => {
                   <option>2134</option>
                 </select>
               </div>
+
             </div>
             <div className="flex items-center">
 
@@ -157,12 +160,14 @@ const Sections = () => {
                 Add Section
               </button>
             </div>
+
           </div>
 
           <div className="overflow-x-auto">
             <table className="min-w-full table-auto  bg-white shadow-md rounded-lg">
               <thead>
                 <tr className="bg-main-red text-white rounded-lg border ">
+
                   <th>Block ID</th>
                   <th>Section</th>
                   <th>College Code</th>
@@ -224,6 +229,7 @@ const Sections = () => {
 
             </table>
 
+
           </div>
           {sectionModalOpen && (
             <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
@@ -277,6 +283,7 @@ const Sections = () => {
                     </div>
 
 
+
                   </div>
                 </div>
                 <button className="bg-main-red text-white rounded-lg p-2 mt-4 ml-auto flex">
@@ -301,6 +308,7 @@ const Sections = () => {
             </li>
             <li>
               <a href="#" className="text-gray-500 border border-gray-500 px-2 rounded hover:text-gray-700 hover:border-gray-700">2</a>
+
             </li>
             <li>
               <FiArrowRight className="border border-gray-500 w-5 h-5 rounded" />
@@ -321,4 +329,5 @@ const Sections = () => {
   )
 }
 
-export default Sections
+
+export default Sections;

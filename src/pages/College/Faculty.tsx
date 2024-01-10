@@ -1,3 +1,4 @@
+
 import DateTime from '@/components/DateTime';
 import React, { useState, useEffect } from 'react';
 import { FiArrowRight, FiArrowLeft } from 'react-icons/fi';
@@ -21,6 +22,7 @@ interface FormData {
   birth_date: string;
   // Add other fields as needed
 }
+
 
 
 
@@ -212,6 +214,7 @@ const Faculty = () => {
 
 
 
+
   // Function to open the faculty modal
   const openFacultyModal = () => {
     setFacultyModalOpen(true);
@@ -226,6 +229,7 @@ const Faculty = () => {
   const openEditModal = () => {
     console.log('Open button clicked'); // Add this line
     setEditModalOpen(true);
+
 
   };
 
@@ -251,6 +255,7 @@ const Faculty = () => {
 
   return (
     <div className="p-10 px-16 grid grid-cols-12 font-montserrat" >
+
       {/* Row 1 */}
       <div className="col-span-12 flex justify-between items-center">
         <div className="px-5 py-1 bg-main-red text-white rounded-lg ">
@@ -286,20 +291,24 @@ const Faculty = () => {
                 Add Faculty
               </button>
             </div>
+
           </div>
           <div className="overflow-x-auto">
             <table className="min-w-full table-auto  bg-white shadow-md rounded-lg">
               <thead>
                 <tr className="bg-main-red text-white rounded-lg border ">
+
                   <th>Instructor ID</th>
                   <th>Instructor Code</th>
                   <th>Name</th>
                   <th>Designation</th>
                   <th>Department Name</th>
+
                   <th>Status</th>
                   <th>Actions</th>
                 </tr>
               </thead>
+
 
               <tbody>
                 {faculty.map((facultyItem) => {
@@ -357,17 +366,21 @@ const Faculty = () => {
           </div>
 
 
+
           {facultyModalOpen && (
             <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
               <div className="bg-white p-4 rounded-lg w-full max-w-lg">
                 <div className="flex justify-between">
                   <h2 className="text-xl font-bold mb-4">Add Faculty</h2>
+
                   <button className="flex bg-main-red items-center text-white p-2" onClick={closeFacultyModal}>X</button>
+
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {/* First Column */}
                   <div>
                     <div className="mb-4">
+
                       <label htmlFor="selectCode" className="text-sm font-medium">
                         Instructor Code
                       </label>
@@ -404,12 +417,59 @@ const Faculty = () => {
                         Last Name
                       </label>
                       <input type="text" id="last_name" className="w-full border p-2 rounded" value={formData.last_name || ''} />
+
                     </div>
+                    <div className="mb-4">
+                      <label
+                        htmlFor="middleInitial"
+                        className="text-sm font-medium"
+                      >
+                        Middle Initial
+                      </label>
+                      <input
+                        type="text"
+                        id="middleInitial"
+                        className="w-full border p-2 rounded"
+                      />
+                    </div>
+                    <div className="mb-4">
+                      <label htmlFor="lastName" className="text-sm font-medium">
+                        Last Name
+                      </label>
+                      <input
+                        type="text"
+                        id="lastName"
+                        className="w-full border p-2 rounded"
+                      />
+                    </div>
+                    <div className="mb-4">
+                      <label htmlFor="suffix" className="text-sm font-medium">
+                        Suffix
+                      </label>
+                      <input
+                        type="text"
+                        id="suffix"
+                        className="w-full border p-2 rounded"
+                      />
+                    </div>
+                    <div className="mb-4">
+                      <label htmlFor="maiden" className="text-sm font-medium">
+                        Maiden
+                      </label>
+                      <input
+                        type="text"
+                        id="maiden"
+                        className="w-full border p-2 rounded"
+                      />
+                    </div>
+                  </div>
+
 
                     <div className="mb-4">
                       <label htmlFor="email" className="text-sm font-medium">
                         Email Address
                       </label>
+
                       <input type="email" id="personal_email" className="w-full border p-2 rounded" value={formData.personal_email || ''} />
                     </div>
                   </div>
@@ -423,11 +483,14 @@ const Faculty = () => {
                       <input type="text" id="contact_no" className="w-full border p-2 rounded" value={formData.contact_no || ''} />
                     </div>
 
+
                     <div className="mb-4">
                       <label htmlFor="sex" className="text-sm font-medium">
                         Sex
                       </label>
+
                       <select id="sex" className="w-full border p-2 rounded" value={formData.sex || 'male'}>
+
                         <option value="male">Male</option>
                         <option value="female">Female</option>
                       </select>
@@ -437,6 +500,7 @@ const Faculty = () => {
                       <label htmlFor="address" className="text-sm font-medium">
                         Address
                       </label>
+
                       <input type="text" id="address" className="w-full border p-2 rounded" value={formData.address_id || ''} />
                     </div>
 
@@ -453,11 +517,13 @@ const Faculty = () => {
                   onClick={handleSubmit}
 
                 >
+
                   Add Faculty
                 </button>
               </div>
             </div>
           )}
+
 
           {/* Edit/Update Button  */}
           {editModalOpen && selectedFaculty && (
@@ -613,6 +679,7 @@ const Faculty = () => {
       </div>
 
 
+
       {/* Row 3 Pagination (right-aligned and smaller) */}
       <div className="col-span-12 mt-20">
         <div className="flex justify-between items-center space-x-2">
@@ -621,10 +688,12 @@ const Faculty = () => {
               <FiArrowLeft className="border border-gray-500 w-5 h-5 rounded" />
             </li>
             <li>
+
               <a href="#" className="text-gray-500 border border-gray-500 px-2 rounded hover:text-gray-700 hover:border-gray-700">1</a>
             </li>
             <li>
               <a href="#" className="text-gray-500 border border-gray-500 px-2 rounded hover:text-gray-700 hover:border-gray-700">2</a>
+
             </li>
             <li>
               <FiArrowRight className="border border-gray-500 w-5 h-5 rounded" />
@@ -639,7 +708,9 @@ const Faculty = () => {
         </div>
       </div>
     </div>
+
   )
 }
 
-export default Faculty
+
+export default Faculty;

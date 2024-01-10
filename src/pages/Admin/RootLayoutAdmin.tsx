@@ -7,12 +7,13 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, Outlet } from "react-router-dom";
+import { logout } from "@/lib/logout";
 
 // Add the imported icons to the library
 library.add(faAngleUp, faAngleDown, faDoorOpen);
 
 const RootLayoutAdmin = () => {
-  const [homeOpen, setHomeOpen] = useState(false);
+  const [homeOpen, setHomeOpen] = useState(true);
   const [scheduleActivitiesOpen, setScheduleActivitiesOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const [classDropdownOpen, setClassDropdownOpen] = useState(false);
@@ -21,7 +22,7 @@ const RootLayoutAdmin = () => {
 
   return (
     <>
-      <div className="flex w-screen">
+      <div className="flex">
         <div className="sidebar p-6 fixed left-0 top-0 bottom-0 w-[19rem] flex flex-col justify-between">
           <ul className="space-y-4">
             <li className="mb-14 mt-2">
@@ -33,7 +34,7 @@ const RootLayoutAdmin = () => {
                 to="/home"
                 className={homeOpen ? "text-main-red font-bold " : ""}
                 onClick={() => {
-                  setHomeOpen(!homeOpen);
+                  setHomeOpen(true);
                   if (homeOpen === false) {
                     setScheduleActivitiesOpen(false);
                     setUserDropdownOpen(false);
@@ -54,7 +55,7 @@ const RootLayoutAdmin = () => {
                   scheduleActivitiesOpen ? "text-main-red font-bold " : ""
                 }
                 onClick={() => {
-                  setScheduleActivitiesOpen(!scheduleActivitiesOpen);
+                  setScheduleActivitiesOpen(true);
                   if (scheduleActivitiesOpen === false) {
                     setUserDropdownOpen(false);
                     setClassDropdownOpen(false);
@@ -72,7 +73,7 @@ const RootLayoutAdmin = () => {
               <a
                 className={userDropdownOpen ? "text-main-red font-bold " : ""}
                 onClick={() => {
-                  setUserDropdownOpen(!userDropdownOpen);
+                  setUserDropdownOpen(true);
 
                   if (userDropdownOpen === false) {
                     setClassDropdownOpen(false);
@@ -99,7 +100,7 @@ const RootLayoutAdmin = () => {
                       to="/home/encode-user-type"
                       className="text-black block py-2 mt-2"
                     >
-                      Encode User Type
+                      Encode User Role
                     </Link>
                   </li>
                   <li>
@@ -118,7 +119,7 @@ const RootLayoutAdmin = () => {
               <a
                 className={classDropdownOpen ? "text-main-red font-bold " : ""}
                 onClick={() => {
-                  setClassDropdownOpen(!classDropdownOpen);
+                  setClassDropdownOpen(true);
                   if (classDropdownOpen === false) {
                     setUserDropdownOpen(false);
                     setCollegeDropdownOpen(false);
@@ -182,7 +183,7 @@ const RootLayoutAdmin = () => {
                   collegeDropdownOpen ? "text-main-red font-bold " : ""
                 }
                 onClick={() => {
-                  setCollegeDropdownOpen(!collegeDropdownOpen);
+                  setCollegeDropdownOpen(true);
                   if (collegeDropdownOpen === false) {
                     setClassDropdownOpen(false);
                     setUserDropdownOpen(false);
@@ -230,7 +231,7 @@ const RootLayoutAdmin = () => {
                   studentDropdownOpen ? "text-main-red font-bold " : ""
                 }
                 onClick={() => {
-                  setStudentDropdownOpen(!studentDropdownOpen);
+                  setStudentDropdownOpen(true);
 
                   if (studentDropdownOpen === false) {
                     setClassDropdownOpen(false);
@@ -279,7 +280,7 @@ const RootLayoutAdmin = () => {
             <li className="flex items-center px-4 py-2 cursor-pointer">
               <img className="Logout-icon" src="/Logout.svg" alt="Logo" />
               <a
-                href="/services"
+                onClick={logout}
                 className="text-black block px-4 py-2 cursor-pointer"
               >
                 Logout

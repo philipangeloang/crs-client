@@ -7,6 +7,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, Outlet } from "react-router-dom";
+import { logout } from "@/lib/logout";
 
 // Add the imported icons to the library
 library.add(faAngleUp, faAngleDown, faDoorOpen);
@@ -46,8 +47,7 @@ const RootLayoutStudentUndergrad = () => {
             </li>
 
             <li className="px-4 py-2 cursor-pointer">
-              <Link
-                to="/home/nstp"
+              <a
                 className={nstpOpen ? "text-main-red font-bold " : ""}
                 onClick={() => {
                   setNstpOpen(!nstpOpen);
@@ -68,20 +68,20 @@ const RootLayoutStudentUndergrad = () => {
                     <FontAwesomeIcon icon="angle-down" />
                   )}
                 </span>
-              </Link>
+              </a>
               {nstpOpen && (
                 <ul>
                   <li className="text-black block py-2 mt-2 cursor-pointer">
-                    Choose ROTC or CWTS
+                    <Link to="nstp1">Choose ROTC or CWTS</Link>
                   </li>
                   <li className="text-black block py-2 cursor-pointer">
-                    Choose Schedule
+                    <Link to="nstp2"> Choose Schedule </Link>
                   </li>
                   <li className="text-black block py-2 cursor-pointer">
-                    Finalization
+                    <Link to="nstp3">Finalization</Link>
                   </li>
                   <li className="text-black block py-2 cursor-pointer">
-                    Enrollment Status
+                    <Link to="nstp4"> Enrollment Status</Link>
                   </li>
                 </ul>
               )}
@@ -113,13 +113,16 @@ const RootLayoutStudentUndergrad = () => {
                 <ul>
                   {/* Dropdown items for Class Management */}
                   <li className="text-black block py-2 cursor-pointer mt-2">
-                    View Assessment
+                    <Link to="enrollment1"> View Schedule</Link>
                   </li>
                   <li className="text-black block py-2 cursor-pointer">
-                    Donwload SER
+                    <Link to="enrollment2"> View Assessment</Link>
                   </li>
                   <li className="text-black block py-2 cursor-pointer">
-                    Enrollment Status
+                    <Link to="enrollment3"> Download SER</Link>
+                  </li>
+                  <li className="text-black block py-2 cursor-pointer">
+                    <Link to="enrollment4"> Enrollment Status</Link>
                   </li>
                 </ul>
               )}
@@ -205,7 +208,7 @@ const RootLayoutStudentUndergrad = () => {
             <li className="flex items-center px-4 py-2 cursor-pointer">
               <img className="Logout-icon" src="/Logout.svg" alt="Logo" />
               <a
-                href="/services"
+                onClick={logout}
                 className="text-black block px-4 py-2 cursor-pointer"
               >
                 Logout

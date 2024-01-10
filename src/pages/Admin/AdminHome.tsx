@@ -2,26 +2,28 @@ import { AiOutlineMail } from "react-icons/ai";
 import { FiFacebook, FiTwitter } from "react-icons/fi";
 import { BsGlobe2 } from "react-icons/bs";
 import { BiUserPin } from "react-icons/bi";
+import DateTime from "@/components/DateTime";
+import TempRoleSelector from "../TempRoleSelector";
 
 const AdminHome = () => {
   return (
     <>
-      <div className="p-10 px-16 grid grid-cols-12 font-montserrat ">
+      <div className="h-screen w-full p-10 px-16 flex flex-col justify-between font-montserrat bg-[url('BGHome.png')] bg-cover">
         {/* Row 1 */}
-        <div className="col-span-12 flex justify-between items-center">
+        <div className="flex justify-between items-center">
           <div className="px-5 py-1 bg-main-red text-white rounded-lg ">
-            Home
+            Admin Home
           </div>
           <div className="flex flex-col items-end">
             <h1 className="font-bold">DELA CRUZ. JUAN PEPITO</h1>
             <p className="text-xs ">
-              Logged as: <span className="text-main-red">Administrator</span>
+              Logged as: <TempRoleSelector />
             </p>
           </div>
         </div>
 
         {/* Row 2 */}
-        <div className="col-span-12 mt-20">
+        <div className=" ">
           <h1 className="text-3xl font-normal mb-2">
             Welcome to the Official CRS Website of
           </h1>
@@ -59,7 +61,7 @@ const AdminHome = () => {
         </div>
 
         {/* Row 3 */}
-        <div className="col-span-12 flex justify-between items-end mt-24 text-[#434343] text-sm">
+        <div className="flex justify-between items-end text-[#434343] text-sm">
           <div className="flex gap-10">
             <div>Contacts</div>
             <div className="flex flex-col">
@@ -90,10 +92,7 @@ const AdminHome = () => {
           </div>
 
           <div className="flex flex-col items-end">
-            <h1 className="text-main-blue font-bold text-md">
-              October 27, 2023
-            </h1>
-            <p>10:35 PM</p>
+            <DateTime />
           </div>
         </div>
       </div>

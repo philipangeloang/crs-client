@@ -1,3 +1,4 @@
+
 import DateTime from '@/components/DateTime';
 import React, { useState, useEffect } from 'react';
 import { FiArrowRight, FiArrowLeft } from 'react-icons/fi';
@@ -145,6 +146,41 @@ const AddDropReq = () => {
 
 
 
+        {/* Table */}
+
+        <div className="overflow-x-auto">
+          <table className="min-w-full table-auto  bg-white shadow-md rounded-lg">
+            <thead>
+              <tr className="bg-main-red text-white rounded-lg border ">
+                <th>Actions</th>
+                <th>Student ID</th>
+                <th>Name</th>
+                <th>Program</th>
+                <th>College</th>
+                <th>Request Date</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody className="text-center border">
+              {tableData.map((item) => (
+                <tr className="border" key={item.id}>
+                  <td
+                    className="text-center flex justify-center items-center m-auto"
+                    onClick={() => openModal(item)}
+                  >
+                    <FaEye className="bg-main-blue text-white rounded text-2xl w-7 h-7 p-1 m-1" />
+                  </td>
+                  <td className="px-4 py-2">{item.id}</td>
+                  <td className="px-4 py-2">{item.name}</td>
+                  <td className="px-4 py-2">{item.program}</td>
+                  <td className="px-4 py-2">{item.college}</td>
+                  <td className="px-4 py-2">{item.reqDate}</td>
+                  <td className="px-4 py-2 text-main-green">{item.status}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
 
   return (
     <div className="p-10 px-16 grid grid-cols-12 font-montserrat" >
@@ -302,10 +338,12 @@ const AddDropReq = () => {
                       <tr className="bg-main-red text-white rounded-lg border">
                         <th>Class ID</th>
                         <th>Subject Code / Section</th>
+
                         <th>Date Created</th>
                       </tr>
                     </thead>
                     <tbody className="text-center border">
+
                       {/* Add your dropped classes data here */}
                     </tbody>
                   </table>
@@ -317,6 +355,7 @@ const AddDropReq = () => {
         )}
 
       </div>
+
 
 
 
@@ -333,6 +372,7 @@ const AddDropReq = () => {
             </li>
             <li>
               <a href="#" className="text-gray-500 border border-gray-500 px-2 rounded hover:text-gray-700 hover:border-gray-700">2</a>
+
             </li>
             <li>
               <FiArrowRight className="border border-gray-500 w-5 h-5 rounded" />
@@ -353,4 +393,5 @@ const AddDropReq = () => {
   )
 }
 
-export default AddDropReq
+
+export default AddDropReq;

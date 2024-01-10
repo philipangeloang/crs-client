@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { IoMdPrint } from "react-icons/io";
 import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
@@ -17,6 +18,7 @@ const CollegeStudentRecords = () => {
   const openStudentModal = () => {
     setStudentModalOpen(true);
   };
+
 
   const closeStudentModal = () => {
     setStudentModalOpen(false);
@@ -119,12 +121,15 @@ const CollegeStudentRecords = () => {
 
 
 
+
   return (
     <div className="p-10 px-16 grid grid-cols-12 font-montserrat">
       {/* Row 1 */}
       <div className="col-span-12 flex justify-between items-center">
+
         <div className="px-5 py-1 bg-main-red text-white rounded-lg">
           Student
+
         </div>
         <div className="flex flex-col items-end">
           <h1 className="font-bold">DELA CRUZ. JUAN PEPITO</h1>
@@ -136,6 +141,7 @@ const CollegeStudentRecords = () => {
 
       {/* Row 2 Table */}
       <div className="col-span-12 mt-20">
+
         <div className="flex  justify-between mb-4">
           <div className="flex">
             <div className="flex items-center">
@@ -236,10 +242,12 @@ const CollegeStudentRecords = () => {
           </div>
         </div>
 
+
         <div className="overflow-x-auto">
           <table className="min-w-full table-auto bg-white shadow-md rounded-lg border">
             <thead>
               <tr className="bg-main-red text-white rounded-lg border ">
+
                 <th className="px-4 py-2">Student No.</th>
                 <th className="px-4 py-1">Name</th>
                 <th className="px-4 py-2">Program Code</th>
@@ -304,6 +312,7 @@ const CollegeStudentRecords = () => {
 
 
           </table>
+
           {studentModalOpen && (
             <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
               <div className="bg-white p-4 rounded-lg w-full max-w-lg">
@@ -316,6 +325,7 @@ const CollegeStudentRecords = () => {
                     X
                   </button>
                 </div>
+
                 <h2 className="text-xl mb-4 text-main-red">Student Terms Update</h2>
 
                 {/* 1st row */}
@@ -434,19 +444,24 @@ const CollegeStudentRecords = () => {
 
                 {/* Additional rows can be added similarly */}
 
+
               </div>
             </div>
           )}
         </div>
 
+
         {/* Row 3 Pagination (right-aligned and smaller) */}
+
         <div className="col-span-12 sm:col-span-3 mt-20 text-sm ml-auto">
           <div className="flex justify-between items-center space-x-2">
             <ul className="flex space-x-2">
               <li>
                 <FiArrowLeft className="border border-gray-500 w-5 h-5 rounded" />
               </li>
+
               {/* ... (pagination links) */}
+
               <li>
                 <p>1 out of 12 rows</p>
               </li>
@@ -459,4 +474,6 @@ const CollegeStudentRecords = () => {
   );
 };
 
+
 export default CollegeStudentRecords;
+
