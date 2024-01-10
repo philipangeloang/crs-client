@@ -4,7 +4,7 @@ import api from "../api/fetch";
 
 // Functions
 const fetchActivities = (page: any, search: any) => {
-  return api.get(`/api/activities?perPage=5&page=${page}&search=${search}`, {
+  return api.get(`/api/activities?perPage=4&page=${page}&search=${search}`, {
     headers: {
       "Content-Type": "application/json",
     },

@@ -1,43 +1,55 @@
-import { RiEditCircleLine, RiDeleteBin2Line } from "react-icons/ri";
-import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 import DateTime from "@/components/DateTime";
 import TempRoleSelector from "../TempRoleSelector";
-import { Input } from "@/components/ui/input";
-import { tableUserType } from "./TestData";
-import { useState } from "react";
+
+import { RiEditCircleLine, RiDeleteBin2Line } from "react-icons/ri";
+import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 import { HiXMark } from "react-icons/hi2";
+
+import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+
+import toast, { Toaster } from "react-hot-toast";
+import moment from "moment";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+
+import { useState } from "react";
+
+import { tableUserType } from "./TestData";
+
+// Form Schema
+const formSchema = z.object({
+  roleID: z.string().min(1, {
+    message: "Please Enter Role ID",
+  }),
+  roleName: z.string().min(1, {
+    message: "Please Enter Role Name",
+  }),
+});
 
 const AdminEncodeUserType = () => {
-  // State for Opening and Closing Modal
   const [userTypeModalOpen, setUserTypeModalOpen] = useState(false);
-
-  // State for Searching and Filtering
   const [search, setSearch] = useState("");
 
-  // State for Moving Along Pages
-  const [schedActivities] = useState(tableUserType);
-  // const [loading, setLoading] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [postPerPage] = useState(7);
-
-  // Logic to get the accurage number of pages
-  const indexOfLastAct = currentPage * postPerPage;
-  const indexOfFirstAct = indexOfLastAct - postPerPage;
-  const currentAct =
-    search === ""
-      ? schedActivities.slice(indexOfFirstAct, indexOfLastAct)
-      : schedActivities.filter((item) => {
-          return search.toLowerCase() === " "
-            ? item
-            : item.roleId.toLowerCase().includes(search);
-        });
-  const pageNumbers = [];
-
-  for (let i = 1; i <= Math.ceil(schedActivities.length / postPerPage); i++) {
-    pageNumbers.push(i);
-  }
+  // Form Hook
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      roleID: "",
+      roleName: "",
+    },
+  });
 
   return (
     <div className="h-screen w-full p-10 px-16 flex flex-col justify-between font-montserrat overflow-x-hidden">

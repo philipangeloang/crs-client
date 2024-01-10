@@ -97,7 +97,7 @@ const AdminScheduleOfActivities = () => {
     },
   });
 
-  // Search on Enter A
+  // Search on Enter
   function StartSearch() {
     setStartSearch(search);
   }
