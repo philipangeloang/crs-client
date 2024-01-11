@@ -1,4 +1,5 @@
 import DateTime from "@/components/DateTime";
+import { useNavigate } from 'react-router-dom';
 import { BiSolidLeftArrow } from "react-icons/bi";
 import { BiSolidRightArrow } from "react-icons/bi";
 import { BiCalendarEvent } from "react-icons/bi";
@@ -7,14 +8,40 @@ import { RiTeamFill } from "react-icons/ri";
 
 const NSTP3 = () => 
 {
+    const navigate = useNavigate();
+
+    const handleBackClick= () => {
+        console.log('Button clicked!');
+            navigate('/home/nstp2');
+    };
+
+    const handleNextClick= () => {
+        console.log('Button clicked!');
+            navigate('/home/nstp4');
+    };
+
+    const tableData = [
+        {
+            ClassCode: "ROTC 0111",
+            ClassName: "ROTC",
+            Section:"1",
+            Schedule1: "Monday",
+            Schedule2:"6:00 PM - 9:00 PM",
+            Schedule3:"F2F",
+            Room:"FIELD",
+            Credits:"2",
+        },
+        // Add more data as needed
+      ];
+
     return (
         <>
-            <div className="p-10 px-16 grid grid-cols-12 font-montserrat
+            <div    className="p-10 px-16 grid grid-cols-12 font-montserrat
                             bg-cover bg-center min-h-screen items-center
                             bg-no-repeat" 
-                style = {{ 
-                backgroundImage: 'url(./gradient.png), url(./plm_bg.png)'
-                }}
+                    style = {{ 
+                                backgroundImage: 'url(/gradient.png), url(/plm_bg.png)'
+                            }}
                 >
                 {/* Row 1 */}
                 <div className="col-span-12 flex justify-between items-center">
@@ -34,10 +61,10 @@ const NSTP3 = () =>
                     <div className="text-3xl font-bold text-main-red">Step&nbsp;3:</div>
                     <div className="text-2xl text-main-red mr-80">Finalization</div>
                     <div className="flex flex-row">
-                        <button className="px-6 py-1 bg-main-red text-white rounded-lg flex items-center">
+                        <button className="px-6 py-1 bg-main-red text-white rounded-lg flex items-center" onClick={handleBackClick}>
                             <BiSolidLeftArrow size={15}></BiSolidLeftArrow>Back
                         </button>
-                        <button className="ml-2 px-6 py-1 bg-main-red text-white rounded-lg flex items-center">
+                        <button className="ml-2 px-6 py-1 bg-main-red text-white rounded-lg flex items-center" onClick={handleNextClick}>
                             Next<BiSolidRightArrow size={15}></BiSolidRightArrow>
                         </button>
                     </div>
@@ -69,7 +96,7 @@ const NSTP3 = () =>
                         </li>
                     </ol>
                     
-                    <table className="table-fixed mt-4 ml-2 text-center rounded-full text-sm border border-black">
+                    <table className="table-fixed mt-4 ml-2 text-center text-sm border bg-white border-black">
                         <thead>
                             <tr className="bg-main-red text-white items-center">
                                 <th className="px-5">Class&nbsp;Code</th>
@@ -81,18 +108,20 @@ const NSTP3 = () =>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td className="py-20">ROTC 0111</td>
-                                <td>ROTC</td>
-                                <td>1</td>
-                                <td className="flex flex-row ml-6 py-20 items-center">
-                                    <BiCalendarEvent size={30} className="px-2"/>Monday
-                                    <AiFillClockCircle size={30} className="px-2"/>6:00 PM - 9:00 PM
-                                    <RiTeamFill size={50} className="px-4"/>F2F
-                                </td>
-                                <td>FIELD</td>
-                                <td>2</td>
-                            </tr>
+                            {tableData.map((item) => (
+                                <tr className="border" key={item.Section}>
+                                    <td className="px-4 py-6">{item.ClassCode}</td>
+                                    <td className="px-4 py-6">{item.ClassName}</td>
+                                    <td className="px-4 py-6">{item.Section}</td>
+                                    <td className="px-4 py-20 flex flex-row ml-6 items-center">
+                                        <BiCalendarEvent size={30} className="px-2"/>{item.Schedule1}
+                                        <AiFillClockCircle size={30} className="px-2"/>{item.Schedule2}
+                                        <RiTeamFill size={30} className="px-2"/>{item.Schedule3}
+                                    </td>
+                                    <td className="px-4 py-6">{item.Room}</td>
+                                    <td className="px-4 py-6">{item.Credits}</td>           
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
 
