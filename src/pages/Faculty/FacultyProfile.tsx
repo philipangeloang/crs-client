@@ -1,17 +1,17 @@
 import DateTime from "@/components/DateTime";
 import api from "@/api/fetch";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
-const FacultyProfile = () => {
+const FacultyProfile: React.FC = () => {
   function fetchProfile() {
     api
       .get("api/me", {
         withCredentials: true,
       })
       .then((response) => {
-        setProfile(response.data.staff_info)
-        console.log("Response:", response.data.staff_info);
+        setProfile(response.data.staff_info);
+        // console.log("Response:", response.data.staff_info);
         // Handle the response data as needed
       })
       .catch((error) => {
@@ -91,6 +91,7 @@ const FacultyProfile = () => {
             <div className="px-4 py-2 border-2 border-main-red bg-main-red text-white rounded-lg cursor-pointer">
               <Link
                 to="/home/profile/edit"
+                state={{ profile }}
               >
                 Edit Details
               </Link>
