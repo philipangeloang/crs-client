@@ -5,6 +5,7 @@ import { Key, useState } from "react";
 import StringCardinal from "@/components/StringCardinal";
 import { FullModal } from "@/components/ui/modal";
 import { UserDisplay } from "@/components/ui/userdisplay";
+import { Pager } from "@/components/ui/pager";
 import "@azure/msal-browser";
 import axios from "axios";
 
@@ -52,63 +53,63 @@ const students = [
     grade: "1.00",
   },
   {
-    student_number: "2020-00000",
+    student_number: "2020-00001",
     name: "Juan Dela Cruz",
     college: "BSCS",
     year: 4,
     grade: "1.00",
   },
   {
-    student_number: "2020-00000",
+    student_number: "2020-00002",
     name: "Juan Dela Cruz",
     college: "BSCS",
     year: 4,
     grade: "1.00",
   },
   {
-    student_number: "2020-00000",
+    student_number: "2020-00003",
     name: "Juan Dela Cruz",
     college: "BSCS",
     year: 4,
     grade: "1.00",
   },
   {
-    student_number: "2020-00000",
+    student_number: "2020-00004",
     name: "Juan Dela Cruz",
     college: "BSCS",
     year: 4,
     grade: "1.00",
   },
   {
-    student_number: "2020-00000",
+    student_number: "2020-00005",
     name: "Juan Dela Cruz",
     college: "BSCS",
     year: 4,
     grade: "1.00",
   },
   {
-    student_number: "2020-00000",
+    student_number: "2020-00006",
     name: "Juan Dela Cruz",
     college: "BSCS",
     year: 4,
     grade: "1.00",
   },
   {
-    student_number: "2020-00000",
+    student_number: "2020-00007",
     name: "Juan Dela Cruz",
     college: "BSCS",
     year: 4,
     grade: "1.00",
   },
   {
-    student_number: "2020-00000",
+    student_number: "2020-00008",
     name: "Juan Dela Cruz",
     college: "BSCS",
     year: 4,
     grade: "1.00",
   },
   {
-    student_number: "2020-00000",
+    student_number: "2020-00009",
     name: "Juan Dela Cruz",
     college: "BSCS",
     year: 4,
@@ -158,6 +159,10 @@ function apiCallExample() {
 
 const FacultyChangeGrades = () => {
   const [showGradeChangeModal, setGradeChangeModal] = useState(false);
+
+  const [page, setPage] = useState(1);
+  const [perPage, setPerPage] = useState(5);
+  const [search, setSearch] = useState("");
 
   const handleGradeClose = () => {
     setGradeChangeModal(false);
@@ -249,7 +254,7 @@ const FacultyChangeGrades = () => {
               </thead>
               <tbody>
                 {students.map((student: student) => (
-                  <tr className="border-b-2 border-black text-sm hover:bg-neutral-100">
+                  <tr key={student.student_number} className="border-b-2 border-black text-sm hover:bg-neutral-100">
                     <td className="p-4">CS Elective 2 (Lec)</td>
                     <td>CSC 0413</td>
                     <td>{student.student_number}</td>
@@ -316,6 +321,9 @@ const FacultyChangeGrades = () => {
 
         {/* Row 3 */}
         <div className="col-span-12 flex justify-between items-end mt-24 text-[#434343] text-sm">
+          <div>
+            <Pager from={1} to={10} total={200} current_page={page} last_page={10} on_page_change={setPage} />
+          </div>
           <div className="flex gap-10"></div>
           <DateTime />
         </div>
