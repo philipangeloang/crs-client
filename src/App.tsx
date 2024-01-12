@@ -17,6 +17,7 @@ import FacultyHome from "./pages/Faculty/FacultyHome";
 import FacultyProfile from "./pages/Faculty/FacultyProfile";
 import FacultyProfileEdit from "./pages/Faculty/FacultyProfileEdit";
 import FacultyChangePassword from "./pages/Faculty/FacultyChangePassword";
+import StudentUndergradChangePassword from "./pages/Student/StudentUndergrad/StudentUndergradChangePassword";
 import FacultyClassAssignments from "./pages/Faculty/FacultyClassAssignments";
 import FacultyEncodingOfGrades from "./pages/Faculty/FacultyEncodingOfGrades";
 import FacultyChangeGrades from "./pages/Faculty/FacultyChangeGrades";
@@ -50,10 +51,15 @@ import Subjects from "./pages/College/Subjects";
 import Curriculum from "./pages/College/Curriculum";
 import AddDropReq from "./pages/College/AddDropReq";
 import ListOfTeaching from "./pages/College/ListOfTeaching";
+import StudentGradEnrollment1 from "./pages/Student/StudentGrad/StudentGradEnrollment1";
+import StudentGradEnrollment2 from "./pages/Student/StudentGrad/StudentGradEnrollment2";
+import StudentGradEnrollment3 from "./pages/Student/StudentGrad/StudentGradEnrollment3";
+import StudentGradEnrollment4 from "./pages/Student/StudentGrad/StudentGradEnrollment4";
+import StudentGradViewGrades from "./pages/Student/StudentGrad/StudentGradViewGrades";
 import StudentGradViewInformation from "./pages/Student/StudentGrad/StudentGradViewInformation";
 import StudentGradClassSchedule from "./pages/Student/StudentGrad/StudentGradClassSchedule";
+import StudentGradChangePassword from "./pages/Student/StudentGrad/StudentGradChangePassword";
 import StudentGradCashier from "./pages/Student/StudentGrad/StudentGradCashier";
-
 import api from "./api/fetch";
 import { useEffect } from "react";
 
@@ -190,7 +196,7 @@ function App() {
                 />
                 <Route
                   path="change-password"
-                  element={<StudentUndergradHome />}
+                  element={<StudentUndergradChangePassword />}
                 />
               </Route>
             </>
@@ -199,8 +205,11 @@ function App() {
             <>
               <Route path="/home" element={<RootLayoutStudentGrad />}>
                 <Route index element={<StudentGradHome />} />
-                <Route path="enrollment" element={<StudentGradHome />} />
-                <Route path="view-grades" element={<StudentGradHome />} />
+                <Route path="enrollment" element={<StudentGradEnrollment1 />} />
+                <Route path="enrollment2" element={<StudentGradEnrollment2 />} />
+                <Route path="enrollment3" element={<StudentGradEnrollment3 />} />
+                <Route path="enrollment4" element={<StudentGradEnrollment4 />} />
+                <Route path="view-grades" element={<StudentGradViewGrades/>} />
                 <Route
                   path="view-information"
                   element={<StudentGradViewInformation />}
@@ -209,7 +218,7 @@ function App() {
                   path="class-schedule"
                   element={<StudentGradClassSchedule />}
                 />
-                <Route path="change-password" element={<StudentGradHome />} />
+                <Route path="change-password" element={<StudentGradChangePassword />} />
                 <Route path="cashier" element={<StudentGradCashier />} />
               </Route>
             </>
