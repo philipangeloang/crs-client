@@ -70,7 +70,7 @@ export const Pager: React.FC<PagerProps> = ({ from, to, total, current_page, las
             }
           </ul>
         :
-        <div className="text-gray-500 text-sm">No other pages</div>
+        <div className="text-gray-500 text-sm mr-4">No other pages</div>
         }
         <div className="text-gray-500 text-xs sm:text-sm">Showing <b>{from}</b> to <b>{to}</b> of <b>{total}</b> items</div>
       </div>
