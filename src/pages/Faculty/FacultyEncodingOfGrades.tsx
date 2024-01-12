@@ -1,8 +1,9 @@
 import { AiOutlineWarning } from "react-icons/ai";
 import { FaPrint, FaDownload } from 'react-icons/fa';
 import DateTime from "@/components/DateTime";
-import { Key } from "react";
+import { Key, useState } from "react";
 import StringCardinal from "@/components/StringCardinal";
+import { Pager } from "@/components/ui/pager";
 import { Link } from "react-router-dom";
 
 // Faculty Details
@@ -29,16 +30,8 @@ const termsAndAcademicYears = [
 ];
 
 const classes = [
-  {class_code: "CSC 0413", section: 2, subject_title: "CS Elective 2 (Lec)", schedule: "W 6:00P-8:00PM F2F - GV 306", instructor: "Jamillah S. Guialil"},
-  {class_code: "CSC 0413", section: 2, subject_title: "CS Elective 2 (Lec)", schedule: "W 6:00P-8:00PM F2F - GV 306", instructor: "Jamillah S. Guialil"},
-  {class_code: "CSC 0413", section: 2, subject_title: "CS Elective 2 (Lec)", schedule: "W 6:00P-8:00PM F2F - GV 306", instructor: "Jamillah S. Guialil"},
-  {class_code: "CSC 0413", section: 2, subject_title: "CS Elective 2 (Lec)", schedule: "W 6:00P-8:00PM F2F - GV 306", instructor: "Jamillah S. Guialil"},
-  {class_code: "CSC 0413", section: 2, subject_title: "CS Elective 2 (Lec)", schedule: "W 6:00P-8:00PM F2F - GV 306", instructor: "Jamillah S. Guialil"},
-  {class_code: "CSC 0413", section: 2, subject_title: "CS Elective 2 (Lec)", schedule: "W 6:00P-8:00PM F2F - GV 306", instructor: "Jamillah S. Guialil"},
-  {class_code: "CSC 0413", section: 2, subject_title: "CS Elective 2 (Lec)", schedule: "W 6:00P-8:00PM F2F - GV 306", instructor: "Jamillah S. Guialil"},
-  {class_code: "CSC 0413", section: 2, subject_title: "CS Elective 2 (Lec)", schedule: "W 6:00P-8:00PM F2F - GV 306", instructor: "Jamillah S. Guialil"},
-  {class_code: "CSC 0413", section: 2, subject_title: "CS Elective 2 (Lec)", schedule: "W 6:00P-8:00PM F2F - GV 306", instructor: "Jamillah S. Guialil"},
-  {class_code: "CSC 0413", section: 2, subject_title: "CS Elective 2 (Lec)", schedule: "W 6:00P-8:00PM F2F - GV 306", instructor: "Jamillah S. Guialil"},
+  {class_code: "CSC 0413", section: 3, subject_title: "CS Elective 2 (Lec)", schedule: "W 7:00AM-9:00AM F2F - GV 306", instructor: "Jamillah S. Guialil"},
+  {class_code: "CSC 0413.1", section: 3, subject_title: "CS Elective 2 (Lab)", schedule: "Th 6:00PM-9:00PM F2F - CompLab 3", instructor: "Jamillah S. Guialil"},
 ]
 
 type plmClass = {
@@ -114,6 +107,10 @@ function TableClassGradeEncoding ({ data }: plmClassArray) {
 }
 
 const FacultyEncodingOfGrades = () => {
+  const [page, setPage] = useState(1);
+  const [perPage, setPerPage] = useState(5);
+  const [search, setSearch] = useState("");
+
   return (
     <>
       <div className="p-10 px-16 grid grid-cols-12 font-montserrat ">
@@ -153,6 +150,9 @@ const FacultyEncodingOfGrades = () => {
 
         {/* Row 3 */}
         <div className="col-span-12 flex justify-between items-end mt-24 text-[#434343] text-sm">
+          <div>
+            <Pager from={1} to={2} total={2} current_page={page} last_page={1} on_page_change={setPage} />
+          </div>
           <div className="flex gap-10">
           </div>
 

@@ -1,6 +1,7 @@
 import DateTime from "@/components/DateTime";
-import { Key } from "react";
+import { Key, useState } from "react";
 import StringCardinal from "@/components/StringCardinal";
+import { Pager }  from "@/components/ui/pager";
 
 // Faculty Details
 const termsAndAcademicYears = [
@@ -19,79 +20,16 @@ const termsAndAcademicYears = [
 const classAssignments = [
   {
     class_code: 26339,
-    course_code_section: "CSC 0413 1.1",
+    course_code_section: "CSC 0413-3",
     subject_title: "CS Elective 2 (Lec)",
-    class_schedule: "W 6:00P-8:00PM F2F - GV 306",
+    class_schedule: "W 7:00AM-9:00AM F2F - GV 306",
     credits: 3,
   },
   {
     class_code: 26340,
-    course_code_section: "CSC 0413 1.1",
-    subject_title: "CS Elective 2 (Lec)",
-    class_schedule: "W 6:00P-8:00PM F2F - GV 306",
-    credits: 3,
-  },
-  {
-    class_code: 26341,
-    course_code_section: "CSC 0413 1.1",
-    subject_title: "CS Elective 2 (Lec)",
-    class_schedule: "W 6:00P-8:00PM F2F - GV 306",
-    credits: 3,
-  },
-  {
-    class_code: 26342,
-    course_code_section: "CSC 0413 1.1",
-    subject_title: "CS Elective 2 (Lec)",
-    class_schedule: "W 6:00P-8:00PM F2F - GV 306",
-    credits: 3,
-  },
-  {
-    class_code: 26343,
-    course_code_section: "CSC 0413 1.1",
-    subject_title: "CS Elective 2 (Lec)",
-    class_schedule: "W 6:00P-8:00PM F2F - GV 306",
-    credits: 3,
-  },
-  {
-    class_code: 26344,
-    course_code_section: "CSC 0413 1.1",
-    subject_title: "CS Elective 2 (Lec)",
-    class_schedule: "W 6:00P-8:00PM F2F - GV 306",
-    credits: 3,
-  },
-  {
-    class_code: 26345,
-    course_code_section: "CSC 0413 1.1",
-    subject_title: "CS Elective 2 (Lec)",
-    class_schedule: "W 6:00P-8:00PM F2F - GV 306",
-    credits: 3,
-  },
-  {
-    class_code: 26346,
-    course_code_section: "CSC 0413 1.1",
-    subject_title: "CS Elective 2 (Lec)",
-    class_schedule: "W 6:00P-8:00PM F2F - GV 306",
-    credits: 3,
-  },
-  {
-    class_code: 26347,
-    course_code_section: "CSC 0413 1.1",
-    subject_title: "CS Elective 2 (Lec)",
-    class_schedule: "W 6:00P-8:00PM F2F - GV 306",
-    credits: 3,
-  },
-  {
-    class_code: 26348,
-    course_code_section: "CSC 0413 1.1",
-    subject_title: "CS Elective 2 (Lec)",
-    class_schedule: "W 6:00P-8:00PM F2F - GV 306",
-    credits: 3,
-  },
-  {
-    class_code: 26349,
-    course_code_section: "CSC 0413 1.1",
-    subject_title: "CS Elective 2 (Lec)",
-    class_schedule: "W 6:00P-8:00PM F2F - GV 306",
+    course_code_section: "CSC 0413.1-3",
+    subject_title: "CS Elective 2 (Lab)",
+    class_schedule: "Th 6:00PM-9:00PM F2F - CompLab 3",
     credits: 3,
   },
 ];
@@ -161,7 +99,7 @@ function TableClassAssignments({ data }: { data: any }) {
           <td></td>
           <td></td>
           <td className="text-center">Total Amount of Credits:</td>
-          <td>33</td>
+          <td>6</td>
         </tr>
       </tbody>
     </table>
@@ -169,6 +107,10 @@ function TableClassAssignments({ data }: { data: any }) {
 }
 
 const FacultyClassAssignments = () => {
+  const [page, setPage] = useState(1);
+  const [perPage, setPerPage] = useState(5);
+  const [search, setSearch] = useState("");
+
   return (
     <>
       <div className="p-10 px-16 grid grid-cols-12 font-montserrat ">
@@ -199,6 +141,9 @@ const FacultyClassAssignments = () => {
 
         {/* Row 3 */}
         <div className="col-span-12 flex justify-between items-end mt-24 text-[#434343] text-sm">
+          <div>
+            <Pager from={1} to={2} total={2} current_page={page} last_page={1} on_page_change={setPage} />
+          </div>
           <div className="flex gap-10"></div>
 
           <DateTime />
