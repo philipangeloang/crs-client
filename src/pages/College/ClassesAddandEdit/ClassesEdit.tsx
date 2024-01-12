@@ -1,6 +1,5 @@
-import React, { useState } from "react";
-import { MdCheck } from "react-icons/md";
-import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
+import { useState } from "react";
+import { FaAngleLeft } from "react-icons/fa";
 import DateTime from "@/components/DateTime";
 
 const ClassesEdit = () => {

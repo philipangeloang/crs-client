@@ -6,7 +6,6 @@ import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 import { HiXMark } from "react-icons/hi2";
 
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -18,7 +17,6 @@ import {
 } from "@/components/ui/form";
 
 import toast, { Toaster } from "react-hot-toast";
-import moment from "moment";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -26,7 +24,6 @@ import * as z from "zod";
 
 import { useState } from "react";
 
-import { tableUserType } from "./TestData";
 import {
   useAddRoles,
   useDeleteRoles,
@@ -219,8 +216,10 @@ const AdminEncodeUserType = () => {
                   <p className=" w-36 mx-auto rounded-lg">
                     {item.role_name
                       .split("_")
-                      .filter((x) => x.length > 0)
-                      .map((x) => x.charAt(0).toUpperCase() + x.slice(1))
+                      .filter((x: string) => x.length > 0)
+                      .map(
+                        (x: string) => x.charAt(0).toUpperCase() + x.slice(1)
+                      )
                       .join(" ")}
                   </p>
                 </div>

@@ -67,12 +67,18 @@ const formSchema = z.object({
 });
 
 // Function for displaying Activity Name Because it is on another table
-function ActivityName({ activityTypes, activity }) {
+function ActivityName({
+  activityTypes,
+  activity,
+}: {
+  activityTypes: [];
+  activity: [];
+}) {
   // Finding the Name equivalent to the ID and rendering it based on the matched value
   const name = activityTypes?.find(
     (item) => item.activity_type_id === activity.activity_type_id
   );
-  return name.activity_type_name;
+  return name?.activity_type_name;
 }
 
 const AdminScheduleOfActivities = () => {
@@ -265,7 +271,7 @@ const AdminScheduleOfActivities = () => {
             </div>
 
             {/* Table Contents */}
-            {activitiesData?.data.data.map((item) => (
+            {activitiesData?.data.data.map((item: any) => (
               <>
                 <div
                   className="col-span-2 px-2 py-3 border-l border-b border-main-gray text-left"
@@ -447,14 +453,16 @@ const AdminScheduleOfActivities = () => {
                             <SelectContent>
                               <SelectGroup>
                                 <SelectLabel>Name</SelectLabel>
-                                {activityTypesData?.data.data.map((data) => (
-                                  <SelectItem
-                                    key={data.activity_type_id}
-                                    value={data.activity_type_id.toString()}
-                                  >
-                                    {data.activity_type_name}
-                                  </SelectItem>
-                                ))}
+                                {activityTypesData?.data.data.map(
+                                  (data: any) => (
+                                    <SelectItem
+                                      key={data.activity_type_id}
+                                      value={data.activity_type_id.toString()}
+                                    >
+                                      {data.activity_type_name}
+                                    </SelectItem>
+                                  )
+                                )}
                               </SelectGroup>
                             </SelectContent>
                           </Select>
@@ -644,14 +652,16 @@ const AdminScheduleOfActivities = () => {
                             <SelectContent>
                               <SelectGroup>
                                 <SelectLabel>Name</SelectLabel>
-                                {activityTypesData?.data.data.map((data) => (
-                                  <SelectItem
-                                    key={data.activity_type_id}
-                                    value={data.activity_type_id.toString()}
-                                  >
-                                    {data.activity_type_name}
-                                  </SelectItem>
-                                ))}
+                                {activityTypesData?.data.data.map(
+                                  (data: any) => (
+                                    <SelectItem
+                                      key={data.activity_type_id}
+                                      value={data.activity_type_id.toString()}
+                                    >
+                                      {data.activity_type_name}
+                                    </SelectItem>
+                                  )
+                                )}
                               </SelectGroup>
                             </SelectContent>
                           </Select>

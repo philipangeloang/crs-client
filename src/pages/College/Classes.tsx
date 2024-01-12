@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import DateTime from "@/components/DateTime";
 import React, { useState, useEffect } from "react";
 import { FiArrowRight, FiArrowLeft } from "react-icons/fi";
-import { FaEdit, FaTrash, FaMinusCircle } from "react-icons/fa";
+import { FaEdit, FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import api from "../../api/fetch";
 
@@ -10,18 +11,18 @@ const Classes = () => {
   const [subject, setSubject] = useState<any[]>([]);
 
   // Dummy data
-  const tableData = [
-    {
-      id: 2121231,
-      subjectCode: "CSC 0413-1",
-      subjectName: "ENGINEERING RESEARCH AND DEVELOPMENT",
-      course: "ME-CE, ME-SE, MEM-CM, MEM-MM, MIT, MS-ICT, MSMANENG",
-      professor: "PANGAYAO, DENVERT C.",
-      slot: "40",
-      start: "N/A",
-      end: "N/A",
-    },
-  ];
+  // const tableData = [
+  //   {
+  //     id: 2121231,
+  //     subjectCode: "CSC 0413-1",
+  //     subjectName: "ENGINEERING RESEARCH AND DEVELOPMENT",
+  //     course: "ME-CE, ME-SE, MEM-CM, MEM-MM, MIT, MS-ICT, MSMANENG",
+  //     professor: "PANGAYAO, DENVERT C.",
+  //     slot: "40",
+  //     start: "N/A",
+  //     end: "N/A",
+  //   },
+  // ];
 
   const fetchDataFromClassEndpoint = async () => {
     try {

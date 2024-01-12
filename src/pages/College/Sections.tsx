@@ -1,18 +1,16 @@
-import DateTime from '@/components/DateTime';
-import React, { useState, useEffect } from 'react';
-import { FiArrowRight, FiArrowLeft } from 'react-icons/fi';
-import { FaEdit, FaTrash, FaMinusCircle } from 'react-icons/fa';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import DateTime from "@/components/DateTime";
+import { useState, useEffect } from "react";
+import { FiArrowRight, FiArrowLeft } from "react-icons/fi";
+import { FaEdit, FaTrash } from "react-icons/fa";
 import api from "../../api/fetch";
-
-
-
 
 const Sections = () => {
   const [sectionModalOpen, setSectionModalOpen] = useState(false);
   const [block, setBlock] = useState<any[]>([]);
   const [program, setProgram] = useState<any[]>([]);
   const [college, setCollege] = useState<any[]>([]);
-
 
   const fetchDataFromCollegeEndpoint = async () => {
     try {
@@ -71,18 +69,11 @@ const Sections = () => {
     }
   };
 
-
-
-
-
-
   useEffect(() => {
     fetchDataFromBlocksEndpoint();
     fetchDataFromProgramEndpoint();
     fetchDataFromCollegeEndpoint();
   }, []);
-
-
 
   // Function to open the faculty modal
   const openSectionModal = () => {
@@ -95,9 +86,7 @@ const Sections = () => {
   };
 
   return (
-    <div className="p-10 px-16 grid grid-cols-12 font-montserrat" >
-
-
+    <div className="p-10 px-16 grid grid-cols-12 font-montserrat">
       {/* Row 1 */}
       <div className="col-span-12 flex justify-between items-center">
         <div className="px-5 py-1 bg-main-red text-white rounded-lg ">
@@ -152,22 +141,21 @@ const Sections = () => {
                   <option>2134</option>
                 </select>
               </div>
-
             </div>
             <div className="flex items-center">
-
-              <button className=" bg-main-red text-white rounded-lg p-2 ml-3" onClick={openSectionModal}>
+              <button
+                className=" bg-main-red text-white rounded-lg p-2 ml-3"
+                onClick={openSectionModal}
+              >
                 Add Section
               </button>
             </div>
-
           </div>
 
           <div className="overflow-x-auto">
             <table className="min-w-full table-auto  bg-white shadow-md rounded-lg">
               <thead>
                 <tr className="bg-main-red text-white rounded-lg border ">
-
                   <th>Block ID</th>
                   <th>Section</th>
                   <th>College Code</th>
@@ -179,27 +167,32 @@ const Sections = () => {
                 </tr>
               </thead>
 
-
-
               <tbody>
                 {block.map((blockItem) => {
-                  const matchingProgram = program.find((programItem) => programItem.program_id === blockItem.program_id);
+                  const matchingProgram = program.find(
+                    (programItem) =>
+                      programItem.program_id === blockItem.program_id
+                  );
 
                   if (matchingProgram) {
-                    const matchingCollege = college.find((collegeItem) => collegeItem.college_id);
+                    const matchingCollege = college.find(
+                      (collegeItem) => collegeItem.college_id
+                    );
 
                     if (matchingCollege) {
-
-
                       return (
                         <tr className="border" key={`${blockItem.program_id}`}>
                           <td className="text-center">{blockItem.block_id}</td>
                           <td className="text-center">{blockItem.section}</td>
-                          <td className="text-center">{matchingCollege.college_code}</td>
+                          <td className="text-center">
+                            {matchingCollege.college_code}
+                          </td>
                           <td className="text-center">{blockItem.term}</td>
                           <td className="text-center">{blockItem.slots}</td>
                           <td className="text-center">{blockItem.slots}</td>
-                          <td className="text-center">{blockItem.academic_year}</td>
+                          <td className="text-center">
+                            {blockItem.academic_year}
+                          </td>
                           <td className="text-center flex justify-center items-center">
                             <FaEdit
                               className="bg-main-blue text-white rounded text-2xl w-7 h-7 p-1 m-1"
@@ -211,7 +204,6 @@ const Sections = () => {
                           </td>
                         </tr>
                       );
-
                     }
                   } else {
                     // Only faculty has this staff_id
@@ -223,20 +215,17 @@ const Sections = () => {
                   }
                 })}
               </tbody>
-
-
-
-
             </table>
-
-
           </div>
           {sectionModalOpen && (
             <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
               <div className="bg-white p-4 rounded-lg w-full max-w-lg">
                 <div className="flex justify-between">
                   <h2 className="text-xl font-bold mb-4">Add Section</h2>
-                  <button className="flex bg-main-red items-center text-white p-2" onClick={closeSectionModal}>
+                  <button
+                    className="flex bg-main-red items-center text-white p-2"
+                    onClick={closeSectionModal}
+                  >
                     X
                   </button>
                 </div>
@@ -244,46 +233,81 @@ const Sections = () => {
                   {/* First Column */}
                   <div>
                     <div className="mb-4">
-                      <label htmlFor="firstName" className="text-sm font-medium">Block ID</label>
-                      <input type="text" className="w-full border p-2 rounded" />
+                      <label
+                        htmlFor="firstName"
+                        className="text-sm font-medium"
+                      >
+                        Block ID
+                      </label>
+                      <input
+                        type="text"
+                        className="w-full border p-2 rounded"
+                      />
                     </div>
                     <div className="mb-4">
-                      <label htmlFor="firstName" className="text-sm font-medium">College</label>
+                      <label
+                        htmlFor="firstName"
+                        className="text-sm font-medium"
+                      >
+                        College
+                      </label>
                       <select className="w-full border p-2 rounded">
-                        <option >CET</option>
-                        <option >CHASS</option>
+                        <option>CET</option>
+                        <option>CHASS</option>
                       </select>
                     </div>
                     <div className="mb-4">
-                      <label htmlFor="firstName" className="text-sm font-medium">Slots</label>
-                      <input type="text" className="w-full border p-2 rounded" />
+                      <label
+                        htmlFor="firstName"
+                        className="text-sm font-medium"
+                      >
+                        Slots
+                      </label>
+                      <input
+                        type="text"
+                        className="w-full border p-2 rounded"
+                      />
                     </div>
-
                   </div>
 
                   {/* Second Column */}
                   <div>
                     <div className="mb-4">
-                      <label htmlFor="birthdate" className="text-sm font-medium">Section</label>
-                      <input type="text" className="w-full border p-2 rounded" />
-
+                      <label
+                        htmlFor="birthdate"
+                        className="text-sm font-medium"
+                      >
+                        Section
+                      </label>
+                      <input
+                        type="text"
+                        className="w-full border p-2 rounded"
+                      />
                     </div>
                     <div className="mb-4">
-                      <label htmlFor="birthdate" className="text-sm font-medium">Term</label>
+                      <label
+                        htmlFor="birthdate"
+                        className="text-sm font-medium"
+                      >
+                        Term
+                      </label>
                       <select className="w-full border p-2 rounded">
-                        <option >4</option>
-                        <option >3</option>
+                        <option>4</option>
+                        <option>3</option>
                       </select>
-
                     </div>
                     <div className="mb-4">
-                      <label htmlFor="birthdate" className="text-sm font-medium">Academic Year</label>
-                      <input type="text" className="w-full border p-2 rounded" />
-
+                      <label
+                        htmlFor="birthdate"
+                        className="text-sm font-medium"
+                      >
+                        Academic Year
+                      </label>
+                      <input
+                        type="text"
+                        className="w-full border p-2 rounded"
+                      />
                     </div>
-
-
-
                   </div>
                 </div>
                 <button className="bg-main-red text-white rounded-lg p-2 mt-4 ml-auto flex">
@@ -295,7 +319,6 @@ const Sections = () => {
         </div>
       </div>
 
-
       {/* Row 3 Pagination (right-aligned and smaller) */}
       <div className="col-span-12 mt-20">
         <div className="flex justify-between items-center space-x-2">
@@ -304,11 +327,20 @@ const Sections = () => {
               <FiArrowLeft className="border border-gray-500 w-5 h-5 rounded" />
             </li>
             <li>
-              <a href="#" className="text-gray-500 border border-gray-500 px-2 rounded hover:text-gray-700 hover:border-gray-700">1</a>
+              <a
+                href="#"
+                className="text-gray-500 border border-gray-500 px-2 rounded hover:text-gray-700 hover:border-gray-700"
+              >
+                1
+              </a>
             </li>
             <li>
-              <a href="#" className="text-gray-500 border border-gray-500 px-2 rounded hover:text-gray-700 hover:border-gray-700">2</a>
-
+              <a
+                href="#"
+                className="text-gray-500 border border-gray-500 px-2 rounded hover:text-gray-700 hover:border-gray-700"
+              >
+                2
+              </a>
             </li>
             <li>
               <FiArrowRight className="border border-gray-500 w-5 h-5 rounded" />
@@ -322,12 +354,8 @@ const Sections = () => {
           </div>
         </div>
       </div>
-
-
-
     </div>
-  )
-}
-
+  );
+};
 
 export default Sections;

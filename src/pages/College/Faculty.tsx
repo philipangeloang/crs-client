@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import DateTime from "@/components/DateTime";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { FiArrowRight, FiArrowLeft } from "react-icons/fi";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import api from "../../api/fetch";
@@ -24,7 +25,7 @@ interface FormData {
 const Faculty = () => {
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [facultyModalOpen, setFacultyModalOpen] = useState(false);
-  const [selectedFaculty, setSelectedFaculty] = useState<{
+  const [selectedFaculty] = useState<{
     id: number;
     identity: string;
     name: string;
@@ -33,8 +34,10 @@ const Faculty = () => {
   } | null>(null);
 
   const [faculty, setFaculty] = useState<any[]>([]);
-  const [department, setDept] = useState<any[]>([]);
+  const [dept, setDept] = useState<any[]>([]);
   const [staff, setStaff] = useState<any[]>([]);
+
+  console.log(dept);
 
   const fetchDataFromFacultyEndpoint = async () => {
     try {
@@ -202,10 +205,10 @@ const Faculty = () => {
   };
 
   // Function to open the "Edit" modal
-  const openEditModal = () => {
-    console.log("Open button clicked"); // Add this line
-    setEditModalOpen(true);
-  };
+  // const openEditModal = () => {
+  //   console.log("Open button clicked"); // Add this line
+  //   setEditModalOpen(true);
+  // };
 
   // Function to close the "Edit" modal
   const closeEditModal = () => {

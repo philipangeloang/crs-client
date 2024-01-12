@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { MdCheck } from "react-icons/md";
 import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
 import DateTime from "@/components/DateTime";
@@ -64,9 +64,9 @@ const ClassesAdd = () => {
   };
 
   // For backend
-  const handleFinish = () => {
-    // Submit the form data to the server
-  };
+  // const handleFinish = () => {
+  //   // Submit the form data to the server
+  // };
 
   const addMoreRows = () => {
     setRowCount(rowCount + 1);

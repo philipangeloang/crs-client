@@ -1,15 +1,13 @@
-import React from "react";
-
 const Calendar = () => {
   const times = ["8:00 AM", "9:00 AM", "10:00 AM", "11:00 AM"]; // Add more time slots as needed
   const days = ["Mon", "Tue", "Wed", "Thu", "Fri"]; // Add more days as needed
 
   // Example: Meeting data
-  const meetings = [
-    { day: "Mon", time: "8:00 AM", title: "Engineering Meeting" },
-    { day: "Wed", time: "9:00 AM", title: "Design Review" },
-    // Add more meeting data as needed
-  ];
+  // const meetings = [
+  //   { day: "Mon", time: "8:00 AM", title: "Engineering Meeting" },
+  //   { day: "Wed", time: "9:00 AM", title: "Design Review" },
+  //   // Add more meeting data as needed
+  // ];
 
   return (
     <div className="flex bg-gray-100 p-2">
@@ -23,7 +21,6 @@ const Calendar = () => {
           </div>
         ))}
       </div>
-      
 
       {/* Days */}
       {days.map((day, index) => (

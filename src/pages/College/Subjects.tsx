@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import DateTime from "@/components/DateTime";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { FiArrowRight, FiArrowLeft } from "react-icons/fi";
-import { FaEdit, FaTrash, FaMinusCircle } from "react-icons/fa";
-import { Link } from "react-router-dom";
 import { IoMdPrint } from "react-icons/io";
 import api from "../../api/fetch";
+import { FaEdit } from "react-icons/fa";
 
 const Subjects = () => {
   // Dummy data
@@ -188,7 +189,7 @@ const Subjects = () => {
                   </div>
 
                   <div className="overflow-x-auto">
-                    <table className="min-w-full table-auto bg-white shadow-md rounded-lg border shadow">
+                    <table className="min-w-full table-auto bg-white  rounded-lg border shadow">
                       <thead>
                         <tr className="bg-main-red text-white rounded-lg border ">
                           <th className="px-4 py-2">Subject Code</th>
