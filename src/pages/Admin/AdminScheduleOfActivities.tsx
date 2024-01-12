@@ -97,7 +97,7 @@ const AdminScheduleOfActivities = () => {
     },
   });
 
-  // Search on Enter A
+  // Search on Enter
   function StartSearch() {
     setStartSearch(search);
   }
@@ -139,6 +139,7 @@ const AdminScheduleOfActivities = () => {
   for (let i = 0; i < activitiesData?.data.last_page; i++) {
     pages.push(i + 1);
   }
+  // if page num exceeds total allowable page - no more increasing of page may happen
   if (pages.length < page) {
     setPage(pages.length);
   }

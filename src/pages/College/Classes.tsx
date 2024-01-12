@@ -1,9 +1,14 @@
 import DateTime from "@/components/DateTime";
+import React, { useState, useEffect } from "react";
 import { FiArrowRight, FiArrowLeft } from "react-icons/fi";
-import { FaEdit, FaTrash } from "react-icons/fa";
+import { FaEdit, FaTrash, FaMinusCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import api from "../../api/fetch";
 
 const Classes = () => {
+  const [classes, setClasses] = useState<any[]>([]);
+  const [subject, setSubject] = useState<any[]>([]);
+
   // Dummy data
   const tableData = [
     {
@@ -12,36 +17,54 @@ const Classes = () => {
       subjectName: "ENGINEERING RESEARCH AND DEVELOPMENT",
       course: "ME-CE, ME-SE, MEM-CM, MEM-MM, MIT, MS-ICT, MSMANENG",
       professor: "PANGAYAO, DENVERT C.",
-    },
-    {
-      id: 2121231,
-      subjectCode: "CSC 0413-1",
-      subjectName: "ENGINEERING RESEARCH AND DEVELOPMENT",
-      course: "ME-CE, ME-SE, MEM-CM, MEM-MM, MIT, MS-ICT, MSMANENG",
-      professor: "PANGAYAO, DENVERT C.",
-    },
-    {
-      id: 2121231,
-      subjectCode: "CSC 0413-1",
-      subjectName: "ENGINEERING RESEARCH AND DEVELOPMENT",
-      course: "ME-CE, ME-SE, MEM-CM, MEM-MM, MIT, MS-ICT, MSMANENG",
-      professor: "PANGAYAO, DENVERT C.",
-    },
-    {
-      id: 2121231,
-      subjectCode: "CSC 0413-1",
-      subjectName: "ENGINEERING RESEARCH AND DEVELOPMENT",
-      course: "ME-CE, ME-SE, MEM-CM, MEM-MM, MIT, MS-ICT, MSMANENG",
-      professor: "PANGAYAO, DENVERT C.",
-    },
-    {
-      id: 2121231,
-      subjectCode: "CSC 0413-1",
-      subjectName: "ENGINEERING RESEARCH AND DEVELOPMENT",
-      course: "ME-CE, ME-SE, MEM-CM, MEM-MM, MIT, MS-ICT, MSMANENG",
-      professor: "PANGAYAO, DENVERT C.",
+      slot: "40",
+      start: "N/A",
+      end: "N/A",
     },
   ];
+
+  const fetchDataFromClassEndpoint = async () => {
+    try {
+      const response = await api.get("api/classes", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      });
+      const data = await response.data.data;
+
+      if (data) {
+        setClasses(data);
+      }
+      console.log("API response from api/classes", data);
+    } catch (error) {
+      console.error("API request error:", error);
+    }
+  };
+
+  const fetchDataFromSubjectEndpoint = async () => {
+    try {
+      const response = await api.get("api/subjects", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      });
+      const data = await response.data.data;
+
+      if (data) {
+        setSubject(data);
+      }
+      console.log("API response from api/subjects", data);
+    } catch (error) {
+      console.error("API request error:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchDataFromClassEndpoint();
+    fetchDataFromSubjectEndpoint();
+  }, []);
 
   return (
     <div className="p-10 px-16 grid grid-cols-12 font-montserrat">
@@ -73,6 +96,20 @@ const Classes = () => {
               </button>
               <div className="mb-5 ml-3">
                 <label htmlFor="selectCollege" className="text-sm font-medium">
+                  College
+                </label>
+                <select
+                  id="selectCollege"
+                  className="w-full border p-2 rounded"
+                  placeholder="Select"
+                >
+                  <option>College of Engineering and Technology</option>
+                  <option>College of Engineering and Technology</option>
+                  <option>College of Engineering and Technology</option>
+                </select>
+              </div>
+              <div className="mb-5 ml-3">
+                <label htmlFor="selectCollege" className="text-sm font-medium">
                   AY Sem
                 </label>
                 <select
@@ -102,27 +139,57 @@ const Classes = () => {
                   <th>Actions</th>
                   <th>Class ID</th>
                   <th>Subject Code</th>
-                  <th>Subject Name</th>
-                  <th>Course</th>
-                  <th>Proffesor</th>
+                  <th>Subject Title</th>
+                  <th>Program(s)</th>
+                  <th>Profesor</th>
+                  <th>Slots</th>
+                  <th>Enrolled</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
                 </tr>
               </thead>
-              <tbody className="text-center border">
-                {tableData.map((item) => (
-                  <tr className="border" key={item.id}>
-                    <td className="text-center flex justify-center items-center">
-                      <Link to="/home/classes-edit">
-                        <FaEdit className="bg-main-blue text-white rounded text-2xl w-7 h-7 p-1 m-1" />
-                      </Link>
-                      <FaTrash className="bg-main-red text-white rounded text-2xl w-7 h-7 p-1 m-1" />
-                    </td>
-                    <td className="px-4 py-2">{item.id}</td>
-                    <td className="px-4 py-2">{item.subjectCode}</td>
-                    <td className="px-4 py-2">{item.subjectName}</td>
-                    <td className="px-4 py-2">{item.course}</td>
-                    <td className="px-4 py-2">{item.professor}</td>
-                  </tr>
-                ))}
+
+              <tbody>
+                {classes.map((classItem) => {
+                  const matchingSubject = subject.find(
+                    (subjectItem) => subjectItem.subject_id
+                  );
+
+                  if (matchingSubject) {
+                    return (
+                      <tr className="border" key={`${classItem.subject_id}`}>
+                        <td className="text-center flex justify-center items-center">
+                          <Link to="/home/classes-edit">
+                            <FaEdit className="bg-main-blue text-white rounded text-2xl w-7 h-7 p-1 m-1" />
+                          </Link>
+                          <FaTrash className="bg-main-red text-white rounded text-2xl w-7 h-7 p-1 m-1" />
+                        </td>
+                        <td className="text-center">{classItem.class_id}</td>
+                        <td className="text-center">
+                          {matchingSubject.subject_code}
+                        </td>
+                        <td className="text-center">
+                          {matchingSubject.subject_title}
+                        </td>
+                        <td className="text-center">
+                          {matchingSubject.subject_type}
+                        </td>
+                        <td className="text-center">-</td>
+                        <td className="text-center">{classItem.slots}</td>
+                        <td className="text-center">-</td>
+                        <td className="text-center">{classItem.start_date}</td>
+                        <td className="text-center">{classItem.end_date}</td>
+                      </tr>
+                    );
+                  } else {
+                    // Only faculty has this staff_id
+                    return (
+                      <tr className="border" key={`${classItem.subject_id}`}>
+                        {/* Render faculty data here */}
+                      </tr>
+                    );
+                  }
+                })}
               </tbody>
             </table>
           </div>

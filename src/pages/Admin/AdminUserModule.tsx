@@ -1,7 +1,12 @@
-import { RiEditCircleLine, RiDeleteBin2Line } from "react-icons/ri";
-import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
+
 import DateTime from "@/components/DateTime";
 import TempRoleSelector from "../TempRoleSelector";
+import { useState } from "react";
+
+import { RiEditCircleLine, RiDeleteBin2Line } from "react-icons/ri";
+import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 import { Input } from "@/components/ui/input";
 import { tableUserModule } from "./TestData";
 import {
@@ -13,11 +18,59 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useState } from "react";
 import { HiXMark } from "react-icons/hi2";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+
+import toast, { Toaster } from "react-hot-toast";
+import moment from "moment";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+
+// Form Schema
+const formSchema = z.object({
+  roleName: z.string().min(1, {
+    message: "Please Choose Role Name",
+  }),
+  activeStatus: z.string().min(1, {
+    message: "Please Choose Active Status",
+  }),
+  firstname: z.string().min(1, {
+    message: "Please Enter First Name",
+  }),
+  lastName: z.string().min(1, {
+    message: "Please Enter Last Name",
+  }),
+  middleName: z.string().min(1, {
+    message: "Please Enter Middle Name",
+  }),
+  personalEmail: z.string().min(1, {
+    message: "Please Enter Personal Email",
+  }),
+  plmEmail: z.string().min(1, {
+    message: "Please Enter PLM Email",
+  }),
+  expirationDate: z.string().min(1, {
+    message: "Please Enter Expiration Date",
+  }),
+  expirationTime: z.string().min(1, {
+    message: "Please Enter Expiration Time",
+  }),
+  userPassword: z.string().min(1, {
+    message: "Please Enter User Password",
+  }),
+});
 
 const AdminUserModule = () => {
   // State for Opening and Closing Modal

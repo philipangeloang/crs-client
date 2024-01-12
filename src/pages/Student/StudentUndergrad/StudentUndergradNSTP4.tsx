@@ -1,18 +1,31 @@
 import DateTime from "@/components/DateTime";
+import { useNavigate } from 'react-router-dom';
 import { BiSolidLeftArrow } from "react-icons/bi";
 import { BiSolidRightArrow } from "react-icons/bi";
 
 
 const NSTP4 = () => 
 {
+    const navigate = useNavigate();
+
+    const handleBackClick= () => {
+        console.log('Button clicked!');
+            navigate('/home/nstp3');
+    };
+
+    const handleHomeClick= () => {
+        console.log('Button clicked!');
+            navigate('/home');
+    };
+
     return (
         <>
-            <div className="p-10 px-16 grid grid-cols-12 font-montserrat
+            <div    className="p-10 px-16 grid grid-cols-12 font-montserrat
                             bg-cover bg-center min-h-screen items-center
                             bg-no-repeat" 
-                style = {{ 
-                backgroundImage: 'url(./gradient.png), url(./plm_bg.png)'
-                }}
+                    style = {{ 
+                                backgroundImage: 'url(/gradient.png), url(/plm_bg.png)'
+                            }}
                 >
                 {/* Row 1 */}
                 <div className="col-span-12 flex justify-between items-center">
@@ -32,10 +45,10 @@ const NSTP4 = () =>
                     <div className="text-3xl font-bold text-main-red">Step&nbsp;4:</div>
                     <div className="text-2xl text-main-red mr-80">Officially Enlisted</div>
                     <div className="flex flex-row">
-                        <button className="px-6 py-1 bg-main-red text-white rounded-lg flex items-center">
+                        <button className="px-6 py-1 bg-main-red text-white rounded-lg flex items-center" onClick={handleBackClick}>
                             <BiSolidLeftArrow size={15}></BiSolidLeftArrow>Back
                         </button>
-                        <button className="ml-2 px-6 py-1 bg-main-red text-white rounded-lg flex items-center">
+                        <button className="ml-2 px-6 py-1 bg-main-red text-white rounded-lg flex items-center" onClick={handleHomeClick}>
                             Home<BiSolidRightArrow size={15}></BiSolidRightArrow>
                         </button>
                     </div>

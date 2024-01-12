@@ -1,18 +1,44 @@
 import DateTime from "@/components/DateTime";
+import { useNavigate } from 'react-router-dom';
 import { BiSolidLeftArrow } from "react-icons/bi";
 import { BiSolidRightArrow } from "react-icons/bi";
 
 
 const NSTP1 = () => 
 {
+    const navigate = useNavigate();
+
+    const handleHomeClick= () => {
+        console.log('Button clicked!');
+            navigate('/home');
+    };
+
+    const handleNextClick= () => {
+        console.log('Button clicked!');
+            navigate('/home/nstp2');
+    };
+
+    const tableData = [
+        {
+            ClassCode: "ROTC 0111",
+            ClassName: "Reserve Officers' Training Corps",
+            Definition: "ROTC (Reserve Officers' Training Corps) is a program that offers college students military training and education, with the aim of developing them into potential reserve officers for the Armed Forces of the Philippines.",
+        },
+        {
+            ClassCode: "CWTS 0112",
+            ClassName: "Civic Welfare Training Service",
+            Definition: "CWTS (Citizenship and Leadership Training Service) is a program that focuses on enhancing students' civic awareness and leadership skills through community service and social engagement.",
+        },
+        // Add more data as needed
+      ];
     return (
         <>
-            <div className="p-10 px-16 grid grid-cols-12 font-montserrat
+            <div    className="p-10 px-16 grid grid-cols-12 font-montserrat
                             bg-cover bg-center min-h-screen items-center
                             bg-no-repeat" 
-                style = {{ 
-                backgroundImage: 'url(./gradient.png), url(./plm_bg.png)'
-                }}
+                    style = {{ 
+                                backgroundImage: 'url(/gradient.png), url(/plm_bg.png)'
+                            }}
                 >
                 {/* Row 1 */}
                 <div className="col-span-12 flex justify-between items-center">
@@ -32,10 +58,10 @@ const NSTP1 = () =>
                     <div className="text-3xl font-bold text-main-red">Step&nbsp;1:</div>
                     <div className="text-2xl text-main-red mr-80">Choose ROTC or CWTS</div>
                     <div className="flex flex-row">
-                        <button className="px-6 py-1 bg-main-red text-white rounded-lg flex items-center">
+                        <button className="px-6 py-1 bg-main-red text-white rounded-lg flex items-center" onClick={handleHomeClick}>
                             <BiSolidLeftArrow size={15}></BiSolidLeftArrow>Home
                         </button>
-                        <button className="ml-2 px-6 py-1 bg-main-red text-white rounded-lg flex items-center">
+                        <button className="ml-2 px-6 py-1 bg-main-red text-white rounded-lg flex items-center" onClick={handleNextClick}>
                             Next<BiSolidRightArrow size={15}></BiSolidRightArrow>
                         </button>
                     </div>
@@ -66,7 +92,7 @@ const NSTP1 = () =>
                             </span>
                         </li>
                     </ol>
-                    <table className="table-fixed mt-4 ml-2 text-center rounded-lg text-sm border border-black">
+                    <table className="table-fixed mt-4 ml-2 text-center rounded-lg text-sm border bg-white border-black">
                         <thead>
                             <tr className="bg-main-red text-white items-center">
                                 <th className="px-10">Class&nbsp;Code</th>
@@ -76,54 +102,33 @@ const NSTP1 = () =>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td className="py-20">ROTC 0111</td>
-                                <td>Reserve Officers' Training Corps</td>
-                                <div>
-                                    <input type="checkbox" id="some_id" className="
-                                        mr-2 mt-16 peer shrink-0 rounded-full
+                            {tableData.map((item) => (
+                                <tr className="border" key={item.ClassCode}>
+                                    <td className="px-4 py-2">{item.ClassCode}</td>
+                                    <td className="px-4 py-2">{item.ClassName}</td>
+                                    <div>
+                                        <input type="checkbox" id="some_id" className="
+                                        mr-2 mt-10 mb-10 peer shrink-0 rounded-full
                                         appearance-none w-10 h-10 border-2 border-black-200 bg-white
                                         checked:bg-white checked:border-red-500 checked:border-2"
-                                    />
-                                    <svg
-                                    className="ml-14 mt-[-2.5rem] text-red-500 w-8 h-8 hidden peer-checked:block pointer-events-none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    stroke-width="1"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    >
-                                        <polyline points="20 6 9 17 4 12"></polyline>
-                                    </svg>
-                                </div>
-                                <td>ROTC (Reserve Officers' Training Corps) is a program that offers college students military training and education, with the aim of developing them into potential reserve officers for the Armed Forces of the Philippines.</td>
-                            </tr>
-                            <tr>
-                                <td className="py-20">CWTS 0112</td>
-                                <td>Civic Welfare Training Service</td>
-                                <div>
-                                    <input type="checkbox" id="some_id" className="
-                                        mr-2 mt-16 peer shrink-0 rounded-full
-                                        appearance-none w-10 h-10 border-2 border-black-200 bg-white
-                                        checked:bg-white checked:border-red-500 checked:border-2"
-                                    />
-                                    <svg
-                                    className="ml-14 mt-[-2.5rem] text-red-500 w-8 h-8 hidden peer-checked:block pointer-events-none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    stroke-width="1"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    >
-                                        <polyline points="20 6 9 17 4 12"></polyline>
-                                    </svg>
-                                </div>
-                                <td>CWTS (Citizenship and Leadership Training Service) is a program that focuses on enhancing students' civic awareness and leadership skills through community service and social engagement.</td>
-                            </tr>
+                                        />
+                                            <svg
+                                            className="ml-14 mb-12 mt-[-5rem] text-red-500 w-8 h-8 hidden peer-checked:block pointer-events-none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="1"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            >
+                                                <polyline points="20 6 9 17 4 12"></polyline>
+                                            </svg>
+                                    </div>
+                                    <td className="px-4 py-2">{item.Definition}</td>         
+                                </tr>
+                            ))}
+                           
                         </tbody>
                                    
                     </table>

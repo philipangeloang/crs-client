@@ -3,8 +3,8 @@ import { useMutation, useQuery } from "react-query";
 import api from "../api/fetch";
 
 // Functions
-const fetchActivities = (page: any, search: any) => {
-  return api.get(`/api/activities?perPage=4&page=${page}&search=${search}`, {
+const fetchRoles = (page: any, search: any) => {
+  return api.get(`/api/roles?perPage=6&page=${page}&search=${search}`, {
     headers: {
       "Content-Type": "application/json",
     },
@@ -12,8 +12,8 @@ const fetchActivities = (page: any, search: any) => {
   });
 };
 
-const addActivities = (activity: any) => {
-  return api.post("/api/activities", activity, {
+const addRoles = (role: any) => {
+  return api.post("/api/roles", role, {
     headers: {
       "Content-Type": "application/json",
     },
@@ -21,8 +21,8 @@ const addActivities = (activity: any) => {
   });
 };
 
-const deleteActivities = (id: any) => {
-  return api.delete(`/api/activities/${id}`, {
+const deleteRoles = (id: any) => {
+  return api.delete(`/api/roles/${id}`, {
     headers: {
       "Content-Type": "application/json",
     },
@@ -30,15 +30,11 @@ const deleteActivities = (id: any) => {
   });
 };
 
-const updateActivities = (activity: any) => {
+const updateRoles = (role: any) => {
   return api.put(
-    `/api/activities/${activity.activity_id}`,
+    `/api/roles/${role.role_id}`,
     {
-      activity_type_id: activity.activity_type_id,
-      academic_year: activity.academic_year,
-      term: activity.term,
-      start_date: activity.start_date,
-      end_date: activity.end_date,
+      role_name: role.role_name,
     },
     {
       headers: {
@@ -50,17 +46,17 @@ const updateActivities = (activity: any) => {
 };
 
 // Exports
-export const useActivities = (
+export const useRoles = (
   page: number,
   search: string,
   onSuccess: any,
   onError: any
 ) => {
   return useQuery(
-    "activities",
+    "roles",
 
     () => {
-      return fetchActivities(page, search);
+      return fetchRoles(page, search);
     },
     {
       onSuccess,
@@ -70,22 +66,22 @@ export const useActivities = (
   );
 };
 
-export const useAddActivities = (onSuccess: any, onError: any) => {
-  return useMutation(addActivities, {
+export const useAddRoles = (onSuccess: any, onError: any) => {
+  return useMutation(addRoles, {
     onSuccess,
     onError,
   });
 };
 
-export const useDeleteActivities = (onSuccess: any, onError: any) => {
-  return useMutation(deleteActivities, {
+export const useDeleteRoles = (onSuccess: any, onError: any) => {
+  return useMutation(deleteRoles, {
     onSuccess,
     onError,
   });
 };
 
-export const useUpdateActivities = (onSuccess: any, onError: any) => {
-  return useMutation(updateActivities, {
+export const useUpdateRoles = (onSuccess: any, onError: any) => {
+  return useMutation(updateRoles, {
     onSuccess,
     onError,
   });
