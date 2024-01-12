@@ -1,7 +1,25 @@
 import DateTime from "@/components/DateTime";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FiArrowRight, FiArrowLeft } from "react-icons/fi";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import api from "../../api/fetch";
+
+interface FormData {
+  staff_id: number;
+  instructor_id: number;
+  instructor_code: string;
+  first_name: string;
+  middle_name: string;
+  last_name: string;
+  teaching_position: string;
+  employment_type: string;
+  personal_email: string;
+  contact_no: string;
+  sex: string;
+  address_id: string;
+  birth_date: string;
+  // Add other fields as needed
+}
 
 const Faculty = () => {
   const [editModalOpen, setEditModalOpen] = useState(false);
@@ -14,52 +32,164 @@ const Faculty = () => {
     college: string;
   } | null>(null);
 
-  // Dummy data
-  const tableData = [
-    {
-      id: 1,
-      identity: "010101",
-      name: "System Administrator",
-      designation: "Graduate Program Head",
-      college: "CET",
-    },
-    {
-      id: 2,
-      identity: "020202",
-      name: "ictocet",
-      designation: "Graduate Program Head",
-      college: "CET",
-    },
-    {
-      id: 3,
-      identity: "020202",
-      name: "ictocet",
-      designation: "Graduate Program Head",
-      college: "CET",
-    },
-    {
-      id: 4,
-      identity: "020202",
-      name: "ictocet",
-      designation: "Graduate Program Head",
-      college: "CET",
-    },
-    {
-      id: 5,
-      identity: "020202",
-      name: "ictocet",
-      designation: "Graduate Program Head",
-      college: "CET",
-    },
-    {
-      id: 6,
-      identity: "020202",
-      name: "Jane Doe",
-      designation: "Graduate Program Head",
-      college: "CET",
-    },
-    // Add more data as needed
-  ];
+  const [faculty, setFaculty] = useState<any[]>([]);
+  const [department, setDept] = useState<any[]>([]);
+  const [staff, setStaff] = useState<any[]>([]);
+
+  const fetchDataFromFacultyEndpoint = async () => {
+    try {
+      const response = await api.get("api/instructors", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      });
+      const data = await response.data.data;
+
+      if (data) {
+        setFaculty(data);
+      }
+      console.log("API response from api/instructor", data);
+    } catch (error) {
+      console.error("API request error:", error);
+    }
+  };
+
+  const fetchDataFromDepartmentEndpoint = async () => {
+    try {
+      const response = await api.get("api/departments", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      });
+      const data = await response.data.data;
+
+      if (data) {
+        setDept(data);
+      }
+      console.log("API response from api/department", data);
+    } catch (error) {
+      console.error("API request error:", error);
+    }
+  };
+  const fetchDataFromStaffEndpoint = async () => {
+    try {
+      const response = await api.get("api/staffs", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      });
+      const data = await response.data.data;
+
+      if (data) {
+        setStaff(data);
+      }
+      console.log("API response from api/staffs", data);
+    } catch (error) {
+      console.error("API request error:", error);
+    }
+  };
+
+  const [formData, setFormData] = useState<FormData>({
+    staff_id: 0, // Provide default values for each field based on your data types
+    instructor_id: 0,
+    instructor_code: "",
+    first_name: "",
+    middle_name: "",
+    last_name: "",
+    teaching_position: "",
+    employment_type: "",
+    personal_email: "",
+    contact_no: "",
+    sex: "",
+    address_id: "",
+    birth_date: "",
+    // Add other fields with default values as needed
+  });
+  const handleInstructorCodeChange = (selectedValue: string) => {
+    // Assuming staff is an array containing all staff data
+    const selectedStaff = staff.find(
+      (item) => `${item.staff_id}-${item.employee_number}` === selectedValue
+    );
+
+    if (selectedStaff) {
+      setFormData({
+        staff_id: selectedStaff.staff_id,
+        instructor_id: selectedStaff.instructor_id,
+        instructor_code: selectedValue,
+        first_name: selectedStaff.first_name || "",
+        middle_name: selectedStaff.middle_name || "",
+        last_name: selectedStaff.last_name || "",
+        teaching_position: selectedStaff.teaching_position || "",
+        employment_type: selectedStaff.employment_type || "",
+        personal_email: selectedStaff.personal_email || "",
+        contact_no: selectedStaff.contact_no || "",
+        sex: selectedStaff.sex || "male",
+        address_id: selectedStaff.address_id || "",
+        birth_date: selectedStaff.birth_date || "",
+        // Add other fields as needed
+      });
+    }
+  };
+
+  useEffect(() => {
+    fetchDataFromStaffEndpoint();
+    fetchDataFromFacultyEndpoint();
+    fetchDataFromDepartmentEndpoint();
+  }, []);
+
+  const handleSubmit = async () => {
+    try {
+      // Assuming instructor_id is generated on the backend (e.g., auto-incremented in the database)
+      // Prepare the form data to match the "instructors" table structure
+      const instructorData = {
+        staff_id: formData.staff_id,
+        instructor_code: formData.instructor_code,
+        first_name: formData.first_name,
+        middle_name: formData.middle_name,
+        last_name: formData.last_name,
+        teaching_position: "staff",
+        employment_type: "regular",
+      };
+
+      // You can send the form data to your backend API endpoint using the 'api.post' method
+      const response = await api.post("api/instructors", instructorData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      });
+
+      // Handle the response from the server (e.g., show success message, update state, etc.)
+      console.log("Form submitted successfully to instructors", response.data);
+
+      // Update the form data state to clear the form fields
+      setFormData({
+        staff_id: 0,
+        instructor_id: response.data.instructor_id, // Assuming the backend returns the newly generated instructor_id
+        instructor_code: "",
+        first_name: "",
+        middle_name: "",
+        last_name: "",
+        teaching_position: "",
+        employment_type: "",
+        personal_email: "",
+        contact_no: "",
+        sex: "",
+        address_id: "",
+        birth_date: "",
+        // Add other fields with default values as needed
+      });
+
+      // Optionally, close the modal or perform other actions after successful submission
+      setFacultyModalOpen(false);
+    } catch (error) {
+      // Handle errors (e.g., show error message, log to console, etc.)
+      console.error("Form submission error:", error);
+    }
+  };
 
   // Function to open the faculty modal
   const openFacultyModal = () => {
@@ -81,6 +211,16 @@ const Faculty = () => {
   const closeEditModal = () => {
     console.log("Close button clicked");
     setEditModalOpen(false);
+  };
+
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const openModal = () => {
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
   };
 
   return (
@@ -109,10 +249,11 @@ const Faculty = () => {
                 placeholder="Search"
                 className="border p-2 rounded"
               />
-              <button className="ml-2">
+              <button className="ml-2" onClick={openModal}>
                 <FiArrowRight className="border text-2xl h-10" />
               </button>
             </div>
+
             <div className="flex items-center">
               <button
                 className=" bg-main-red text-white rounded-lg p-2 ml-3"
@@ -126,41 +267,102 @@ const Faculty = () => {
             <table className="min-w-full table-auto  bg-white shadow-md rounded-lg">
               <thead>
                 <tr className="bg-main-red text-white rounded-lg border ">
-                  <th>#</th>
-                  <th>Identity #</th>
+                  <th>Instructor ID</th>
+                  <th>Instructor Code</th>
                   <th>Name</th>
                   <th>Designation</th>
-                  <th>College</th>
+                  <th>Department Name</th>
                   <th>Status</th>
                   <th>Actions</th>
                 </tr>
               </thead>
-              <tbody className="text-center border">
-                {tableData.map((item) => (
-                  <tr className="border" key={item.id}>
-                    <td className="px-4 py-2">{item.id}</td>
-                    <td className="px-4 py-2">{item.identity}</td>
-                    <td className="px-4 py-2">{item.name}</td>
-                    <td className="px-4 py-2">{item.designation}</td>
-                    <td className="px-4 py-2">{item.college}</td>
-                    <td>
-                      <button className=" text-main-green p-2 rounded mr-2">
-                        Active
-                      </button>
-                    </td>
-                    <td className="text-center flex justify-center items-center">
-                      <FaEdit
-                        className="bg-main-blue text-white rounded text-2xl w-7 h-7 p-1 m-1"
-                        onClick={() => {
-                          setSelectedFaculty(item);
-                          openEditModal();
-                        }}
-                      />
 
-                      <FaTrash className="bg-main-red text-white rounded text-2xl w-7 h-7 p-1 m-1" />
-                    </td>
-                  </tr>
-                ))}
+              <tbody>
+                {faculty.map((facultyItem) => {
+                  const matchingStaff = staff.find(
+                    (staffItem) => staffItem.staff_id === facultyItem.staff_id
+                  );
+
+                  if (matchingStaff) {
+                    return (
+                      <tr
+                        className="border"
+                        key={`${facultyItem.instructor_id}-${facultyItem.department_id}`}
+                      >
+                        <td className="text-center">
+                          {facultyItem.instructor_id}
+                        </td>
+                        <td className="text-center">
+                          {facultyItem.instructor_code}
+                        </td>
+                        <td className="text-center">
+                          {matchingStaff.last_name}, {matchingStaff.first_name},{" "}
+                          {matchingStaff.middle_name}
+                        </td>
+                        <td className="text-center">
+                          {matchingStaff.designation}
+                        </td>
+
+                        {facultyItem.departments &&
+                        facultyItem.departments.length > 0 ? (
+                          <td className="text-center">
+                            {facultyItem.departments.map(
+                              (department: {
+                                department_id: number;
+                                department_code: string;
+                                department_name: string;
+                              }) => (
+                                <div key={department.department_id}>
+                                  <span>
+                                    {department.department_code} <br />{" "}
+                                    {department.department_name}
+                                  </span>
+                                  <br />
+                                </div>
+                              )
+                            )}
+                          </td>
+                        ) : (
+                          <td className="text-center">No Departments</td>
+                        )}
+
+                        <td
+                          className="text-center"
+                          style={{
+                            color:
+                              facultyItem.employment_type === "regular"
+                                ? "green"
+                                : "gray",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          {facultyItem.employment_type === "regular"
+                            ? "Active"
+                            : "None"}
+                        </td>
+                        <td className="text-center flex justify-center items-center">
+                          <FaEdit
+                            className="bg-main-blue text-white rounded text-2xl w-7 h-7 p-1 m-1"
+                            onClick={() => {
+                              // Handle edit action
+                            }}
+                          />
+                          <FaTrash className="bg-main-red text-white rounded text-2xl w-7 h-7 p-1 m-1" />
+                        </td>
+                      </tr>
+                    );
+                  } else {
+                    // Only faculty has this staff_id
+                    return (
+                      <tr
+                        className="border"
+                        key={`${facultyItem.instructor_id}`}
+                      >
+                        {/* Render faculty data here */}
+                      </tr>
+                    );
+                  }
+                })}
               </tbody>
             </table>
           </div>
@@ -182,6 +384,32 @@ const Faculty = () => {
                   <div>
                     <div className="mb-4">
                       <label
+                        htmlFor="selectCode"
+                        className="text-sm font-medium"
+                      >
+                        Instructor Code
+                      </label>
+                      <select
+                        id="instructor_code"
+                        className="w-full border p-2 rounded"
+                        placeholder="Select"
+                        onChange={(e) =>
+                          handleInstructorCodeChange(e.target.value)
+                        }
+                      >
+                        {staff.map((item) => (
+                          <option
+                            key={item.staff_id}
+                            value={`${item.staff_id}-${item.employee_number}`}
+                          >
+                            {`${item.staff_id}-${item.employee_number}`}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <div className="mb-4">
+                      <label
                         htmlFor="firstName"
                         className="text-sm font-medium"
                       >
@@ -189,10 +417,12 @@ const Faculty = () => {
                       </label>
                       <input
                         type="text"
-                        id="firstName"
+                        id="first_name"
                         className="w-full border p-2 rounded"
+                        value={formData.first_name || ""}
                       />
                     </div>
+
                     <div className="mb-4">
                       <label
                         htmlFor="middleName"
@@ -202,51 +432,33 @@ const Faculty = () => {
                       </label>
                       <input
                         type="text"
-                        id="middleName"
+                        id="middle_name"
                         className="w-full border p-2 rounded"
+                        value={formData.middle_name || ""}
                       />
                     </div>
-                    <div className="mb-4">
-                      <label
-                        htmlFor="middleInitial"
-                        className="text-sm font-medium"
-                      >
-                        Middle Initial
-                      </label>
-                      <input
-                        type="text"
-                        id="middleInitial"
-                        className="w-full border p-2 rounded"
-                      />
-                    </div>
+
                     <div className="mb-4">
                       <label htmlFor="lastName" className="text-sm font-medium">
                         Last Name
                       </label>
                       <input
                         type="text"
-                        id="lastName"
+                        id="last_name"
                         className="w-full border p-2 rounded"
+                        value={formData.last_name || ""}
                       />
                     </div>
+
                     <div className="mb-4">
-                      <label htmlFor="suffix" className="text-sm font-medium">
-                        Suffix
+                      <label htmlFor="email" className="text-sm font-medium">
+                        Email Address
                       </label>
                       <input
-                        type="text"
-                        id="suffix"
+                        type="email"
+                        id="personal_email"
                         className="w-full border p-2 rounded"
-                      />
-                    </div>
-                    <div className="mb-4">
-                      <label htmlFor="maiden" className="text-sm font-medium">
-                        Maiden
-                      </label>
-                      <input
-                        type="text"
-                        id="maiden"
-                        className="w-full border p-2 rounded"
+                        value={formData.personal_email || ""}
                       />
                     </div>
                   </div>
@@ -254,37 +466,34 @@ const Faculty = () => {
                   {/* Second Column */}
                   <div>
                     <div className="mb-4">
-                      <label htmlFor="email" className="text-sm font-medium">
-                        Email Address
-                      </label>
-                      <input
-                        type="email"
-                        id="email"
-                        className="w-full border p-2 rounded"
-                      />
-                    </div>
-                    <div className="mb-4">
                       <label
-                        htmlFor="contactNumber"
+                        htmlFor="contact_number"
                         className="text-sm font-medium"
                       >
                         Contact Number
                       </label>
                       <input
-                        type="tel"
-                        id="contactNumber"
+                        type="text"
+                        id="contact_no"
                         className="w-full border p-2 rounded"
+                        value={formData.contact_no || ""}
                       />
                     </div>
+
                     <div className="mb-4">
                       <label htmlFor="sex" className="text-sm font-medium">
                         Sex
                       </label>
-                      <select id="sex" className="w-full border p-2 rounded">
+                      <select
+                        id="sex"
+                        className="w-full border p-2 rounded"
+                        value={formData.sex || "male"}
+                      >
                         <option value="male">Male</option>
                         <option value="female">Female</option>
                       </select>
                     </div>
+
                     <div className="mb-4">
                       <label htmlFor="address" className="text-sm font-medium">
                         Address
@@ -293,8 +502,10 @@ const Faculty = () => {
                         type="text"
                         id="address"
                         className="w-full border p-2 rounded"
+                        value={formData.address_id || ""}
                       />
                     </div>
+
                     <div className="mb-4">
                       <label
                         htmlFor="birthdate"
@@ -303,14 +514,18 @@ const Faculty = () => {
                         Birthdate
                       </label>
                       <input
-                        type="date"
+                        type="text"
                         id="birthdate"
                         className="w-full border p-2 rounded"
+                        value={formData.birth_date || ""}
                       />
                     </div>
                   </div>
                 </div>
-                <button className="bg-main-red text-white rounded-lg p-2 mt-4 ml-auto flex ">
+                <button
+                  className="bg-main-red text-white rounded-lg p-2 mt-4 ml-auto flex"
+                  onClick={handleSubmit}
+                >
                   Add Faculty
                 </button>
               </div>
@@ -420,13 +635,49 @@ const Faculty = () => {
                         className="w-full border p-2 rounded"
                       />
                     </div>
+                    <div className="mb-4">
+                      <label
+                        htmlFor="birthdate"
+                        className="text-sm font-medium"
+                      >
+                        Birth Place
+                      </label>
+                      <input
+                        type="date"
+                        id="birthdate"
+                        className="w-full border p-2 rounded"
+                      />
+                    </div>
                   </div>
 
                   {/* Second Column */}
                   <div>
                     <div className="mb-4">
+                      <label
+                        htmlFor="birthdate"
+                        className="text-sm font-medium"
+                      >
+                        Birthdate
+                      </label>
+                      <input
+                        type="date"
+                        id="birthdate"
+                        className="w-full border p-2 rounded"
+                      />
+                    </div>
+                    <div className="mb-4">
+                      <label htmlFor="sex" className="text-sm font-medium">
+                        Sex
+                      </label>
+                      <select id="sex" className="w-full border p-2 rounded">
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                      </select>
+                    </div>
+                    <div className="mb-4">
                       <label htmlFor="email" className="text-sm font-medium">
-                        Email Address
+                        {" "}
+                        Personal Email Address
                       </label>
                       <input
                         type="email"
@@ -448,34 +699,37 @@ const Faculty = () => {
                       />
                     </div>
                     <div className="mb-4">
-                      <label htmlFor="sex" className="text-sm font-medium">
-                        Sex
-                      </label>
-                      <select id="sex" className="w-full border p-2 rounded">
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                      </select>
-                    </div>
-                    <div className="mb-4">
-                      <label htmlFor="address" className="text-sm font-medium">
-                        Address
+                      <label
+                        htmlFor="contactNumber"
+                        className="text-sm font-medium"
+                      >
+                        Designation
                       </label>
                       <input
                         type="text"
-                        id="address"
                         className="w-full border p-2 rounded"
                       />
                     </div>
                     <div className="mb-4">
                       <label
-                        htmlFor="birthdate"
+                        htmlFor="contactNumber"
                         className="text-sm font-medium"
                       >
-                        Birthdate
+                        Instructor Code
                       </label>
                       <input
-                        type="date"
-                        id="birthdate"
+                        type="text "
+                        className="w-full border p-2 rounded"
+                      />
+                    </div>
+
+                    <div className="mb-4">
+                      <label htmlFor="address" className="text-sm font-medium">
+                        Department name
+                      </label>
+                      <input
+                        type="text"
+                        id="address"
                         className="w-full border p-2 rounded"
                       />
                     </div>
@@ -488,6 +742,49 @@ const Faculty = () => {
             </div>
           )}
         </div>
+        {isModalOpen && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+            <div className="bg-white p-4 rounded-lg">
+              <h2 className="text-xl font-bold mb-4">Search Staff</h2>
+
+              {/* Employee Number Input */}
+              <div className="mb-4">
+                <label className="text-sm" htmlFor="employeeNumber">
+                  Employee Number
+                </label>
+                <input
+                  type="text"
+                  id="employeeNumber"
+                  className="w-full border p-2 rounded"
+                  placeholder="Enter Employee Number"
+                />
+              </div>
+
+              {/* Employee Name Input */}
+              <div className="mb-4">
+                <label className="text-sm" htmlFor="employeeName">
+                  Employee Name
+                </label>
+                <input
+                  type="text"
+                  id="employeeName"
+                  className="w-full border p-2 rounded"
+                  placeholder="Enter Employee Name"
+                />
+              </div>
+
+              {/* Search Button */}
+              <div className="flex justify-center">
+                <button
+                  className="bg-main-red text-white p-2 rounded"
+                  onClick={closeModal}
+                >
+                  Search
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Row 3 Pagination (right-aligned and smaller) */}

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { MdCheck } from "react-icons/md";
 import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
 import DateTime from "@/components/DateTime";
@@ -64,9 +64,9 @@ const ClassesAdd = () => {
   };
 
   // For backend
-  //   const handleFinish = () => {
-  //     // Submit the form data to the server
-  //   };
+  const handleFinish = () => {
+    // Submit the form data to the server
+  };
 
   const addMoreRows = () => {
     setRowCount(rowCount + 1);
@@ -122,9 +122,17 @@ const ClassesAdd = () => {
     <div className="w-full mt-10 p-5 border shadow rounded" key={1}>
       <div className="mb-3">
         <label htmlFor="Course" className="form-label">
-          Course Number:{" "}
+          Program Code:{" "}
         </label>
-        <select className="form-select ml-3 p-1 w-1/2 border rounded form-control">
+        <select className="form-select ml-4 p-1 w-1/3 border rounded form-control">
+          <option></option>
+          <option>2021343</option>
+          <option>202334</option>
+        </select>
+        <label htmlFor="Course" className="form-label ml-2">
+          Subject Code :{" "}
+        </label>
+        <select className="form-select ml-3 p-1 w-1/3 border rounded form-control">
           <option></option>
           <option>2021343</option>
           <option>202334</option>

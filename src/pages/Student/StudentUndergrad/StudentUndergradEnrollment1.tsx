@@ -1,4 +1,5 @@
 import DateTime from "@/components/DateTime";
+import { useNavigate } from 'react-router-dom';
 import { BiSolidLeftArrow } from "react-icons/bi";
 import { BiSolidRightArrow } from "react-icons/bi";
 import { BiCalendarEvent } from "react-icons/bi";
@@ -11,14 +12,135 @@ import { BiDownload } from "react-icons/bi";
 
 const Enrollment1 = () => 
 {
+    const navigate = useNavigate();
+
+    const handleHomeClick= () => {
+        console.log('Button clicked!');
+            navigate('/home');
+    };
+
+    const handleNextClick= () => {
+        console.log('Button clicked!');
+            navigate('/home/enrollment2');
+    };
+
+    const tableData = [
+        {
+            ClassCode: "CSC 0411",
+            ClassName: "CS Thesis Writing 1",
+            Section:"3",
+            Schedule1icon:<BiCalendarEvent size={30} className="px-2"/>,
+            Schedule1: "Monday",
+            Schedule2icon: <AiFillClockCircle size={30} className="px-2"/>,
+            Schedule2:"6:00 PM - 9:00 PM",
+            Schedule3icon: <RiTeamFill size={50} className="px-4"/>,
+            Schedule3:"F2F",
+            Room1:"GCA 307",
+            Credits:"3",
+        },
+        {
+            ClassCode: "CSC 0412",
+            ClassName: "Networks and Communication (lec)",
+            Section:"3",
+            Schedule1icon:<BiCalendarEvent size={30} className="px-2"/>,
+            Schedule1: "Monday",
+            Schedule2icon: <AiFillClockCircle size={30} className="px-2"/>,
+            Schedule2:"6:00 PM - 9:00 PM",
+            Schedule3icon: <RiTeamFill size={50} className="px-4"/>,
+            Schedule3:"F2F",
+            Schedule4icon:<BiCalendarEvent size={30} className="px-2"/>,
+            Schedule4: "Monday",
+            Schedule5icon: <AiFillClockCircle size={30} className="px-2"/>,
+            Schedule5:"6:00 PM - 9:00 PM",
+            Schedule6icon: <RiTeamFill size={50} className="px-4"/>,
+            Schedule6:"F2F",
+            Room1:"FIELD",
+            Room2:"GCA 306",
+            Credits:"2",
+        },
+        {
+            ClassCode: "CSC 0412.1",
+            ClassName: "Networks and Communication (lab)",
+            Section:"3",
+            Schedule1icon:<BiCalendarEvent size={30} className="px-2"/>,
+            Schedule1:"Monday",
+            Schedule2icon: <AiFillClockCircle size={30} className="px-2"/>,
+            Schedule2:"6:00 PM - 9:00 PM",
+            Schedule3icon: <RiTeamFill size={50} className="px-4"/>,
+            Schedule3:"F2F",
+            Room1:"COMP LAB 2",
+            Credits:"1",
+        },
+        {
+            ClassCode: "CSC 0413",
+            ClassName: "CS Elective 2 (lec)",
+            Section:"3",
+            Schedule1icon:<BiCalendarEvent size={30} className="px-2"/>,
+            Schedule1: "Monday",
+            Schedule2icon: <AiFillClockCircle size={30} className="px-2"/>,
+            Schedule2:"6:00 PM - 9:00 PM",
+            Schedule3icon: <RiTeamFill size={50} className="px-4"/>,
+            Schedule3:"F2F",
+            Room1:"COMP LAB 3",
+            Credits:"2",
+        },
+        {
+            ClassCode: "CSC 0413.1",
+            ClassName: "CS Elective 2 (lab)",
+            Section:"3",
+            Schedule1icon:<BiCalendarEvent size={30} className="px-2"/>,
+            Schedule1: "Monday",
+            Schedule2icon: <AiFillClockCircle size={30} className="px-2"/>,
+            Schedule2:"6:00 PM - 9:00 PM",
+            Schedule3icon: <RiTeamFill size={50} className="px-4"/>,
+            Schedule3:"F2F",
+            Room1:"COMP LAB 3",
+            Credits:"1",
+        },
+        {
+            ClassCode: "CSC 0414",
+            ClassName: "CS Elective 3 (lec)",
+            Section:"3",
+            Schedule1icon:<BiCalendarEvent size={30} className="px-2"/>,
+            Schedule1: "Tuesday",
+            Schedule2icon: <AiFillClockCircle size={30} className="px-2"/>,
+            Schedule2:"7:00 AM - 8:30 AM",
+            Schedule3icon: <MdCastForEducation size={50} className="px-4"/>,
+            Schedule3:"LecSyncOnline",
+            Schedule4icon:<BiCalendarEvent size={30} className="px-2"/>,
+            Schedule4: "Monday",
+            Schedule5icon: <AiFillClockCircle size={30} className="px-2"/>,
+            Schedule5:"6:00 PM - 9:00 PM",
+            Schedule6icon: <RiTeamFill size={50} className="px-4"/>,
+            Schedule6:"F2F",
+            Room1:"FIELD",
+            Room2:"COMP LAB 2",
+            Credits:"2",
+        },
+        {
+            ClassCode: "CSC 0414.1",
+            ClassName: "CS Elective 3 (lab)",
+            Section:"3",
+            Schedule1icon:<BiCalendarEvent size={30} className="px-2"/>,
+            Schedule1: "Monday",
+            Schedule2icon: <AiFillClockCircle size={30} className="px-2"/>,
+            Schedule2:"6:00 PM - 9:00 PM",
+            Schedule3icon: <RiTeamFill size={50} className="px-4"/>,
+            Schedule3:"F2F",
+            Room1:"GV 307",
+            Credits:"1",
+        },
+        // Add more data as needed
+      ];
+
     return (
         <>
-            <div className="p-10 px-16 grid grid-cols-12 font-montserrat
+            <div    className="p-10 px-16 grid grid-cols-12 font-montserrat
                             bg-cover bg-center min-h-screen items-center
                             bg-no-repeat" 
-                style = {{ 
-                backgroundImage: 'url(./gradient.png), url(./plm_bg.png)'
-                }}
+                    style = {{ 
+                                backgroundImage: 'url(/gradient.png), url(/plm_bg.png)'
+                            }}
                 >
                 {/* Row 1 */}
                 <div className="col-span-12 flex justify-between items-center">
@@ -38,10 +160,10 @@ const Enrollment1 = () =>
                     <div className="text-3xl font-bold text-main-red">Step&nbsp;1:</div>
                     <div className="text-2xl text-main-red mr-80">View Schedule</div>
                     <div className="flex flex-row">
-                        <button className="px-6 py-1 bg-main-red text-white rounded-lg flex items-center">
-                            <BiSolidLeftArrow size={15}></BiSolidLeftArrow>Back
+                        <button className="px-6 py-1 bg-main-red text-white rounded-lg flex items-center" onClick={handleHomeClick}>
+                            <BiSolidLeftArrow size={15}></BiSolidLeftArrow>Home
                         </button>
-                        <button className="ml-2 px-6 py-1 bg-main-red text-white rounded-lg flex items-center">
+                        <button className="ml-2 px-6 py-1 bg-main-red text-white rounded-lg flex items-center" onClick={handleNextClick}>
                             Next<BiSolidRightArrow size={15}></BiSolidRightArrow>
                         </button>
                     </div>
@@ -71,7 +193,7 @@ const Enrollment1 = () =>
                             </span>
                         </li>
                     </ol>
-                    <table className=" table-fixed mt-4 ml-2 text-center rounded-full text-sm border border-black">
+                    <table className=" table-fixed mt-4 ml-2 text-center text-sm border divide-slate-500 bg-white border-black">
                         <thead>
                             <tr className="bg-main-red text-white items-center">
                                 <th className="px-3">Class&nbsp;Code</th>
@@ -82,115 +204,41 @@ const Enrollment1 = () =>
                                 <th className="px-10">Credits</th>
                             </tr>
                         </thead>
-                        <tbody className="border-black divide-y divide-slate-500">
-                            <tr>
-                                <td>CSC 0411</td>
-                                <td>CS Thesis Writing 1</td>
-                                <td>3</td>
-                                <td className="flex flex-row ml-6 items-center">
-                                    <BiCalendarEvent size={30} className="px-2"/>Monday
-                                    <AiFillClockCircle size={30} className="px-2"/>6:00 PM - 9:00 PM
-                                    <RiTeamFill size={50} className="px-4"/>F2F
-                                </td>
-                                <td>GCA 307</td>
-                                <td>3</td>
-                            </tr>
-                            <tr>
-                                <td>CSC 0412</td>
-                                <td>Networks and Communication (lec)</td>
-                                <td>3</td>
-                                <td className="flex flex-row ml-6 items-center">
-                                    <BiCalendarEvent size={30} className="px-2"/>Monday
-                                    <AiFillClockCircle size={30} className="px-2"/>6:00 PM - 9:00 PM
-                                    <RiTeamFill size={50} className="px-4"/>F2F
-                                </td>
-                                <td className="flex flex-row ml-6 items-center">
-                                    <BiCalendarEvent size={30} className="px-2"/>Monday
-                                    <AiFillClockCircle size={30} className="px-2"/>6:00 PM - 9:00 PM
-                                    <RiTeamFill size={50} className="px-4"/>F2F
-                                </td>
-                                <td>
-                                    FIELD
-                                    <br/><br/>
-                                    GCA 306
-                                </td>
-                                <td>2</td>
-                            </tr>
-                            <tr>
-                                <td>CSC 0412.1</td>
-                                <td>Networks and Communication (lab)</td>
-                                <td>3</td>
-                                <td className="flex flex-row ml-6 items-center">
-                                    <BiCalendarEvent size={30} className="px-2"/>Monday
-                                    <AiFillClockCircle size={30} className="px-2"/>6:00 PM - 9:00 PM
-                                    <RiTeamFill size={50} className="px-4"/>F2F
-                                </td>
-                                <td>COMP LAB 2</td>
-                                <td>1</td>
-                            </tr>
-                            <tr>
-                                <td>CSC 0413</td>
-                                <td>CS Elective 2 (lec)</td>
-                                <td>3</td>
-                                <td className="flex flex-row ml-6 items-center">
-                                    <BiCalendarEvent size={30} className="px-2"/>Monday
-                                    <AiFillClockCircle size={30} className="px-2"/>6:00 PM - 9:00 PM
-                                    <RiTeamFill size={50} className="px-4"/>F2F
-                                </td>
-                                <td>COMP LAB 3</td>
-                                <td>2</td>
-                            </tr>
-                            <tr>
-                                <td>CSC 0413.1</td>
-                                <td>CS Elective 2 (lab)</td>
-                                <td>3</td>
-                                <td className="flex flex-row ml-6 items-center">
-                                    <BiCalendarEvent size={30} className="px-2"/>Monday
-                                    <AiFillClockCircle size={30} className="px-2"/>6:00 PM - 9:00 PM
-                                    <RiTeamFill size={50} className="px-4"/>F2F
-                                </td>
-                                <td>COMP LAB 3</td>
-                                <td>1</td>
-                            </tr>
-                            <tr>
-                                <td>CSC 0414</td>
-                                <td>CS Elective 3 (lec)</td>
-                                <td>3</td>
-                                <td className="flex flex-row ml-6 items-center">
-                                    <BiCalendarEvent size={30} className="px-2"/>Monday
-                                    <AiFillClockCircle size={30} className="px-2"/>6:00 PM - 9:00 PM
-                                    <MdCastForEducation size={50} className="px-4"/>LecSyncOnline
-                                </td>
-                                <td className="flex flex-row ml-6 items-center">
-                                    <BiCalendarEvent size={30} className="px-2"/>Monday
-                                    <AiFillClockCircle size={30} className="px-2"/>6:00 PM - 9:00 PM
-                                    <RiTeamFill size={50} className="px-4"/>F2F
-                                </td>
-                                <td>
-                                    FIELD
-                                    <br/><br/>
-                                    COMP LAB 2
-                                </td>
-                                <td>2</td>
-                            </tr>
-                            <tr>
-                                <td>CSC 0414.1</td>
-                                <td>CS Elective 3 (lab)</td>
-                                <td>3</td>
-                                <td className="flex flex-row ml-6 items-center">
-                                    <BiCalendarEvent size={30} className="px-2"/>Monday
-                                    <AiFillClockCircle size={30} className="px-2"/>6:00 PM - 9:00 PM
-                                    <RiTeamFill size={50} className="px-4"/>F2F
-                                </td>
-                                <td>GV 307</td>
-                                <td>1</td>
-                            </tr>
+                        <tbody className=" divide-y ">
+                            {tableData.map((item) => (
+                                <tr className="border" key={item.Section}>
+                                    <td className="px-4 py-6">{item.ClassCode}</td>
+                                    <td className="px-4 py-6">{item.ClassName}</td>
+                                    <td className="px-4 py-6">{item.Section}</td>
+                                    <td className="px-4 py-6">
+                                        <div className="flex flex-row ml-6 items-center">
+                                            {item.Schedule1icon}{item.Schedule1}
+                                            {item.Schedule2icon}{item.Schedule2}
+                                            {item.Schedule3icon}{item.Schedule3}
+                                        </div>
+                                        <div className="flex flex-row ml-6 items-center">
+                                            {item.Schedule4icon}{item.Schedule4}
+                                            {item.Schedule5icon}{item.Schedule5}
+                                            {item.Schedule6icon}{item.Schedule6}
+                                        </div>  
+                                    </td>
+                                    <td className="px-4 py-6">
+                                        <div>
+                                        {item.Room1}
+                                        </div>
+                                        <br></br>
+                                        <div>
+                                        {item.Room2}
+                                        </div>
+                                    </td>
+                                    <td className="px-4 py-6">{item.Credits}</td>           
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
                 </div>
 
-
-                <div className="p-2 ml-4 mt-36 col-span-12 justify-end flex flex-row rounded-lg border bg-red-200 text-main-red w-96">
+                <div className="p-2 ml-4 mt-20 col-span-12 justify-end flex flex-row rounded-lg border bg-red-200 text-main-red w-96">
                     <AiOutlineWarning size={40}/>
                     <p className="text-sm mb-2 ml-1 ">
                         For First Year and Second Year Students please choose and enroll to a PE Subject.
@@ -202,8 +250,6 @@ const Enrollment1 = () =>
                             PE ENLISTMENT
                     </button>
                 </div>
-                
-                
 
                 {/* Row 3 */}
                 <div className="col-span-12 flex flex-row justify-end mt-24 text-[#434343]">

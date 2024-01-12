@@ -1,89 +1,189 @@
-import DateTime from "@/components/DateTime";
-import { useState } from "react";
-import { FiArrowRight, FiArrowLeft } from "react-icons/fi";
-import { FaEye } from "react-icons/fa";
+
+import DateTime from '@/components/DateTime';
+import React, { useState, useEffect } from 'react';
+import { FiArrowRight, FiArrowLeft } from 'react-icons/fi';
+import { FaEdit, FaEye, FaTrash, FaMinusCircle, FaExchangeAlt } from 'react-icons/fa';
+import { Link } from "react-router-dom";
+import api from "../../api/fetch";
+
+
 
 const AddDropReq = () => {
-  type TableData = {
-    id: number;
-    name: string;
-    program: string;
-    college: string;
-    reqDate: string;
-    status: string;
-  };
-
-  // Dummy data
-  const tableData = [
-    {
-      id: 202361003,
-      name: "FERNANDEZ, JOSE LUIS GARCIA",
-      program: "MSMANENG",
-      college: "CET-GP",
-      reqDate: "2023-09-20 12:58:20",
-      status: "Approved",
-    },
-    {
-      id: 202361003,
-      name: "FERNANDEZ, JOSE LUIS GARCIA",
-      program: "MSMANENG",
-      college: "CET-GP",
-      reqDate: "2023-09-20 12:58:20",
-      status: "Approved",
-    },
-    {
-      id: 202361003,
-      name: "FERNANDEZ, JOSE LUIS GARCIA",
-      program: "MSMANENG",
-      college: "CET-GP",
-      reqDate: "2023-09-20 12:58:20",
-      status: "Approved",
-    },
-    {
-      id: 202361003,
-      name: "FERNANDEZ, JOSE LUIS GARCIA",
-      program: "MSMANENG",
-      college: "CET-GP",
-      reqDate: "2023-09-20 12:58:20",
-      status: "Approved",
-    },
-    {
-      id: 202361003,
-      name: "FERNANDEZ, JOSE LUIS GARCIA",
-      program: "MSMANENG",
-      college: "CET-GP",
-      reqDate: "2023-09-20 12:58:20",
-      status: "Approved",
-    },
-    {
-      id: 202361003,
-      name: "FERNANDEZ, JOSE LUIS GARCIA",
-      program: "MSMANENG",
-      college: "CET-GP",
-      reqDate: "2023-09-20 12:58:20",
-      status: "Approved",
-    },
-  ];
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedData, setSelectedData] = useState<TableData | null>(null);
+  const [studentsTerms, setStudentsTerms] = useState<any[]>([]);
+  const [students, setStudents] = useState<any[]>([]);
+  const [studentModalOpen, setStudentModalOpen] = useState(false);
+  const [colleges, setColleges] = useState<any[]>([]);
+  const [program, setProgram] = useState<any[]>([]);
+  const [addDrop, setAddDrop] = useState<any[]>([]);
 
-  // ... (your existing data and components)
+  const fetchDataFromCollegesEndpoint = async () => {
+    try {
+      const response = await api.get("api/colleges", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      });
+      const data = await response.data.data;
 
-  // Function to open the modal and set the selected data
-  const openModal = (data: TableData) => {
-    setSelectedData(data);
+      if (data) {
+        setColleges(data);
+      }
+      console.log("API response from api/colleges:", data);
+    } catch (error) {
+      console.error("API request error:", error);
+    }
+  };
+  const fetchDataFromAddDropEndpoint = async () => {
+    try {
+      const response = await api.get("api/add-drop-requests", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      });
+      const data = await response.data.data;
+
+      if (data) {
+        setAddDrop(data);
+      }
+      console.log("API response from api/add-drop-requests:", data);
+    } catch (error) {
+      console.error("API request error:", error);
+    }
+  };
+
+  const fetchDataFromProgramsEndpoint = async () => {
+    try {
+      const response = await api.get("api/programs", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      });
+      const data = await response.data.data;
+
+      if (data) {
+        setProgram(data);
+      }
+      console.log("API response from api/programs:", data);
+    } catch (error) {
+      console.error("API request error:", error);
+    }
+  };
+
+
+  const fetchDataFromStudentsEndpoint = async () => {
+    try {
+      const response = await api.get("api/students", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      });
+      const data = await response.data.data;
+
+      if (data) {
+        setStudents(data);
+      }
+      console.log("API response from api/student", data);
+    } catch (error) {
+      console.error("API request error:", error);
+    }
+  };
+
+
+  const fetchDataFromStudentTermsEndpoint = async () => {
+    try {
+      const response = await api.get("api/student-terms", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      });
+      const data = await response.data.data;
+
+      if (data) {
+        setStudentsTerms(data);
+      }
+      console.log("API response from api/student-terms:", data);
+    } catch (error: any) {
+      console.error("API request error:", error);
+      console.error("API response error details:", error.response);
+    }
+
+
+
+  };
+
+
+  const openModal = () => {
     setIsModalOpen(true);
   };
 
+
+  useEffect(() => {
+    fetchDataFromStudentsEndpoint();
+    fetchDataFromStudentTermsEndpoint();
+    fetchDataFromCollegesEndpoint();
+    fetchDataFromProgramsEndpoint();
+    fetchDataFromAddDropEndpoint();
+  }, []);
+
+
+
+
+
+
+
+
   // Function to close the modal
   const closeModal = () => {
-    setSelectedData(null);
     setIsModalOpen(false);
   };
 
+
+
+        {/* Table */}
+
+        <div className="overflow-x-auto">
+          <table className="min-w-full table-auto  bg-white shadow-md rounded-lg">
+            <thead>
+              <tr className="bg-main-red text-white rounded-lg border ">
+                <th>Actions</th>
+                <th>Student ID</th>
+                <th>Name</th>
+                <th>Program</th>
+                <th>College</th>
+                <th>Request Date</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody className="text-center border">
+              {tableData.map((item) => (
+                <tr className="border" key={item.id}>
+                  <td
+                    className="text-center flex justify-center items-center m-auto"
+                    onClick={() => openModal(item)}
+                  >
+                    <FaEye className="bg-main-blue text-white rounded text-2xl w-7 h-7 p-1 m-1" />
+                  </td>
+                  <td className="px-4 py-2">{item.id}</td>
+                  <td className="px-4 py-2">{item.name}</td>
+                  <td className="px-4 py-2">{item.program}</td>
+                  <td className="px-4 py-2">{item.college}</td>
+                  <td className="px-4 py-2">{item.reqDate}</td>
+                  <td className="px-4 py-2 text-main-green">{item.status}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
   return (
-    <div className="p-10 px-16 grid grid-cols-12 font-montserrat">
+    <div className="p-10 px-16 grid grid-cols-12 font-montserrat" >
       {/* Row 1 */}
       <div className="col-span-12 flex justify-between items-center">
         <div className="px-5 py-1 bg-main-red text-white rounded-lg ">
@@ -125,36 +225,74 @@ const AddDropReq = () => {
                 <th>College</th>
                 <th>Request Date</th>
                 <th>Status</th>
+                <th>Checked By</th>
+                <th>Checked Date</th>
               </tr>
             </thead>
-            <tbody className="text-center border">
-              {tableData.map((item) => (
-                <tr className="border" key={item.id}>
-                  <td
-                    className="text-center flex justify-center items-center m-auto"
-                    onClick={() => openModal(item)}
-                  >
-                    <FaEye className="bg-main-blue text-white rounded text-2xl w-7 h-7 p-1 m-1" />
-                  </td>
-                  <td className="px-4 py-2">{item.id}</td>
-                  <td className="px-4 py-2">{item.name}</td>
-                  <td className="px-4 py-2">{item.program}</td>
-                  <td className="px-4 py-2">{item.college}</td>
-                  <td className="px-4 py-2">{item.reqDate}</td>
-                  <td className="px-4 py-2 text-main-green">{item.status}</td>
-                </tr>
-              ))}
+
+            {/* Change Table */}
+            <tbody>
+              {addDrop.map((studentAddItem) => {
+                const matchingStudent = students.find((studentItem) => studentItem.student_id === studentAddItem.student_id);
+                const matchingStudentTerms = studentsTerms.find((studentTermItem) => studentTermItem.student_id === matchingStudent.student_id);
+                const matchingProgram = program.find((programItem) => programItem.program_id === matchingStudentTerms.program_id);
+                const matchingCollege = colleges.find((collegeItem) => collegeItem.college_id === matchingStudentTerms.college_id);
+
+
+
+
+
+                return (
+                  <tr className="border" key={`${studentAddItem.student_id}`}>
+                    <td className="text-center flex justify-center items-center m-auto">
+                      <button
+                        onClick={() => openModal()}
+                        className="focus:outline-none"
+                      >
+                        <FaEye className="bg-main-blue text-white rounded text-2xl w-7 h-7 p-1 m-1" />
+                      </button>
+                    </td>
+                    <td className="text-center">{studentAddItem.student_id}</td>
+                    <td className="text-center">{matchingStudent.last_name}, {matchingStudent.first_name}, {matchingStudent.middle_name}</td>
+                    <td className="text-center">{matchingProgram.program_code}</td>
+                    <td className="text-center">{matchingCollege.college_code}</td>
+                    <td className="text-center">{studentAddItem.request_date}</td>
+                    <td className="text-center">{studentAddItem.status}</td>
+                    <td className="text-center">{studentAddItem.approved_by}</td>
+                    <td className={`text-center ${studentAddItem.approved_date ? 'text-green-700 font-bold' : 'text-gray-500'}`}>
+                      {studentAddItem.approved_date ? studentAddItem.approved_date : 'Not yet approved'}
+                    </td>
+                  </tr>
+                );
+
+
+
+                // Only student has this student_id
+                return (
+                  <tr className="border" key={`${studentAddItem.student_id}`}>
+                    {/* Render student data here */}
+                  </tr>
+                );
+              })}
             </tbody>
+
+
+
+
+
           </table>
         </div>
 
+
+
+
+
         {/* Modal */}
         {isModalOpen && (
-          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 ">
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
             <div className="bg-white p-4 rounded-lg w-full max-w-2xl">
               <div className="flex justify-between items-center">
-                <h2 className="text-xl text-main-red p-1 ">View Details</h2>
-
+                <h2 className="text-xl text-main-red p-1">View Details</h2>
                 <button
                   className="bg-main-red text-white p-1 rounded"
                   onClick={closeModal}
@@ -163,75 +301,64 @@ const AddDropReq = () => {
                 </button>
               </div>
               <hr />
-
               <div>
                 {/* Display the selected data here */}
-                {selectedData && (
-                  <div className="flex justify-between  border p-1 shadow rounded">
-                    <div className="flex flex-col ">
-                      <p>Student ID: {selectedData.id}</p>
-                      <p>Student Name: {selectedData.name}</p>
-                      <p>Program: {selectedData.program}</p>
-                      <p>College: {selectedData.college}</p>
-                    </div>
+                {addDrop.map((studentAddItem) => {
+                  const matchingStudent = students.find((studentItem) => studentItem.student_id === studentAddItem.student_id);
+                  const matchingStudentTerms = studentsTerms.find((studentTermItem) => studentTermItem.student_id === matchingStudent.student_id);
+                  const matchingProgram = program.find((programItem) => programItem.program_id === matchingStudentTerms.program_id);
+                  const matchingCollege = colleges.find((collegeItem) => collegeItem.college_id === matchingStudentTerms.college_id);
 
-                    <div className="flex flex-col">
-                      <p>Request Date: {selectedData.reqDate}</p>
-                      <p>
-                        Total units after approved:{" "}
-                        {/* Add the appropriate data */}
-                      </p>
-                      <p>Reason: {/* Add the appropriate data */}</p>
-                      <p>Status: {selectedData.status}</p>
-                      <p>Approved by: ICTOCET</p>
-                      <p>
-                        Approved date:{" "}
-                        {/* Add the appropriate data (e.g., today's date) */}
-                      </p>
-                    </div>
-                  </div>
-                )}
 
-                {/* Second div with a table of Dropped classes */}
-                <div className="overflow-x-auto  mt-5 mb-2 h-[200px]">
-                  <h2 className="text-xl font-bold text-main-red mb-2">
-                    Dropped Classes
-                  </h2>
+                  return (
+                    <div key={studentAddItem.student_id} className="flex justify-between border p-1 shadow rounded">
+                      <div className="flex flex-col">
+                        <p>Student ID: {studentAddItem.student_id}</p>
+                        <p>Student Name: {matchingStudent ? `${matchingStudent.last_name}, ${matchingStudent.first_name}, ${matchingStudent.middle_name}` : 'N/A'}</p>
+                        <p>Program: {matchingProgram ? matchingProgram.program_code : 'N/A'}</p>
+                        <p>College: {matchingCollege ? matchingCollege.college_code : 'N/A'}</p>
+                      </div>
+                      <div className="flex flex-col">
+                        <p>Request Date: {studentAddItem.request_date}</p>
+                        <p>Total units after approved: {studentAddItem.total_units} </p>
+                        <p>Reason: {studentAddItem.reason}</p>
+                        <p>Status: {studentAddItem.status}</p>
+                        <p>Approved by: {studentAddItem.approved_by}</p>
+                        <p>Approved date: {studentAddItem.approved_date || 'Not yet approved'}</p>
+                      </div>
+                    </div>
+                  );
+                })}
+
+                {/* Display Dropped Classes */}
+                <div className="overflow-x-auto mt-5 mb-2 h-[200px]">
+                  <h2 className="text-xl font-bold text-main-red mb-2">Dropped Classes</h2>
                   <table className="min-w-full table-auto bg-white shadow-md rounded-lg">
                     <thead>
-                      <tr className="bg-main-red text-white rounded-lg border ">
-                        <th>Section ID</th>
-                        <th>Section</th>
+                      <tr className="bg-main-red text-white rounded-lg border">
+                        <th>Class ID</th>
+                        <th>Subject Code / Section</th>
+
                         <th>Date Created</th>
                       </tr>
                     </thead>
                     <tbody className="text-center border">
-                      <td className="px-4 py-2">2023104131</td>
-                      <td className="px-4 py-2">CSC 0413 - 1</td>
-                      <td className="px-4 py-2">2023-09-20</td>
-                    </tbody>
-                  </table>
 
-                  {/* Third div with a table of Dropped classes */}
-                  <h2 className="text-xl font-bold text-main-red mb-2 mt-5">
-                    Dropped Classes
-                  </h2>
-                  <table className="min-w-full table-auto bg-white shadow-md rounded-lg h-[100px]">
-                    <thead>
-                      <tr className="bg-main-red text-white rounded-lg border ">
-                        <th>Section ID</th>
-                        <th>Section</th>
-                        <th>Date Created</th>
-                      </tr>
-                    </thead>
-                    <tbody className="text-center border"></tbody>
+                      {/* Add your dropped classes data here */}
+                    </tbody>
                   </table>
                 </div>
               </div>
+
             </div>
           </div>
         )}
+
       </div>
+
+
+
+
 
       {/*Row 3 Pagination (right-aligned and smaller) */}
       <div className="col-span-12 mt-20 text-sm">
@@ -241,20 +368,11 @@ const AddDropReq = () => {
               <FiArrowLeft className="border border-gray-500 w-5 h-5 rounded" />
             </li>
             <li>
-              <a
-                href="#"
-                className="text-gray-500 border border-gray-500 px-2 rounded hover:text-gray-700 hover:border-gray-700"
-              >
-                1
-              </a>
+              <a href="#" className="text-gray-500 border border-gray-500 px-2 rounded hover:text-gray-700 hover:border-gray-700">1</a>
             </li>
             <li>
-              <a
-                href="#"
-                className="text-gray-500 border border-gray-500 px-2 rounded hover:text-gray-700 hover:border-gray-700"
-              >
-                2
-              </a>
+              <a href="#" className="text-gray-500 border border-gray-500 px-2 rounded hover:text-gray-700 hover:border-gray-700">2</a>
+
             </li>
             <li>
               <FiArrowRight className="border border-gray-500 w-5 h-5 rounded" />
@@ -267,10 +385,13 @@ const AddDropReq = () => {
           <div>
             <DateTime />
           </div>
+
         </div>
       </div>
+
     </div>
-  );
-};
+  )
+}
+
 
 export default AddDropReq;
