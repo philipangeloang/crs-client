@@ -39,7 +39,7 @@ const StudentGradChangePassword = () => {
                             <div className="text-sm text-justify mt-4">
                                 You can now personalize your user password to make it easier for you to remember. However, you should ensure that it is not too easy for anyone else to guess!
                             </div>
-                            
+
                             <div className="text-sm text-justify mt-4">
                                 Your <span className="text-main-red">password must be at least 8-20 characters long only.</span> Making your password difficult for anyone else to crack will secure your CRS data.
                             </div>
@@ -58,20 +58,16 @@ const StudentGradChangePassword = () => {
                             </div>
 
                             <div className="col-span-7 flex">
-                                <div className="col-span-3">
-                                    <label htmlFor="currentPassword" className="text-[#434343]">
-                                        Current Password:
-                                    </label>
-                                </div>
-                                <div className="col-span-4 col-start-4">
-                                    <input
-                                        type="password"
-                                        id="currentPassword"
-                                        className="w-full p-2 border border-[#434343] rounded"
-                                        value={currentPassword}
-                                        onChange={(e) => setCurrentPassword(e.target.value)}
-                                    />
-                                </div>
+                                <label htmlFor="currentPassword" className="text-[#434343]">
+                                    Current Password:
+                                </label>
+                                <input
+                                    type="password"
+                                    id="currentPassword"
+                                    className="w-full p-2 border border-[#434343] rounded"
+                                    value={currentPassword}
+                                    onChange={(e) => setCurrentPassword(e.target.value)}
+                                />
                             </div>
 
                             <div className="col-span-7 flex">
