@@ -31,7 +31,11 @@ const FacultyProfileEdit: React.FC = () => {
 
     // Create a JSON object with the collected values
     const editedProfile = {
+      "user_account_id": profile.user_account_id,
       "staff_id": profile.staff_id,
+      "employee_number": profile.employee_number,
+      "address_id": profile.address_id,
+      "designation": profile.designation,
       "first_name": first_name ? first_name.value : '',
       "last_name": last_name ? last_name.value : '',
       "middle_name": middle_name ? middle_name.value : '',
@@ -47,6 +51,7 @@ const FacultyProfileEdit: React.FC = () => {
       "TIN_no": TIN_no ? TIN_no.value : '',
       "GSIS_no": GSIS_no ? GSIS_no.value : '',
       "address": {
+        "address_id": profile.address.address_id,
         "street_address": street_address ? street_address.value : '',
         "city": city ? city.value : '',
         "province": province ? province.value : '',
@@ -55,7 +60,6 @@ const FacultyProfileEdit: React.FC = () => {
       }
     };
 
-    console.log(editedProfile);
     const route = "api/staffs/" + profile.staff_id;
 
     api
