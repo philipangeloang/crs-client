@@ -36,41 +36,41 @@ import { Checkbox } from "@/components/ui/checkbox";
 
 // import { zodResolver } from "@hookform/resolvers/zod";
 // import { useForm } from "react-hook-form";
-import * as z from "zod";
+// import * as z from "zod";
 
 // Form Schema
-const formSchema = z.object({
-  roleName: z.string().min(1, {
-    message: "Please Choose Role Name",
-  }),
-  activeStatus: z.string().min(1, {
-    message: "Please Choose Active Status",
-  }),
-  firstname: z.string().min(1, {
-    message: "Please Enter First Name",
-  }),
-  lastName: z.string().min(1, {
-    message: "Please Enter Last Name",
-  }),
-  middleName: z.string().min(1, {
-    message: "Please Enter Middle Name",
-  }),
-  personalEmail: z.string().min(1, {
-    message: "Please Enter Personal Email",
-  }),
-  plmEmail: z.string().min(1, {
-    message: "Please Enter PLM Email",
-  }),
-  expirationDate: z.string().min(1, {
-    message: "Please Enter Expiration Date",
-  }),
-  expirationTime: z.string().min(1, {
-    message: "Please Enter Expiration Time",
-  }),
-  userPassword: z.string().min(1, {
-    message: "Please Enter User Password",
-  }),
-});
+// const formSchema = z.object({
+//   roleName: z.string().min(1, {
+//     message: "Please Choose Role Name",
+//   }),
+//   activeStatus: z.string().min(1, {
+//     message: "Please Choose Active Status",
+//   }),
+//   firstname: z.string().min(1, {
+//     message: "Please Enter First Name",
+//   }),
+//   lastName: z.string().min(1, {
+//     message: "Please Enter Last Name",
+//   }),
+//   middleName: z.string().min(1, {
+//     message: "Please Enter Middle Name",
+//   }),
+//   personalEmail: z.string().min(1, {
+//     message: "Please Enter Personal Email",
+//   }),
+//   plmEmail: z.string().min(1, {
+//     message: "Please Enter PLM Email",
+//   }),
+//   expirationDate: z.string().min(1, {
+//     message: "Please Enter Expiration Date",
+//   }),
+//   expirationTime: z.string().min(1, {
+//     message: "Please Enter Expiration Time",
+//   }),
+//   userPassword: z.string().min(1, {
+//     message: "Please Enter User Password",
+//   }),
+// });
 
 const AdminUserModule = () => {
   // State for Opening and Closing Modal
@@ -79,6 +79,7 @@ const AdminUserModule = () => {
   // State for Searching and Filtering
   const [search, setSearch] = useState("");
   const [userType, setUserType] = useState("");
+  console.log(userType);
 
   // State for Moving Along Pages
   const [schedActivities] = useState(tableUserModule);

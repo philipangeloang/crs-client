@@ -71,12 +71,12 @@ function ActivityName({
   activityTypes,
   activity,
 }: {
-  activityTypes: [];
-  activity: [];
+  activityTypes: any;
+  activity: any;
 }) {
   // Finding the Name equivalent to the ID and rendering it based on the matched value
   const name = activityTypes?.find(
-    (item) => item.activity_type_id === activity.activity_type_id
+    (item: any) => item.activity_type_id === activity.activity_type_id
   );
   return name?.activity_type_name;
 }

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import DateTime from "@/components/DateTime";
 import TempRoleSelector from "../TempRoleSelector";
 
@@ -204,7 +205,7 @@ const AdminEncodeUserType = () => {
             </div>
 
             {/* Table Contents */}
-            {roles?.data.data.map((item) => (
+            {roles?.data.data.map((item: any) => (
               <>
                 <div
                   className="col-span-4 px-2 py-3 border-l border-b border-main-gray text-center pr-32 flex flex-col justify-center"
