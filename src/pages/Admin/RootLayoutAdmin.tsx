@@ -165,14 +165,14 @@ const RootLayoutAdmin = () => {
                       Encoding of Blocks
                     </Link>
                   </li>
-                  <li>
+                  {/* <li>
                     <Link
                       to="/home/room-plot"
                       className="text-black block py-2"
                     >
                       Room Plotting
                     </Link>
-                  </li>
+                  </li> */}
                 </ul>
               )}
             </li>
