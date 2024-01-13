@@ -1,39 +1,71 @@
 import DateTime from "@/components/DateTime";
+import api from "@/api/fetch";
 import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 
-// Faculty Details
-let personalDetails = {
-  employeeNumber: "2019-81725",
-  lastName: "DELA CRUZ",
-  firstName: "JUAN",
-  middleName: "PEPITO",
-  nameExtension: "",
-  maidenName: "",
-  pedigree: "None",
-  birthDate: "1987-05-03",
-  birthPlace: "NCR - Manila",
-  gender: "Male",
-  civilStatus: "Single",
-  citizenship: "Filipino",
-  mobileNumber: "09987654321",
-  emailAddress: "juan.delacruz@gmail.com"
-};
+const FacultyProfile: React.FC = () => {
+  function fetchProfile() {
+    api
+      .get("api/me", {
+        withCredentials: true,
+      })
+      .then((response) => {
+        setProfile(response.data.staff_info);
+        // console.log("Response:", response.data.staff_info);
+        // Handle the response data as needed
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        // Handle the error
+      });
+  }
 
-let employmentDetails = {
-  tin: "xxx-xxx-xxx-xxx",
-  gsisNumber: "xxxx-xxxx-xxxx-xxxx",
-  instructorCode: "DELACRUZJP"
-};
+  const [ profile, setProfile ] = useState({
+      "staff_id": null,
+      "user_account_id": null,
+      "address_id": null,
+      "employee_number": null,
+      "designation": null,
+      "first_name": null,
+      "last_name": null,
+      "middle_name": null,
+      "name_extension": null,
+      "pedigree": null,
+      "sex": null,
+      "civil_status": null,
+      "citizenship": null,
+      "birth_date": null,
+      "birth_place": null,
+      "contact_no": null,
+      "personal_email": null,
+      "TIN_no": null,
+      "GSIS_no": null,
+      "created_at": null,
+      "updated_at": null,
+      "address": {
+          "address_id": null,
+          "street_address": null,
+          "city": null,
+          "province": null,
+          "zip_code": null,
+          "telephone_no": null
+      },
+      "instructor_info": {
+          "instructor_id": null,
+          "staff_id": null,
+          "instructor_code": null,
+          "first_name": null,
+          "middle_name": null,
+          "last_name": null,
+          "teaching_position": null,
+          "employment_type": null
+      }
+  });
 
-let currentAddress = {
-  address: "5317 Muralla St., Intramuros, Manila, Philippines 1002",
-  phoneNumber: "(02) 8643 2500",
-};
+  useEffect(() => {
+    fetchProfile();
+  }, [])
 
-let stringBirthDate = new Date(personalDetails.birthDate);
-const displayBirthDate = new Intl.DateTimeFormat('en-PH', {year: 'numeric', month: 'long', day: 'numeric'}).format(stringBirthDate);
-
-const FacultyProfile = () => {
   return (
     <>
       <div className="p-10 px-16 grid grid-cols-12 font-montserrat ">
@@ -59,6 +91,7 @@ const FacultyProfile = () => {
             <div className="px-4 py-2 border-2 border-main-red bg-main-red text-white rounded-lg cursor-pointer">
               <Link
                 to="/home/profile/edit"
+                state={{ profile }}
               >
                 Edit Details
               </Link>
@@ -73,51 +106,51 @@ const FacultyProfile = () => {
               <div className="w-full flex flex-row justify-start">
                 <div className="w-1/3 flex flex-row justify-start items-center">
                   <span className="w-1/3 text-left">Employee No. :</span>
-                  <span className="w-2/3 text-left font-bold">{personalDetails.employeeNumber}</span>
+                  <span className="w-2/3 text-left font-bold">{profile.employee_number}</span>
                 </div>
               </div>
               <div className="w-full flex flex-row justify-start">
                 <div className="w-1/3 flex flex-row justify-start items-center">
                   <span className="w-1/3 text-left">Full Name :</span>
-                  <span className="w-2/3 text-left font-bold">{personalDetails.firstName} {personalDetails.middleName} {personalDetails.lastName} {personalDetails.nameExtension}</span>
+                  <span className="w-2/3 text-left font-bold">{profile.first_name} {profile.middle_name} {profile.last_name} {profile.name_extension}</span>
                 </div>
                 <div className="w-1/3 flex flex-row justify-start items-center">
                   <span className="w-1/3 text-left">Pedigree :</span>
-                  <span className="w-2/3 text-left font-bold">{personalDetails.pedigree}</span>
+                  <span className="w-2/3 text-left font-bold">{profile.pedigree}</span>
                 </div>
               </div>
               <div className="w-full flex flex-row justify-start">
                 <div className="w-1/3 flex flex-row justify-start items-center">
                   <span className="w-1/3 text-left">Birth Date :</span>
-                  <span className="w-2/3 text-left font-bold">{displayBirthDate}</span>
+                  <span className="w-2/3 text-left font-bold">{profile.birth_date}</span>
                 </div>
                 <div className="w-1/3 flex flex-row justify-start items-center">
                   <span className="w-1/3 text-left">Birth Place :</span>
-                  <span className="w-2/3 text-left font-bold">{personalDetails.birthPlace}</span>
+                  <span className="w-2/3 text-left font-bold">{profile.birth_place}</span>
                 </div>
               </div>
               <div className="w-full flex flex-row justify-start">
                 <div className="w-1/3 flex flex-row justify-start items-center">
                   <span className="w-1/3 text-left">Gender :</span>
-                  <span className="w-2/3 text-left font-bold">{personalDetails.gender}</span>
+                  <span className="w-2/3 text-left font-bold">{profile.sex}</span>
                 </div>
                 <div className="w-1/3 flex flex-row justify-start items-center">
                   <span className="w-1/3 text-left">Civil Status :</span>
-                  <span className="w-2/3 text-left font-bold">{personalDetails.civilStatus}</span>
+                  <span className="w-2/3 text-left font-bold">{profile.civil_status}</span>
                 </div>
                 <div className="w-1/3 flex flex-row justify-start items-center">
                   <span className="w-1/3 text-left">Citizenship :</span>
-                  <span className="w-2/3 text-left font-bold">{personalDetails.citizenship}</span>
+                  <span className="w-2/3 text-left font-bold">{profile.citizenship}</span>
                 </div>
               </div>
               <div className="w-full flex flex-row justify-start">
                 <div className="w-1/3 flex flex-row justify-start items-center">
                   <span className="w-1/3 text-left">Mobile No. :</span>
-                  <span className="w-2/3 text-left font-bold">{personalDetails.mobileNumber}</span>
+                  <span className="w-2/3 text-left font-bold">{profile.contact_no}</span>
                 </div>
                 <div className="w-1/3 flex flex-row justify-start items-center">
                   <span className="w-1/3 text-left">Email Address :</span>
-                  <span className="w-2/3 text-left font-bold">{personalDetails.emailAddress}</span>
+                  <span className="w-2/3 text-left font-bold">{profile.personal_email}</span>
                 </div>
               </div>
             </div>
@@ -131,15 +164,15 @@ const FacultyProfile = () => {
               <div className="w-full flex flex-row justify-start">
                 <div className="w-1/3 flex flex-row justify-start items-center">
                   <span className="w-1/3 text-left">TIN :</span>
-                  <span className="w-2/3 text-left font-bold">{employmentDetails.tin}</span>
+                  <span className="w-2/3 text-left font-bold">{profile.TIN_no}</span>
                 </div>
                 <div className="w-1/3 flex flex-row justify-start items-center">
                   <span className="w-1/3 text-left">GSIS No. :</span>
-                  <span className="w-2/3 text-left font-bold">{employmentDetails.gsisNumber}</span>
+                  <span className="w-2/3 text-left font-bold">{profile.GSIS_no}</span>
                 </div>
                 <div className="w-1/3 flex flex-row justify-start items-center">
                   <span className="w-1/3 text-left">Instructor Code :</span>
-                  <span className="w-2/3 text-left font-bold">{employmentDetails.instructorCode}</span>
+                  <span className="w-2/3 text-left font-bold">{profile.instructor_info.instructor_code}</span>
                 </div>
               </div>
             </div>
@@ -153,13 +186,13 @@ const FacultyProfile = () => {
               <div className="w-full flex flex-row justify-start">
                 <div className="w-1/2 flex flex-row justify-start items-center">
                   <span className="w-1/4 text-left">Address :</span>
-                  <span className="w-full text-left font-bold">{currentAddress.address}</span>
+                  <span className="w-full text-left font-bold">{profile.address.street_address}, {profile.address.city}, {profile.address.province} {profile.address.zip_code}</span>
                 </div>
               </div>
               <div className="w-full flex flex-row justify-start">
                 <div className="w-1/2 flex flex-row justify-start items-center">
                   <span className="w-1/4 text-left">Phone No. :</span>
-                  <span className="w-full text-left font-bold">{currentAddress.phoneNumber}</span>
+                  <span className="w-full text-left font-bold">{profile.address.telephone_no}</span>
                 </div>
               </div>
             </div>

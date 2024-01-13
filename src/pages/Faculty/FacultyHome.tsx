@@ -8,7 +8,7 @@ import TempRoleSelector from "../TempRoleSelector";
 const FacultyHome = () => {
   return (
     <>
-      <div className="p-10 px-16 grid grid-cols-12 font-montserrat ">
+      <div className="p-10 px-16 grid grid-cols-12 font-montserrat  bg-[url('BGHome.png')] bg-cover">
         {/* Row 1 */}
         <div className="col-span-12 flex justify-between items-center">
           <div className="px-5 py-1 bg-main-red text-white rounded-lg ">

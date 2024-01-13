@@ -1,7 +1,8 @@
 import { FaPrint } from "react-icons/fa";
 import DateTime from "@/components/DateTime";
-import { Key } from "react";
+import { Key, useState } from "react";
 import StringCardinal from "@/components/StringCardinal";
+import { Pager } from "@/components/ui/pager";
 
 // Faculty Details
 const facultyDetails = {
@@ -25,102 +26,22 @@ const termsAndAcademicYears = [
 
 const teachingAssignments = [
   {
-    course_code_section: "CSC 0413.1-1",
+    course_code_section: "CSC 0413-3",
     subject_title: "CS Elective 2 (Lec)",
-    units: 2,
-    class_schedule: "W 6:00P-8:00PM F2F - GV 306",
+    units: 3,
+    class_schedule: "W 7:00AM-9:00AM F2F - GV 306",
     no_of_students: 38,
-    credited_units: 2,
+    credited_units: 3,
     college: "CEng",
     type_of_load: "",
   },
   {
-    course_code_section: "CSC 0413.1-1",
-    subject_title: "CS Elective 2 (Lec)",
-    units: 2,
-    class_schedule: "W 6:00P-8:00PM F2F - GV 306",
+    course_code_section: "CSC 0413.1-3",
+    subject_title: "CS Elective 2 (Lab)",
+    units: 3,
+    class_schedule: "Th 6:00PM-9:00PM F2F - CompLab 3",
     no_of_students: 38,
-    credited_units: 2,
-    college: "CEng",
-    type_of_load: "",
-  },
-  {
-    course_code_section: "CSC 0413.1-1",
-    subject_title: "CS Elective 2 (Lec)",
-    units: 2,
-    class_schedule: "W 6:00P-8:00PM F2F - GV 306",
-    no_of_students: 38,
-    credited_units: 2,
-    college: "CEng",
-    type_of_load: "",
-  },
-  {
-    course_code_section: "CSC 0413.1-1",
-    subject_title: "CS Elective 2 (Lec)",
-    units: 2,
-    class_schedule: "W 6:00P-8:00PM F2F - GV 306",
-    no_of_students: 38,
-    credited_units: 2,
-    college: "CEng",
-    type_of_load: "",
-  },
-  {
-    course_code_section: "CSC 0413.1-1",
-    subject_title: "CS Elective 2 (Lec)",
-    units: 2,
-    class_schedule: "W 6:00P-8:00PM F2F - GV 306",
-    no_of_students: 38,
-    credited_units: 2,
-    college: "CEng",
-    type_of_load: "",
-  },
-  {
-    course_code_section: "CSC 0413.1-1",
-    subject_title: "CS Elective 2 (Lec)",
-    units: 2,
-    class_schedule: "W 6:00P-8:00PM F2F - GV 306",
-    no_of_students: 38,
-    credited_units: 2,
-    college: "CEng",
-    type_of_load: "",
-  },
-  {
-    course_code_section: "CSC 0413.1-1",
-    subject_title: "CS Elective 2 (Lec)",
-    units: 2,
-    class_schedule: "W 6:00P-8:00PM F2F - GV 306",
-    no_of_students: 38,
-    credited_units: 2,
-    college: "CEng",
-    type_of_load: "",
-  },
-  {
-    course_code_section: "CSC 0413.1-1",
-    subject_title: "CS Elective 2 (Lec)",
-    units: 2,
-    class_schedule: "W 6:00P-8:00PM F2F - GV 306",
-    no_of_students: 38,
-    credited_units: 2,
-    college: "CEng",
-    type_of_load: "",
-  },
-  {
-    course_code_section: "CSC 0413.1-1",
-    subject_title: "CS Elective 2 (Lec)",
-    units: 2,
-    class_schedule: "W 6:00P-8:00PM F2F - GV 306",
-    no_of_students: 38,
-    credited_units: 2,
-    college: "CEng",
-    type_of_load: "",
-  },
-  {
-    course_code_section: "CSC 0413.1-1",
-    subject_title: "CS Elective 2 (Lec)",
-    units: 2,
-    class_schedule: "W 6:00P-8:00PM F2F - GV 306",
-    no_of_students: 38,
-    credited_units: 2,
+    credited_units: 3,
     college: "CEng",
     type_of_load: "",
   },
@@ -201,6 +122,10 @@ function TableClassAssignments({ data }: { data: any }) {
 }
 
 const FacultyClassAssignments = () => {
+  const [page, setPage] = useState(1);
+  const [perPage, setPerPage] = useState(5);
+  const [search, setSearch] = useState("");
+
   return (
     <>
       <div className="p-10 px-16 grid grid-cols-12 font-montserrat ">
@@ -256,6 +181,9 @@ const FacultyClassAssignments = () => {
 
         {/* Row 3 */}
         <div className="col-span-12 flex justify-between items-end mt-24 text-[#434343] text-sm">
+          <div>
+            <Pager from={1} to={2} total={2} current_page={page} last_page={1} on_page_change={setPage} />
+          </div>
           <div className="flex gap-10"></div>
 
           <DateTime />
