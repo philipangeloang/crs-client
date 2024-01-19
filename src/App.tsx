@@ -63,6 +63,9 @@ import StudentGradCashier from "./pages/Student/StudentGrad/StudentGradCashier";
 import api from "./api/fetch";
 import { useEffect } from "react";
 import Payment from "./pages/Cashier/Payment";
+import StudentDetails from "./pages/Cashier/StudentDetails";
+import PaymentHistory from "./pages/Cashier/PaymentHistory";
+import Transaction from "./pages/Cashier/Transaction";
 
 function App() {
   const { role, setRole } = useRoleStore();
@@ -225,13 +228,17 @@ function App() {
             </>
           )}
           {role === "CASHIER" && (
-            <>
-              <Route path="/home" element={<RootLayoutCashier />}>
-                <Route index element={<Payment />} />
-                <Route path="payment-student" element={<Payment />} />
-              </Route>
-             
-            </>
+        
+          <>
+                    <Route path="/" element={<Signin />} />
+                    <Route path="/home" element={<RootLayoutCashier />}>
+                      <Route index element={<AdminHome />} />
+                    </Route> 
+                    <Route path="/home/payment-student" element={<Payment/>}/>
+                    <Route path="/home/student-details" element={<StudentDetails/>}/>
+                    <Route path="/home/payment-history" element={<PaymentHistory/>}/>
+                    <Route path="/home/transaction" element={<Transaction/>}/>
+                  </>
           )}
         </Routes>
         <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
