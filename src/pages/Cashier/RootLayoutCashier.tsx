@@ -3,6 +3,8 @@ import { FiFacebook, FiTwitter } from "react-icons/fi";
 import { BsGlobe2 } from "react-icons/bs";
 import { BiUserPin } from "react-icons/bi";
 import TempRoleSelector from "../TempRoleSelector";
+import { Link } from "react-router-dom";
+import DateTime from "@/components/DateTime";
 
 const RootLayoutCashier = () => {
   return (
@@ -42,6 +44,18 @@ const RootLayoutCashier = () => {
             <h1 className="text-3xl font-bold text-main-red">
               Pamantasan ng Lungsod ng Maynila
             </h1>
+            <div className="flex items-center mt-5">
+            <span className="mr-2">
+              Go to
+            </span>
+            <Link to="payment-student">
+            <button className="btn border p-2 bg-main-red text-white">
+                Student Payment Status
+            </button>
+            </Link>
+          
+            </div>
+      
           </div>
 
           {/* Row 3 */}
@@ -74,13 +88,11 @@ const RootLayoutCashier = () => {
                 </div>
               </div>
             </div>
-
             <div className="flex flex-col items-end">
-              <h1 className="text-main-blue font-bold text-md">
-                October 27, 2023
-              </h1>
-              <p>10:35 PM</p>
+              <DateTime/>
             </div>
+
+
           </div>
         </div>
       </div>

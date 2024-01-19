@@ -62,6 +62,7 @@ import StudentGradChangePassword from "./pages/Student/StudentGrad/StudentGradCh
 import StudentGradCashier from "./pages/Student/StudentGrad/StudentGradCashier";
 import api from "./api/fetch";
 import { useEffect } from "react";
+import Payment from "./pages/Cashier/Payment";
 
 function App() {
   const { role, setRole } = useRoleStore();
@@ -226,9 +227,10 @@ function App() {
           {role === "CASHIER" && (
             <>
               <Route path="/home" element={<RootLayoutCashier />}>
-                <Route index element={<AdminHome />} />
-                <Route path="search-student" element={<AdminHome />} />
+                <Route index element={<Payment />} />
+                <Route path="payment-student" element={<Payment />} />
               </Route>
+             
             </>
           )}
         </Routes>
